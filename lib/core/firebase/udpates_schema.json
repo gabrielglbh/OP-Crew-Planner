@@ -1,0 +1,26 @@
+{
+  "alias": {
+    "9313": {
+      "id": 9313,
+      "unitId": "UNIT ID",
+      "alias": "ALIAS"
+    }
+  },
+  "unit": {
+    "3923": {
+      "pk": 3923,
+      "id": "UNIT ID",
+      "name": "UNIT NAME",
+      "type": "UNIT TYPE",
+      "url": "UNIT IMAGE URL FROM FIREBASE STORAGE"
+    }
+  },
+  "ship": {
+    "55": {
+      "pk": 55,
+      "id": "SHIP ID",
+      "name": "SHIP NAME",
+      "url": "SHIP IMAGE URL FROM FIREBASE STORAGE"
+    }
+  }
+}
