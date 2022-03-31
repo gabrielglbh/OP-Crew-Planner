@@ -6,8 +6,12 @@ import 'package:optcteams/core/database/queries/team_queries.dart';
 import 'package:optcteams/core/database/queries/unit_queries.dart';
 
 class BackUpQueries {
+  BackUpQueries._();
+
+  static final BackUpQueries _instance = BackUpQueries._();
+
   /// Singleton instance of [BackUpQueries]
-  static BackUpQueries instance = BackUpQueries();
+  static BackUpQueries get instance => _instance;
 
   Future<bool> insertDataFromBackup(List<Unit> units, List<Team> teams,
       List<RumbleTeam> rumbleTeams, List<Unit> history, List<Unit> backupUnits,

@@ -10,12 +10,14 @@ import 'package:sqflite/sqflite.dart';
 class RumbleTeamQueries {
   Database? _database;
 
-  /// Singleton instance of [RumbleTeamQueries]
-  static RumbleTeamQueries instance = RumbleTeamQueries();
-
-  RumbleTeamQueries() {
+  RumbleTeamQueries._() {
     _database = CustomDatabase.instance.database;
   }
+
+  static final RumbleTeamQueries _instance = RumbleTeamQueries._();
+
+  /// Singleton instance of [RumbleTeamQueries]
+  static RumbleTeamQueries get instance => _instance;
 
   Future<List<RumbleTeam>> getAllRumbleTeams() async {
     if (_database != null) {
@@ -175,7 +177,7 @@ class RumbleTeamQueries {
     }
   }
 
-  List<RumbleTeam> generateRumbleTeamList(List<Map<String, dynamic>> res) {
+  static List<RumbleTeam> generateRumbleTeamList(List<Map<String, dynamic>> res) {
     return List.generate(res.length, (i) {
       return RumbleTeam(
           name: res[i][Data.rumbleTeamName],

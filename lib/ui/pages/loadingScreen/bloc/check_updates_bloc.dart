@@ -24,15 +24,14 @@ class CheckUpdatesBloc extends Bloc<CheckUpdatesEvent, CheckUpdatesState> {
         if (loadedLocale != "") OPCrewPlanner.setLocale(event.context, Locale(loadedLocale));
 
         /// Open the database
-        await CustomDatabase.instance.open(context: event.context,
-            onUpdate: (String message) {
+        await CustomDatabase.instance.open(onUpdate: (String message) {
               emit(CheckUpdatesLoadingState(message: message));
             }).catchError((err) {
           emit(CheckUpdatesFailureState(message: err.toString()));
         });
 
         /// Check if there are any new units, aliases or ships
-        await UpdateQueries.instance.getAllUnitsAndAliasesFromFireStore(event.context,
+        await UpdateQueries.instance.getAllUnitsAndAliasesFromFireStore(
             onUpdate: (message, progress) {
               emit(CheckUpdatesLoadingState(message: message, progress: progress));
             }).catchError((err) {
@@ -49,15 +48,14 @@ class CheckUpdatesBloc extends Bloc<CheckUpdatesEvent, CheckUpdatesState> {
       if (loadedLocale != "") OPCrewPlanner.setLocale(event.context, Locale(loadedLocale));
 
       /// Open the database
-      await CustomDatabase.instance.open(context: event.context,
-          onUpdate: (String message) {
+      await CustomDatabase.instance.open(onUpdate: (String message) {
             emit(CheckUpdatesLoadingState(message: message));
           }).catchError((err) {
         emit(CheckUpdatesFailureState(message: err.toString()));
       });
 
       /// Check if there are any new units, aliases or ships
-      await UpdateQueries.instance.getAllUnitsAndAliasesFromFireStore(event.context,
+      await UpdateQueries.instance.getAllUnitsAndAliasesFromFireStore(
           onUpdate: (message, progress) {
             emit(CheckUpdatesLoadingState(message: message, progress: progress));
           }).catchError((err) {

@@ -6,12 +6,14 @@ import 'package:sqflite/sqflite.dart';
 class ShipQueries {
   Database? _database;
 
-  /// Singleton instance of [ShipQueries]
-  static ShipQueries instance = ShipQueries();
-
-  ShipQueries() {
+  ShipQueries._() {
     _database = CustomDatabase.instance.database;
   }
+
+  static final ShipQueries _instance = ShipQueries._();
+
+  /// Singleton instance of [ShipQueries]
+  static ShipQueries get instance => _instance;
 
   Future<int> getAllShipsCount() async {
     if (_database != null) {
@@ -66,7 +68,7 @@ class ShipQueries {
     return "";
   }
 
-  List<Ship> generateShipList(List<Map<String, dynamic>> res) {
+  static List<Ship> generateShipList(List<Map<String, dynamic>> res) {
     return List.generate(res.length, (i) {
       return Ship(id: res[i][Data.shipId], name: res[i][Data.shipName], url: res[i][Data.shipUrl]);
     });

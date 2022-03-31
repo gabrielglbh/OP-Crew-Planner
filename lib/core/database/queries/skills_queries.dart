@@ -6,12 +6,14 @@ import 'package:sqflite/sqflite.dart';
 class SkillsQueries {
   Database? _database;
 
-  /// Singleton instance of [SkillsQueries]
-  static SkillsQueries instance = SkillsQueries();
-
-  SkillsQueries() {
+  SkillsQueries._() {
     _database = CustomDatabase.instance.database;
   }
+
+  static final SkillsQueries _instance = SkillsQueries._();
+
+  /// Singleton instance of [SkillsQueries]
+  static SkillsQueries get instance => _instance;
 
   Future<Skills> getSkills(String name) async {
     if (_database != null) {

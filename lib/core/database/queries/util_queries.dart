@@ -9,12 +9,14 @@ import 'package:sqflite/sqflite.dart';
 class UtilQueries {
   Database? _database;
 
-  /// Singleton instance of [UtilQueries]
-  static UtilQueries instance = UtilQueries();
-
-  UtilQueries() {
+  UtilQueries._() {
     _database = CustomDatabase.instance.database;
   }
+
+  static final UtilQueries _instance = UtilQueries._();
+
+  /// Singleton instance of [UtilQueries]
+  static UtilQueries get instance => _instance;
 
   Future<bool> checkIfLimitReached(TypeList mode) async {
     if (_database != null) {

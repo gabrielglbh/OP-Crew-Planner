@@ -7,12 +7,14 @@ import 'package:sqflite/sqflite.dart';
 class UnitQueries {
   Database? _database;
 
-  /// Singleton instance of [UnitQueries]
-  static UnitQueries instance = UnitQueries();
-
-  UnitQueries() {
+  UnitQueries._() {
     _database = CustomDatabase.instance.database;
   }
+
+  static final UnitQueries _instance = UnitQueries._();
+
+  /// Singleton instance of [UnitQueries]
+  static UnitQueries get instance => _instance;
 
   Future<void> updateHistoryUnit(Unit u) async {
     u.setLastCheckedData(DateTime.now().millisecondsSinceEpoch);
@@ -439,7 +441,7 @@ class UnitQueries {
     }
   }
 
-  List<Unit> generateUnitList(List<Map<String, dynamic>> res) {
+  static List<Unit> generateUnitList(List<Map<String, dynamic>> res) {
     return List.generate(res.length, (i) {
       return Unit(id: res[i][Data.unitId],
           name: res[i][Data.unitName],

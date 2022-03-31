@@ -8,12 +8,14 @@ import 'package:sqflite/sqflite.dart';
 class UnitInfoQueries {
   Database? _database;
 
-  /// Singleton instance of [UnitInfoQueries]
-  static UnitInfoQueries instance = UnitInfoQueries();
-
-  UnitInfoQueries() {
+  UnitInfoQueries._() {
     _database = CustomDatabase.instance.database;
   }
+
+  static final UnitInfoQueries _instance = UnitInfoQueries._();
+
+  /// Singleton instance of [UnitInfoQueries]
+  static UnitInfoQueries get instance => _instance;
 
   Future<bool> insertUnitInfoIntoDatabase(UnitInfo u, Unit unit) async {
     try {
@@ -50,7 +52,7 @@ class UnitInfoQueries {
         List<Map<String, dynamic>>? res = await _database?.query(Data.unitTable,
             where: "${Data.unitDataDownloaded}=?", whereArgs: [1]);
         if (res != null) {
-          List<Unit> units = UnitQueries.instance.generateUnitList(res);
+          List<Unit> units = UnitQueries.generateUnitList(res);
           units.forEach((unit) async {
             unit.downloaded = 0;
             await UnitQueries.instance.updateUnit(unit);
