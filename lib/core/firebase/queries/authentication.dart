@@ -13,13 +13,15 @@ class AuthQueries {
   FirebaseFirestore? _ref;
   FirebaseAuth? _auth;
 
-  /// Singleton instance of [AuthQueries]
-  static AuthQueries instance = AuthQueries();
-
-  AuthQueries() {
+  AuthQueries._() {
     _ref = FirebaseUtils.instance.dbRef;
     _auth = FirebaseUtils.instance.authRef;
   }
+
+  static final AuthQueries _instance = AuthQueries._();
+
+  /// Singleton instance of [AuthQueries]
+  static AuthQueries get instance => _instance;
 
   Future<User?> handleEmailSignIn(BuildContext context, UserMode mode,
       String email, String password) async {

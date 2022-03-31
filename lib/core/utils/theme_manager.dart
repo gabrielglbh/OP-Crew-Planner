@@ -3,14 +3,16 @@ import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/theme/theme.dart';
 
 class ThemeManager {
-  /// Singleton instance of [ThemeManager]
-  static final ThemeManager instance = ThemeManager();
-
   ThemeNotifier? _notifier;
 
-  ThemeManager() {
+  ThemeManager._() {
     _notifier = ThemeNotifier();
   }
+
+  static final ThemeManager _instance = ThemeManager._();
+
+  /// Singleton instance of [ThemeManager ]
+  static ThemeManager get instance => _instance;
 
   ThemeMode get themeMode => _notifier?.isDarkTheme == true ? ThemeMode.dark : ThemeMode.light;
   ThemeData? get currentLightThemeData => lightTheme;

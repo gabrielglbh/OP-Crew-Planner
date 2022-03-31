@@ -6,12 +6,14 @@ import 'package:sqflite/sqflite.dart';
 class AliasQueries {
   Database? _database;
 
-  /// Singleton instance of [AliasQueries]
-  static AliasQueries instance = AliasQueries();
-
-  AliasQueries() {
+  AliasQueries._() {
     _database = CustomDatabase.instance.database;
   }
+
+  static final AliasQueries _instance = AliasQueries._();
+
+  /// Singleton instance of [AliasQueries]
+  static AliasQueries get instance => _instance;
 
   Future<int> getAllAliasesCount() async {
     if (_database != null) {

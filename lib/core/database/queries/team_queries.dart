@@ -16,12 +16,14 @@ import 'package:sqflite/sqflite.dart';
 class TeamQueries {
   Database? _database;
 
-  /// Singleton instance of [TeamQueries]
-  static TeamQueries instance = TeamQueries();
-
-  TeamQueries() {
+  TeamQueries._() {
     _database = CustomDatabase.instance.database;
   }
+
+  static final TeamQueries _instance = TeamQueries._();
+
+  /// Singleton instance of [TeamQueries]
+  static TeamQueries get instance => _instance;
 
   Future<List<Team>> getAllTeams() async {
     if (_database != null) {
@@ -244,7 +246,7 @@ class TeamQueries {
     }
   }
 
-  List<Team> generateTeamList(List<Map<String, dynamic>> res) {
+  static List<Team> generateTeamList(List<Map<String, dynamic>> res) {
     return List.generate(res.length, (i) {
       return Team(
           name: res[i][Data.teamName],

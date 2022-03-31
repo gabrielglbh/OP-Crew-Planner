@@ -9,7 +9,7 @@ class Migrations {
   static Future<void> version37to38(Database db) async {
     try {
       List<Map<String, dynamic>>? res = await db.query(Data.unitTable);
-      List<Unit> all = UnitQueries.instance.generateUnitList(res);
+      List<Unit> all = UnitQueries.generateUnitList(res);
 
       final batch = db.batch();
       for (int u = 0; u < all.length; u++) {
@@ -17,7 +17,7 @@ class Migrations {
           Data.unitUrl: all[u].getUrlOfUnitImage()
         }, where: "${Data.unitId}=?", whereArgs: [all[u].id]);
       }
-      await batch.commit(continueOnError: false);
+      await batch.commit();
     } catch (err) {
       print(err);
     }

@@ -5,12 +5,14 @@ import 'package:sqflite/sqflite.dart';
 class SupportQueries {
   Database? _database;
 
-  /// Singleton instance of [SupportQueries]
-  static SupportQueries instance = SupportQueries();
-
-  SupportQueries() {
+  SupportQueries._() {
     _database = CustomDatabase.instance.database;
   }
+
+  static final SupportQueries _instance = SupportQueries._();
+
+  /// Singleton instance of [SupportQueries]
+  static SupportQueries get instance => _instance;
 
   Future<List<String>> getSupportUnitFromTeam(String name) async {
     if (_database != null) {

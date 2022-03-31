@@ -21,13 +21,15 @@ class BackUpRecords {
   FirebaseFirestore? _ref;
   FirebaseAuth? _auth;
 
-  /// Singleton instance of [BackUpRecords]
-  static BackUpRecords instance = BackUpRecords();
-
-  BackUpRecords() {
+  BackUpRecords._() {
     _ref = FirebaseUtils.instance.dbRef;
     _auth = FirebaseUtils.instance.authRef;
   }
+
+  static final BackUpRecords _instance = BackUpRecords._();
+
+  /// Singleton instance of [BackUpRecords]
+  static BackUpRecords get instance => _instance;
 
   Future<void> uploadToFireStore(BuildContext context, Function(String) updateUI) async {
     User? _user = _auth?.currentUser;

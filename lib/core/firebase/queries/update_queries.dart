@@ -18,12 +18,14 @@ class UpdateQueries {
   final String _versionCollection = "version";
   FirebaseFirestore? _ref;
 
-  /// Singleton instance of [UpdateQueries]
-  static UpdateQueries instance = UpdateQueries();
-
-  UpdateQueries() {
+  UpdateQueries._() {
     _ref = FirebaseUtils.instance.dbRef;
   }
+
+  static final UpdateQueries _instance = UpdateQueries._();
+
+  /// Singleton instance of [UpdateQueries]
+  static UpdateQueries get instance => _instance;
 
   Future<void> registerAnalyticsEvent(String event) async {
     if (!AdManager.test) await FirebaseAnalytics.instance.logEvent(name: event, parameters: null);
@@ -100,7 +102,7 @@ class UpdateQueries {
     }
   }
 
-  Future<void> getAllUnitsAndAliasesFromFireStore(BuildContext context,
+  Future<void> getAllUnitsAndAliasesFromFireStore(
       {required Function(String, double) onUpdate}) async {
     /// When uploaded, remove the for loop, clear updates.json and include all
     /// uploaded units/aliases/ships to insertion.json (outside file)

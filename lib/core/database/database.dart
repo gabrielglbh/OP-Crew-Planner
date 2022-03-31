@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/database/migrations.dart';
 import 'package:path/path.dart';
@@ -7,16 +6,20 @@ import 'package:sqflite/sqflite.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class CustomDatabase {
+  CustomDatabase._();
+
+  static final CustomDatabase _instance = CustomDatabase._();
+
   /// Singleton instance of [CustomDatabase]
-  static CustomDatabase instance = CustomDatabase();
+  static CustomDatabase get instance => _instance;
 
   /// Database to perform all the queries on
-  Database? database;
+  static Database? _database;
 
-  CustomDatabase() { open(); }
+  Database? get database => _database;
 
   /// Opens up the db and configures all of it
-  Future<void> open({Function(String)? onUpdate, BuildContext? context}) async {
+  Future<void> open({Function(String)? onUpdate}) async {
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, "optc-teams.db");
 
@@ -24,7 +27,7 @@ class CustomDatabase {
       await Directory(databasesPath).create(recursive: true);
     } catch (_) {}
 
-    database = await openDatabase(
+    _database = await openDatabase(
         path,
         version: 38,
         singleInstance: true,
@@ -146,6 +149,9 @@ class CustomDatabase {
               "${Data.lastTapCondition} TEXT, "
               "${Data.lastTapDescription} TEXT)");
         },
+        onDowngrade: (Database db, int oldVersion, int newVersion) {
+          // Change it to whatever to debug new versions of DB
+        },
         onUpgrade: (Database db, int oldVersion, int newVersion) async {
           if (onUpdate != null) onUpdate("archUpdates".tr());
           await _onUpgrade(db, oldVersion, newVersion);
@@ -159,12 +165,12 @@ class CustomDatabase {
   /// Function to manage migrations on whenever an update is needed.
   /// Whenever the update to the DB, automatically put it on the onCreate DB
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion <= 34) Migrations.version34to35(db);
-    if (oldVersion <= 35) Migrations.version35to36(db);
-    if (oldVersion <= 36) Migrations.version36to37(db);
-    if (oldVersion <= 37) Migrations.version37to38(db);
+    if (oldVersion <= 34) await Migrations.version34to35(db);
+    if (oldVersion <= 35) await Migrations.version35to36(db);
+    if (oldVersion <= 36) await Migrations.version36to37(db);
+    if (oldVersion <= 37) await Migrations.version37to38(db);
   }
 
   /// Closes up the current database.
-  Future<void> close() async => await database?.close();
+  Future<void> close() async => await _database?.close();
 }
