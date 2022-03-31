@@ -33,6 +33,8 @@ class BackUpQueries {
         else backupUnits[y].downloaded = 1;
         // Check url
         if (backupUnits[y].url == null) backupUnits[y].url = u.url;
+        // Due to Bandai removing all images from server
+        backupUnits[y].url = u.getUrlOfUnitImage();
         await UnitQueries.instance.updateUnit(backupUnits[y]);
       }
 
@@ -45,6 +47,8 @@ class BackUpQueries {
         else backupHistory[y].downloaded = 1;
         // Check url
         if (backupHistory[y].url == null) backupHistory[y].url = u.url;
+        // Due to Bandai removing all images from server
+        backupHistory[y].url = u.getUrlOfUnitImage();
         await UnitQueries.instance.updateUnit(backupHistory[y]);
       }
 
@@ -62,6 +66,8 @@ class BackUpQueries {
           else backupTeams[y].units[x].downloaded = 1;
           // Check url
           if (backupTeams[y].units[x].url == null) backupTeams[y].units[x].url = u.url;
+          // Due to Bandai removing all images from server
+          backupTeams[y].units[x].url = u.getUrlOfUnitImage();
         }
         // idem - supports
         for (int x = 0; x < backupTeams[y].supports.length; x++) {
@@ -69,6 +75,8 @@ class BackUpQueries {
           if (u.downloaded == 0) backupTeams[y].supports[x].downloaded = 0;
           else backupTeams[y].supports[x].downloaded = 1;
           if (backupTeams[y].supports[x].url == null) backupTeams[y].supports[x].url = u.url;
+          // Due to Bandai removing all images from server
+          backupTeams[y].supports[x].url = u.getUrlOfUnitImage();
         }
         await TeamQueries.instance.insertTeam(backupTeams[y]);
       }
@@ -87,6 +95,8 @@ class BackUpQueries {
           else backupRumbleTeams[y].units[x].downloaded = 1;
           // Check url
           if (backupRumbleTeams[y].units[x].url == null) backupRumbleTeams[y].units[x].url = u.url;
+          // Due to Bandai removing all images from server
+          backupRumbleTeams[y].units[x].url = u.getUrlOfUnitImage();
         }
         await RumbleTeamQueries.instance.insertRumbleTeam(backupRumbleTeams[y]);
       }

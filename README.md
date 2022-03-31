@@ -2,6 +2,10 @@
 
 Find unit's data, build your teams and get a TO-DO list on your to be maxed out units for the mobile game One Piece Treasure Cruise. Get One Piece Treasure Cruise on [Google Play](https://play.google.com/store/apps/details?id=com.namcobandaigames.spmoja010E) or [App Store](https://apps.apple.com/es/app/one-piece-treasure-cruise/id943690848).
 
+Build with passion with [Flutter](https://flutter.dev/)!
+
+Make sure to visit [OPTC DB](https://github.com/optc-db/optc-db.github.io), this app would not exist without it.
+
 <p align="center">
   <a href="https://play.google.com/store/apps/details?id=com.gabr.garc.optcteams">
     <img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/en_get.svg" width="30%">
@@ -39,12 +43,12 @@ After that, you will need to register the app through Ad Mob by publishing it to
 
 The following IDs are needed to make the app work with custom ads:
 
-- In [info.plist](https://github.com/gabrielglbh/OP-Crew-Planner/blob/main/ios/Runner/Info.plist):
+- In [info.plist](https://github.com/gabrielglbh/OP-Crew-Planner/blob/main/ios/Runner/Info.plist) __(key for correctly launching the iOS app)__:
 
     - `GOOGLE-iOS-AD-ID`: iOS Application Id from AdMob
     - `GOOGLE-URL-SCHEME`: URL scheme for proper navigation through ads
 
-- In [AndroidManifest.xml](https://github.com/gabrielglbh/OP-Crew-Planner/blob/main/android/app/src/main/AndroidManifest.xml):
+- In [AndroidManifest.xml](https://github.com/gabrielglbh/OP-Crew-Planner/blob/main/android/app/src/main/AndroidManifest.xml) __(key for correctly launching the Android app)__:
 
     - `GOOGLE-ANDROID-AD-ID`: Android Application Id from AdMob
 
@@ -59,7 +63,14 @@ The following IDs are needed to make the app work with custom ads:
 
     - `GOOGLE-DEVICE-TESTS-AD`: Id that is prompted in the console when developing to get test ads in the emulator
 
-In case you do not want ads, just remove the file [ads.dart](https://github.com/gabrielglbh/OP-Crew-Planner/blob/main/lib/core/firebase/ads.dart) and all of its instances across all app.
+### Removing AdMob
+
+In case you do not want ads in your own build, just remove:
+
+- Remove from [main.dart](https://github.com/gabrielglbh/OP-Crew-Planner/blob/main/lib/main.dart) the `MobileAds.instance.initialize()` function.
+- The file [ads.dart](https://github.com/gabrielglbh/OP-Crew-Planner/blob/main/lib/core/firebase/ads.dart) and all of its instances across all app.
+- Remove from the [AndroidManifest.xml](https://github.com/gabrielglbh/OP-Crew-Planner/blob/main/android/app/src/main/AndroidManifest.xml) the metadata regarding the ad mob id.
+- Remove from the [info.plist](https://github.com/gabrielglbh/OP-Crew-Planner/blob/main/ios/Runner/Info.plist) the `GADApplicationIdentifier` key.
 
 ## Language Addition
 
