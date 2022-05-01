@@ -32,21 +32,7 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
   /// This variable keeps track of the actual filter applied. The value is
   /// saved into the shared preferences when a filter is applied.
   /// This value is then restored upon new session.
-  int _currentAppliedFilter = UnitFilter.all.index;
-  /// State map for the filters, independent of the bloc.
-  Map<int, bool> _filterValues = {
-    UnitFilter.all.index: true,
-    UnitFilter.maxLevel.index: false,
-    UnitFilter.skills.index: false,
-    UnitFilter.special.index: false,
-    UnitFilter.cottonCandy.index: false,
-    UnitFilter.support.index: false,
-    UnitFilter.potential.index: false,
-    UnitFilter.evolution.index: false,
-    UnitFilter.limitBreak.index: false,
-    UnitFilter.rumbleSpecial.index: false,
-    UnitFilter.rumbleAbility.index: false
-  };
+  UnitFilter _currentAppliedFilter = UnitFilter.all;
 
   @override
   bool get wantKeepAlive => true;
@@ -54,7 +40,8 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
   @override
   void initState() {
     _controller = TextEditingController();
-    _currentAppliedFilter = StorageUtils.readData(StorageUtils.unitListFilter, UnitFilter.all.index);
+    final int index = StorageUtils.readData(StorageUtils.unitListFilter, UnitFilter.all.index);
+    _currentAppliedFilter = UnitFilter.values[index];
     setState(() {
       _showOnlyAvailable = StorageUtils.readData(StorageUtils.availableFilter, false);
     });
@@ -67,23 +54,19 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
     super.dispose();
   }
 
-  _getCurrentIndexOfFilter() => _filterValues.keys.toList().indexOf(_currentAppliedFilter);
-
   _addLoadingEvent(BuildContext blocContext) {
-    blocContext.read<UnitListBloc>()..add(UnitListEventLoading(filter: UnitFilter.values[_currentAppliedFilter],
+    blocContext.read<UnitListBloc>()..add(UnitListEventLoading(filter: _currentAppliedFilter,
         showOnlyAvailable: _showOnlyAvailable));
   }
 
   Future<void> _onFilterSelected(BuildContext blocContext, int index) async {
     await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.changedFiltersOnUnits);
-    _currentAppliedFilter = UnitFilter.values[index].index;
     setState(() {
-      _filterValues.updateAll((key, value) => false);
-      _filterValues.update(_currentAppliedFilter, (value) => true);
+      _currentAppliedFilter = UnitFilter.values[index];
     });
     /// Adds the loading event to the bloc builder to load the new lists
     _addLoadingEvent(blocContext);
-    StorageUtils.saveData(StorageUtils.unitListFilter, _currentAppliedFilter);
+    StorageUtils.saveData(StorageUtils.unitListFilter, _currentAppliedFilter.index);
   }
 
   bool _onScrolling(ScrollNotification sn) {
@@ -97,7 +80,7 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
   Widget build(BuildContext context) {
     super.build(context);
     return BlocProvider<UnitListBloc>(
-      create: (_) => UnitListBloc()..add(UnitListEventLoading(filter: UnitFilter.values[_currentAppliedFilter],
+      create: (_) => UnitListBloc()..add(UnitListEventLoading(filter: _currentAppliedFilter,
           showOnlyAvailable: _showOnlyAvailable)),
       child: BlocBuilder<UnitListBloc, UnitListState>(
         builder: (context, state) {
@@ -169,7 +152,7 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
                   ? Icon(Icons.filter_list, color: Colors.white)
                   : Image.asset(UnitFilter.values[index].asset),
               onSelected: (bool selected) async => await _onFilterSelected(blocContext, index),
-              selected: _getCurrentIndexOfFilter() == index,
+              selected: _currentAppliedFilter.index == index,
             ),
           );
         }
@@ -208,7 +191,7 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
                 onSelected: () => widget.focus?.unfocus(),
                 onDelete: () {
                   blocContext.read<UnitListBloc>()..add(UnitListEventDelete(
-                    unit, filter: UnitFilter.values[_currentAppliedFilter],
+                    unit, filter: _currentAppliedFilter,
                     showOnlyAvailable: _showOnlyAvailable
                   ));
                   Navigator.pop(context);
