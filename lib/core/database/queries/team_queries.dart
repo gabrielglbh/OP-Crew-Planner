@@ -218,8 +218,7 @@ class TeamQueries {
       if (lastName != null) {
         // If enter here, user has changed the team name
         List<String> teamNames = await getTeamNames();
-        if (teamNames.contains(team.name)) return false;
-        else await deleteTeam(lastName);
+        if (!teamNames.contains(team.name)) await deleteTeam(lastName);
       }
       await deleteTeam(team.name);
       await insertTeam(team);

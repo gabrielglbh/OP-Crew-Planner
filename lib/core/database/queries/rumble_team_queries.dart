@@ -156,8 +156,7 @@ class RumbleTeamQueries {
       if (lastName != null) {
         // If enter here, user has changed the team name
         List<String> teamNames = await getRumbleTeamNames();
-        if (teamNames.contains(team.name)) return false;
-        else await deleteRumbleTeam(lastName);
+        if (!teamNames.contains(team.name)) await deleteRumbleTeam(lastName);
       }
       await deleteRumbleTeam(team.name);
       await insertRumbleTeam(team);
