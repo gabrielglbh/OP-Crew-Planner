@@ -26,7 +26,8 @@ class UnitInfoUtils {
 
   Divider divider() => Divider(thickness: 2);
 
-  List<TextSpan> generateColorKeysForTextSpan(String? primalContent, {String? underlined, bool simple = true}) {
+  List<TextSpan> generateColorKeysForTextSpan(String? primalContent,
+      {String? underlined, bool simple = true, bool parsePotential = false}) {
     List<String> parted = [];
     List<TextSpan> texts = [];
     Color? color = (!StorageUtils.readData(StorageUtils.darkMode, false)
@@ -36,11 +37,13 @@ class UnitInfoUtils {
     if (primalContent != null) parted = primalContent.split(" ");
 
     // Draw the widget tree of TextSpans
-    if (!simple) {
-      texts.add(TextSpan(text: "• ", style: TextStyle(color: color)));
-      texts.add(TextSpan(text: "$underlined: ", style: TextStyle(decoration: TextDecoration.underline, color: color)));
-    } else {
-      texts.add(TextSpan(text: "• ", style: TextStyle(color: color)));
+    if (!parsePotential) {
+      if (!simple) {
+        texts.add(TextSpan(text: "• ", style: TextStyle(color: color)));
+        texts.add(TextSpan(text: "$underlined: ", style: TextStyle(decoration: TextDecoration.underline, color: color)));
+      } else {
+        texts.add(TextSpan(text: "• ", style: TextStyle(color: color)));
+      }
     }
     parted.forEach((text) {
       texts.add(TextSpan(text: " "));
@@ -127,7 +130,7 @@ class UnitInfoUtils {
           texts.add(TextSpan(text: "$text", style: TextStyle(color: color)));
       }
     });
-    texts.add(TextSpan(text: "\n"));
+    if (!parsePotential) texts.add(TextSpan(text: "\n"));
     return texts;
   }
 

@@ -216,7 +216,13 @@ class PotentialAbility extends StatelessWidget {
                   child: Image.asset((_potentialImages[ability.toLowerCase()] ?? "")),
                 ),
               ),
-              Text("$ability", textAlign: TextAlign.start),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  children: UnitInfoUtils.instance.generateColorKeysForTextSpan(
+                      ability, parsePotential: true)
+                ),
+              )
             ])
           );
         }
