@@ -37,7 +37,7 @@ class Team {
 
   /// Team helper methods
 
-  void setMaxed(int isMaxed) { this.maxed = isMaxed; }
+  void setMaxed(int isMaxed) { maxed = isMaxed; }
   void setUpdated(String updated) { this.updated = updated; }
 
   Map<String, dynamic> toMap() {
@@ -53,14 +53,14 @@ class Team {
     int result = 0;
     int units = 0;
 
-    if (this.name == b.name) result++;
-    if (this.description == b.description) result++;
-    if (this.ship.compare(b.ship)) result++;
-    if (this.skills.compare(b.skills)) result++;
+    if (name == b.name) result++;
+    if (description == b.description) result++;
+    if (ship.compare(b.ship)) result++;
+    if (skills.compare(b.skills)) result++;
 
     for (int v = 0; v < this.units.length; v++) {
       if (this.units[v].compare(b.units[v],true)) units++;
-      if (this.supports[v].compare(b.supports[v], true)) units++;
+      if (supports[v].compare(b.supports[v], true)) units++;
     }
 
     return result == 4 && units == 12;

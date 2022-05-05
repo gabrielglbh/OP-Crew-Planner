@@ -20,7 +20,9 @@ class Migrations {
       await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbFestAbility} TEXT");
       await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbFestResistance} TEXT");
       await db.rawQuery("ALTER TABLE ${Data.unitTable} ADD COLUMN ${Data.unitMaxLevelLimitBreak} INTEGER NOT NULL DEFAULT 0");
-    } catch (err) {}
+    } catch (err) {
+      print(err);
+    }
   }
 
   // Bandai removed the hosted images on their web, had to migrate to Firebase
@@ -45,7 +47,9 @@ class Migrations {
     try {
       await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.lastTapCondition} TEXT");
       await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.lastTapDescription} TEXT");
-    } catch (err) {}
+    } catch (err) {
+      print(err);
+    }
 
     // Contrast with the names too in order to not overlap the actual units with the oldIds
     List<String> oldIds = [
@@ -122,7 +126,9 @@ class Migrations {
   static Future<void> version34to35(Database db) async {
     try {
       await db.rawQuery("ALTER TABLE ${Data.teamTable} ADD COLUMN ${Data.teamUpdated} TEXT");
-    } catch (err) {}
+    } catch (err) {
+      print(err);
+    }
     await db.rawQuery("ALTER TABLE ${Data.unitTable} ADD COLUMN ${Data.unitUrl} TEXT");
     List<Map<String, dynamic>> u = await db.query(Data.unitTable);
     List<Unit> units = List.generate(u.length, (i) {

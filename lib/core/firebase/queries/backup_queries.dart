@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:optcteams/core/database/models/rumble.dart';
 import 'package:optcteams/core/database/models/team.dart';
 import 'package:optcteams/core/database/models/unit.dart';
-import 'package:optcteams/core/database/models/unitInfo.dart';
+import 'package:optcteams/core/database/models/unit_info.dart';
 import 'package:optcteams/core/database/queries/backup_queries.dart';
 import 'package:optcteams/core/database/queries/rumble_team_queries.dart';
 import 'package:optcteams/core/database/queries/team_queries.dart';
@@ -100,10 +100,10 @@ class BackUpRecords {
                 print("No history available, creating empty history array");
               }
               // If units saved on to-be-maxed list are on history, keep them
-              backupUnits.forEach((unit) {
-                unit.lastCheckedData = unit.lastCheckedData == null ? 0 : unit.lastCheckedData;
-                unit.downloaded = unit.downloaded == null ? 0 : unit.downloaded;
-              });
+              for (var unit in backupUnits) {
+                unit.lastCheckedData = unit.lastCheckedData ?? 0;
+                unit.downloaded = unit.downloaded ?? 0;
+              }
 
               await BackUpQueries.instance.insertDataFromBackup(units, teams, rumbleTeams, history,
                   backupUnits, backupTeams, backupRumbleTeams, backupHistory).then((successful) async {

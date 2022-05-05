@@ -22,7 +22,7 @@ class SkillsQueries {
           where: "${Data.skillsTeam}=?",
           whereArgs: [name]
       );
-      if (res != null)
+      if (res != null) {
         return Skills(team: res[0][Data.skillsTeam], damageReduction: res[0][Data.skillsDamage],
             chargeSpecials: res[0][Data.skillsSpecials], bindResistance: res[0][Data.skillsBind],
             despairResistance: res[0][Data.skillsDespair], autoHeal: res[0][Data.skillsHeal],
@@ -30,7 +30,9 @@ class SkillsQueries {
             mapResistance: res[0][Data.skillsMap], poisonResistance: res[0][Data.skillsPoison],
             resilience: res[0][Data.skillsResilience]
         );
-      else return Skills.empty;
+      } else {
+        return Skills.empty;
+      }
     }
     return Skills.empty;
   }

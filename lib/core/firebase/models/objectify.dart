@@ -16,13 +16,21 @@ class Objectify {
 
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> arrayUnits = [];
-    for(int y = 0; y < units.length; y++) arrayUnits.add(units[y].toJson());
+    for(int y = 0; y < units.length; y++) {
+      arrayUnits.add(units[y].toJson());
+    }
     List<Map<String, dynamic>> arrayHistory = [];
-    for(int y = 0; y < history.length; y++) arrayHistory.add(history[y].toJson());
+    for(int y = 0; y < history.length; y++) {
+      arrayHistory.add(history[y].toJson());
+    }
     List<Map<String, dynamic>> arrayTeams = [];
-    for(int y = 0; y < teams.length; y++) arrayTeams.add(teams[y].toJson());
+    for(int y = 0; y < teams.length; y++) {
+      arrayTeams.add(teams[y].toJson());
+    }
     List<Map<String, dynamic>> arrayRumbleTeams = [];
-    for(int y = 0; y < rumbleTeams.length; y++) arrayRumbleTeams.add(rumbleTeams[y].toJson());
+    for(int y = 0; y < rumbleTeams.length; y++) {
+      arrayRumbleTeams.add(rumbleTeams[y].toJson());
+    }
     Map<String, dynamic> obj =  {
       'updated': lastUpdated,
       'units': arrayUnits,
@@ -37,33 +45,44 @@ class Objectify {
   List<Unit> fromJsonUnits(Map<String, dynamic> json) {
     List<dynamic> jsonUnits = json['units'];
     List<Unit> parsedUnits = [];
-    for(int y = 0; y < jsonUnits.length; y++) parsedUnits.add(Unit.fromJson(jsonUnits[y]));
+    for(int y = 0; y < jsonUnits.length; y++) {
+      parsedUnits.add(Unit.fromJson(jsonUnits[y]));
+    }
     return parsedUnits;
   }
 
   List<Unit> fromJsonHistory(Map<String, dynamic> json) {
     List<dynamic> jsonHistory = json['history'];
     List<Unit> parsedHistory = [];
-    for(int y = 0; y < jsonHistory.length; y++) parsedHistory.add(Unit.fromJson(jsonHistory[y]));
+    for(int y = 0; y < jsonHistory.length; y++) {
+      parsedHistory.add(Unit.fromJson(jsonHistory[y]));
+    }
     return parsedHistory;
   }
 
   List<Team> fromJsonTeams(Map<String, dynamic> json) {
     List<dynamic> jsonTeams = json['teams'];
     List<Team> parsedTeams = [];
-    for(int y = 0; y < jsonTeams.length; y++) parsedTeams.add(Team.fromJson(jsonTeams[y]));
+    for(int y = 0; y < jsonTeams.length; y++) {
+      parsedTeams.add(Team.fromJson(jsonTeams[y]));
+    }
     return parsedTeams;
   }
 
   List<RumbleTeam> fromJsonRumbleTeams(Map<String, dynamic> json) {
     List<dynamic> jsonRumbleTeams = json['rumble'];
     List<RumbleTeam> parsedRumbleTeams = [];
-    for(int y = 0; y < jsonRumbleTeams.length; y++) parsedRumbleTeams.add(RumbleTeam.fromJson(jsonRumbleTeams[y]));
+    for(int y = 0; y < jsonRumbleTeams.length; y++) {
+      parsedRumbleTeams.add(RumbleTeam.fromJson(jsonRumbleTeams[y]));
+    }
     return parsedRumbleTeams;
   }
 
   String fromJsonUpdated(Map<String, dynamic>? json) {
-    if (json == null) return "errNoData".tr();
-    else return json['updated'].toString();
+    if (json == null) {
+      return "errNoData".tr();
+    } else {
+      return json['updated'].toString();
+    }
   }
 }

@@ -80,24 +80,25 @@ class Unit {
   bool compare(Unit b, bool team) {
     int result = 0;
 
-    if (this.name == b.name) result++;
-    if (this.type == b.type) result++;
-    if (this.id == b.id) result++;
+    if (name == b.name) result++;
+    if (type == b.type) result++;
+    if (id == b.id) result++;
 
-    if (team) return result == 3;
-    else {
-      if (this.limitBreak == b.limitBreak) result++;
-      if (this.cottonCandy == b.cottonCandy) result++;
-      if (this.maxLevel == b.maxLevel) result++;
-      if (this.maxLevelLimitBreak == b.maxLevelLimitBreak) result++;
-      if (this.specialLevel == b.specialLevel) result++;
-      if (this.supportLevel == b.supportLevel) result++;
-      if (this.evolution == b.evolution) result++;
-      if (this.skills == b.skills) result++;
-      if (this.potentialAbility == b.potentialAbility) result++;
-      if (this.available == b.available) result++;
-      if (this.rumbleSpecial == b.rumbleSpecial) result++;
-      if (this.rumbleAbility == b.rumbleAbility) result++;
+    if (team) {
+      return result == 3;
+    } else {
+      if (limitBreak == b.limitBreak) result++;
+      if (cottonCandy == b.cottonCandy) result++;
+      if (maxLevel == b.maxLevel) result++;
+      if (maxLevelLimitBreak == b.maxLevelLimitBreak) result++;
+      if (specialLevel == b.specialLevel) result++;
+      if (supportLevel == b.supportLevel) result++;
+      if (evolution == b.evolution) result++;
+      if (skills == b.skills) result++;
+      if (potentialAbility == b.potentialAbility) result++;
+      if (available == b.available) result++;
+      if (rumbleSpecial == b.rumbleSpecial) result++;
+      if (rumbleAbility == b.rumbleAbility) result++;
       return result == 15;
     }
   }
@@ -111,7 +112,7 @@ class Unit {
   ///   -> 1
   ///       ...
   String getUrlOfUnitImage() {
-    final String res = "res/units/";
+    const String res = "res/units/";
     switch (id) {
       case 'noimage': return res + 'noimage.png';
       case 'str_none': return res + 'str_none.png';

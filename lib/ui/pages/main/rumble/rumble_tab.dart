@@ -5,16 +5,16 @@ import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/pages/main/enum_lists.dart';
 import 'package:optcteams/ui/pages/main/rumble/bloc/rumble_bloc.dart';
-import 'package:optcteams/ui/widgets/ActionButton.dart';
-import 'package:optcteams/ui/widgets/EmptyList.dart';
-import 'package:optcteams/ui/widgets/LoadingWidget.dart';
-import 'package:optcteams/ui/widgets/RumbleElement.dart';
-import 'package:optcteams/ui/widgets/CustomSearchBar.dart';
+import 'package:optcteams/ui/widgets/action_button.dart';
+import 'package:optcteams/ui/widgets/empty_list.dart';
+import 'package:optcteams/ui/widgets/loading_widget.dart';
+import 'package:optcteams/ui/widgets/rumble_element.dart';
+import 'package:optcteams/ui/widgets/custom_search_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class RumbleTab extends StatefulWidget {
   final FocusNode? focus;
-  const RumbleTab({required this.focus});
+  const RumbleTab({Key? key, required this.focus}) : super(key: key);
 
   @override
   _RumbleTabState createState() => _RumbleTabState();
@@ -25,7 +25,7 @@ class _RumbleTabState extends State<RumbleTab> with AutomaticKeepAliveClientMixi
   bool _showATKRumble = true;
 
   _addLoadingEvent(BuildContext blocContext) {
-    blocContext.read<RumbleListBloc>()..add(RumbleListEventLoading(showATK: _showATKRumble));
+    blocContext.read<RumbleListBloc>().add(RumbleListEventLoading(showATK: _showATKRumble));
   }
 
   bool _onScrolling(ScrollNotification sn) {
@@ -75,7 +75,7 @@ class _RumbleTabState extends State<RumbleTab> with AutomaticKeepAliveClientMixi
                       ),
                     ),
                     ActionButton(
-                      child: Container(
+                      child: SizedBox(
                         width: 40, height: 40,
                         child: Image.asset(_showATKRumble ? "res/icons/atk.png" : "res/icons/def.png", scale: 2.5),
                       ),
@@ -97,15 +97,17 @@ class _RumbleTabState extends State<RumbleTab> with AutomaticKeepAliveClientMixi
   }
 
   Widget _setWidgetOnState(BuildContext blocContext, RumbleListState state) {
-    if (state is RumbleListStateLoading || state is RumbleListStateSearching)
-      return LoadingWidget();
-    else if (state is RumbleListStateLoaded) {
-      if (state.teams.isEmpty)
+    if (state is RumbleListStateLoading || state is RumbleListStateSearching) {
+      return const LoadingWidget();
+    } else if (state is RumbleListStateLoaded) {
+      if (state.teams.isEmpty) {
         return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.team);
-      else
+      } else {
         return _teamList(blocContext, state);
-    } else
+      }
+    } else {
       return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.team);
+    }
   }
 
   Expanded _teamList(BuildContext blocContext, RumbleListStateLoaded state) {
@@ -116,7 +118,7 @@ class _RumbleTabState extends State<RumbleTab> with AutomaticKeepAliveClientMixi
             onRefresh: () async => _addLoadingEvent(blocContext),
             color: Colors.orange.shade400,
             child: ListView.builder(
-              key: PageStorageKey<String>('rumbleTab'),
+              key: const PageStorageKey<String>('rumbleTab'),
               itemCount: state.teams.length,
               itemBuilder: ((context, index) {
                 return RumbleElement(
@@ -127,7 +129,7 @@ class _RumbleTabState extends State<RumbleTab> with AutomaticKeepAliveClientMixi
                     widget.focus?.unfocus();
                   },
                   onDelete: () async {
-                    blocContext.read<RumbleListBloc>()..add(
+                    blocContext.read<RumbleListBloc>().add(
                         RumbleListEventDelete(state.teams[index], showATK: _showATKRumble));
                     Navigator.pop(context);
                   },

@@ -6,9 +6,13 @@ class Data {
   static const int maxUnits = 100;
 
   static String get storeLink {
-    if (Platform.isAndroid) return "https://play.google.com/store/apps/details?id=com.gabr.garc.optcteams";
-    else if (Platform.isIOS) return "https://apps.apple.com/us/app/op-crew-planner/id1553879484";
-    else return "";
+    if (Platform.isAndroid) {
+      return "https://play.google.com/store/apps/details?id=com.gabr.garc.optcteams";
+    } else if (Platform.isIOS) {
+      return "https://apps.apple.com/us/app/op-crew-planner/id1553879484";
+    } else {
+      return "";
+    }
   }
 
   static const String unitPath = "UNITS";

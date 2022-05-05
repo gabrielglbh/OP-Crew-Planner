@@ -19,16 +19,16 @@ void main() async {
   }
   await StorageUtils.getInstance();
   await EasyLocalization.ensureInitialized();
-  runApp(SetUpApp());
+  runApp(const SetUpApp());
 }
 
 class SetUpApp extends StatelessWidget {
-  const SetUpApp();
+  const SetUpApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return EasyLocalization(
-      supportedLocales: [
+      supportedLocales: const [
         Locale("en"),
         Locale("es"),
         Locale("de"),
@@ -36,13 +36,15 @@ class SetUpApp extends StatelessWidget {
         Locale("pt"),
       ],
       path: "lib/core/localization",
-      fallbackLocale: Locale("en"),
-      child: OPCrewPlanner(),
+      fallbackLocale: const Locale("en"),
+      child: const OPCrewPlanner(),
     );
   }
 }
 
 class OPCrewPlanner extends StatefulWidget {
+  const OPCrewPlanner({Key? key}) : super(key: key);
+
   @override
   _OPCrewPlannerState createState() => _OPCrewPlannerState();
 

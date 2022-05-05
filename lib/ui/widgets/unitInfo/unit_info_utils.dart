@@ -24,7 +24,7 @@ class UnitInfoUtils {
     }
   }
 
-  Divider divider() => Divider(thickness: 2);
+  Divider divider() => const Divider(thickness: 2);
 
   List<TextSpan> generateColorKeysForTextSpan(String? primalContent,
       {String? underlined, bool simple = true, bool parsePotential = false}) {
@@ -45,8 +45,8 @@ class UnitInfoUtils {
         texts.add(TextSpan(text: "• ", style: TextStyle(color: color)));
       }
     }
-    parted.forEach((text) {
-      texts.add(TextSpan(text: " "));
+    for (var text in parted) {
+      texts.add(const TextSpan(text: " "));
       switch (text) {
         case "[STR]":
           texts.add(TextSpan(text: " STR ", style: TextStyle(color: tColor, backgroundColor: UI.strT)));
@@ -127,10 +127,10 @@ class UnitInfoUtils {
           texts.add(TextSpan(text: " G ", style: TextStyle(color: tColor, backgroundColor: UI.gT)));
           break;
         default:
-          texts.add(TextSpan(text: "$text", style: TextStyle(color: color)));
+          texts.add(TextSpan(text: text, style: TextStyle(color: color)));
       }
-    });
-    if (!parsePotential) texts.add(TextSpan(text: "\n"));
+    }
+    if (!parsePotential) texts.add(const TextSpan(text: "\n"));
     return texts;
   }
 
@@ -177,8 +177,8 @@ class UnitInfoUtils {
   Row headerOfSection(String asset, String? title, {bool italic = false}) {
     return Row(children: [
       Padding(
-          padding: EdgeInsets.only(right: 6),
-          child: Container(width: 40, height: 40,
+          padding: const EdgeInsets.only(right: 6),
+          child: SizedBox(width: 40, height: 40,
             child: Image.asset(asset),
           )
       ),
@@ -197,11 +197,11 @@ class UnitInfoUtils {
           Colors.orange.shade600,
           Colors.yellow.shade600
         ]),
-        borderRadius: BorderRadius.all(Radius.circular(80.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(80.0)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(8),
-        child: Text("withLLB".tr(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        child: Text("withLLB".tr(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
   }

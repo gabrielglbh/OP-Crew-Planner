@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:optcteams/ui/widgets/BottomSheetChoices.dart';
-import 'package:optcteams/ui/widgets/CustomAlert.dart';
+import 'package:optcteams/ui/widgets/bottom_sheet_choices.dart';
+import 'package:optcteams/ui/widgets/custom_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class MainUtils {

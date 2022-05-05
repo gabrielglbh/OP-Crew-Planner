@@ -8,17 +8,17 @@ import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/pages/main/units/bloc/unit_bloc.dart';
 import 'package:optcteams/ui/pages/main/enum_lists.dart';
 import 'package:optcteams/ui/pages/main/units/enum_unit_filters.dart';
-import 'package:optcteams/ui/widgets/ActionButton.dart';
-import 'package:optcteams/ui/widgets/EmptyList.dart';
-import 'package:optcteams/ui/widgets/LoadingWidget.dart';
-import 'package:optcteams/ui/widgets/MaxUnitElement.dart';
-import 'package:optcteams/ui/widgets/CustomSearchBar.dart';
+import 'package:optcteams/ui/widgets/action_button.dart';
+import 'package:optcteams/ui/widgets/empty_list.dart';
+import 'package:optcteams/ui/widgets/loading_widget.dart';
+import 'package:optcteams/ui/widgets/max_unit_element.dart';
+import 'package:optcteams/ui/widgets/custom_search_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:optcteams/ui/widgets/unitInfo/BottomSheetUnitInfo.dart';
+import 'package:optcteams/ui/widgets/unitInfo/bottom_sheet_unit_info.dart';
 
 class UnitsTab extends StatefulWidget {
   final FocusNode? focus;
-  const UnitsTab({required this.focus});
+  const UnitsTab({Key? key, required this.focus}) : super(key: key);
 
   @override
   _UnitsTabState createState() => _UnitsTabState();
@@ -55,7 +55,7 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
   }
 
   _addLoadingEvent(BuildContext blocContext) {
-    blocContext.read<UnitListBloc>()..add(UnitListEventLoading(filter: _currentAppliedFilter,
+    blocContext.read<UnitListBloc>().add(UnitListEventLoading(filter: _currentAppliedFilter,
         showOnlyAvailable: _showOnlyAvailable));
   }
 
@@ -121,35 +121,37 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
   }
 
   Widget _showWidgetOnState(BuildContext blocContext, UnitListState state) {
-    if (state is UnitListStateLoading || state is UnitListStateSearching)
-      return LoadingWidget();
-    else if (state is UnitListStateLoaded) {
-      if (state.units.isEmpty)
+    if (state is UnitListStateLoading || state is UnitListStateSearching) {
+      return const LoadingWidget();
+    } else if (state is UnitListStateLoaded) {
+      if (state.units.isEmpty) {
         return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.unit);
-      else
+      } else {
         return _unitList(blocContext, state);
+      }
     }
-    else
+    else {
       return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.unit);
+    }
   }
 
   Container _filterChips(BuildContext blocContext) {
     return Container(
       height: 58,
       color: Colors.transparent,
-      padding: EdgeInsets.symmetric(horizontal: 8),
-      margin: EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      margin: const EdgeInsets.only(bottom: 8),
       child: ListView.builder(
         itemCount: UnitFilter.values.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 2),
             child: ChoiceChip(
               label: Text(UnitFilter.values[index].label),
-              padding: EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               avatar: index == UnitFilter.all.index
-                  ? Icon(Icons.filter_list, color: Colors.white)
+                  ? const Icon(Icons.filter_list, color: Colors.white)
                   : Image.asset(UnitFilter.values[index].asset),
               onSelected: (bool selected) async => await _onFilterSelected(blocContext, index),
               selected: _currentAppliedFilter.index == index,
@@ -168,7 +170,7 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
           onRefresh: () async => _addLoadingEvent(blocContext),
           color: Colors.orange.shade400,
           child: ListView.builder(
-            key: PageStorageKey<String>('unitTab'),
+            key: const PageStorageKey<String>('unitTab'),
             itemCount: state.units.length,
             itemBuilder: ((context, index) {
               Unit unit = state.units[index];
@@ -191,7 +193,7 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
                 },
                 onSelected: () => widget.focus?.unfocus(),
                 onDelete: () {
-                  blocContext.read<UnitListBloc>()..add(UnitListEventDelete(
+                  blocContext.read<UnitListBloc>().add(UnitListEventDelete(
                     unit, filter: _currentAppliedFilter,
                     showOnlyAvailable: _showOnlyAvailable
                   ));

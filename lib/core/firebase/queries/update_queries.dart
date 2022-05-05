@@ -65,8 +65,11 @@ class UpdateQueries {
     try {
       DocumentSnapshot? r = await _ref?.collection("RECENT").doc("recent_units").get();
       List<String>? s = r?.get("units").cast<String>();
-      if (s != null) return s.reversed.toList();
-      else return [];
+      if (s != null) {
+        return s.reversed.toList();
+      } else {
+        return [];
+      }
     } catch (err) {
       print("getRecentUnits: ${err.toString()}");
       return [];

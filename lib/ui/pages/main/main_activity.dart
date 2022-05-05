@@ -18,10 +18,10 @@ import 'package:optcteams/ui/pages/main/rumble/rumble_tab.dart';
 import 'package:optcteams/ui/pages/main/teams/teams_tab.dart';
 import 'package:optcteams/ui/pages/main/units/units_tab.dart';
 import 'package:optcteams/ui/pages/main/enum_lists.dart';
-import 'package:optcteams/ui/widgets/unitInfo/BottomSheetUnitInfo.dart';
+import 'package:optcteams/ui/widgets/unitInfo/bottom_sheet_unit_info.dart';
 
 class NavigationPage extends StatefulWidget {
-  NavigationPage();
+  const NavigationPage({Key? key}) : super(key: key);
 
   @override
   _NavigationPageState createState() => _NavigationPageState();
@@ -35,7 +35,7 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
 
   PageController? _pageController;
 
-  List<Unit> _recentUnits = [];
+  final List<Unit> _recentUnits = [];
 
   TypeList _type = TypeList.unit;
   int _recentUnitsLength = 0;
@@ -145,10 +145,10 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
             ),
             Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: PageView(
                   controller: _pageController,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     UnitsTab(focus: _unitFocusNode),
                     DataTab(focus: _dataFocusNode),
@@ -171,17 +171,17 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
       automaticallyImplyLeading: false,
       leading: _uid == null ? null
           : Container(
-          padding: EdgeInsets.only(right: 15),
-          margin: EdgeInsets.only(left: 15),
+          padding: const EdgeInsets.only(right: 15),
+          margin: const EdgeInsets.only(left: 15),
           child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.green,
                   shape: BoxShape.circle
               ),
               child: Align(
                 alignment: Alignment.center,
                 child: Padding(
-                    padding: EdgeInsets.only(left: 1),
+                    padding: const EdgeInsets.only(left: 1),
                     child: Text((_user?.substring(0, 1).toUpperCase() ?? ""))
                 ),
               )
@@ -210,7 +210,7 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
                 }
               });
             },
-            icon: Icon(Icons.add)
+            icon: const Icon(Icons.add)
           ),
         ),
         IconButton(
@@ -220,15 +220,16 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
               await _getUid();
             });
           },
-          icon: Icon(Icons.settings)
+          icon: const Icon(Icons.settings)
         ),
       ],
     );
   }
 
   Widget _appBarTitle() {
-    if (_type == TypeList.data) return Text("databaseTab".tr());
-    else {
+    if (_type == TypeList.data) {
+      return Text("databaseTab".tr());
+    } else {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -252,25 +253,25 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
 
   Padding _recentList() {
     return Padding(
-      padding: EdgeInsets.only(right: 8, left: 8, top: 8),
+      padding: const EdgeInsets.only(right: 8, left: 8, top: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("${"lastAddedUnits".tr()} (${_recentUnits.length})", style: TextStyle(fontWeight: FontWeight.bold)),
+              Text("${"lastAddedUnits".tr()} (${_recentUnits.length})", style: const TextStyle(fontWeight: FontWeight.bold)),
               GestureDetector(
                 onTap: () async {
                   await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.closeRecentList);
                   setState(() => _showLastAddedUnits = false);
                   StorageUtils.saveData(StorageUtils.lastAddedUnitsLength, _recentUnitsLength);
                 },
-                child: Text("dismiss".tr(), style: TextStyle(fontStyle: FontStyle.italic)),
+                child: Text("dismiss".tr(), style: const TextStyle(fontStyle: FontStyle.italic)),
               )
             ],
           ),
-          Container(
+          SizedBox(
             height: 60,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -293,7 +294,7 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
           await AdditionalUnitInfo.callModalSheet(context, _recentUnits[index].id, onClose: () {});
         },
         child: Padding(
-          padding: EdgeInsets.all(2),
+          padding: const EdgeInsets.all(2),
           child: UI.placeholderImageWhileLoading(_recentUnits[index].url),
         )
     );
@@ -301,7 +302,7 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
 
   Container _bnb() {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         boxShadow: [BoxShadow(color: Colors.black54, blurRadius: 5)],
       ),
       child: BottomNavigationBar(
@@ -326,11 +327,17 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
 
   BottomNavigationBarItem _navigationBarItem(TypeList mode) {
     double scale = 3;
-    if (mode == TypeList.unit) scale = 2.7;
-    else if (mode == TypeList.data) scale = 4.2;
-    else if (mode == TypeList.team) scale = 2.9;
-    else if (mode == TypeList.rumble) scale = 2.95;
-    else scale = 2.6;
+    if (mode == TypeList.unit) {
+      scale = 2.7;
+    } else if (mode == TypeList.data) {
+      scale = 4.2;
+    } else if (mode == TypeList.team) {
+      scale = 2.9;
+    } else if (mode == TypeList.rumble) {
+      scale = 2.95;
+    } else {
+      scale = 2.6;
+    }
     return BottomNavigationBarItem(label: mode.label, icon: Image.asset(mode.asset, scale: scale));
   }
 }

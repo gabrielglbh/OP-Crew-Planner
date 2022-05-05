@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:optcteams/core/database/models/unitInfo.dart';
+import 'package:optcteams/core/database/models/unit_info.dart';
 import 'package:optcteams/ui/widgets/unitInfo/unit_info_utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class CaptainAbility extends StatelessWidget {
   final UnitInfo info;
-  const CaptainAbility({required this.info});
+  const CaptainAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class CaptainAbility extends StatelessWidget {
 
 class SpecialAbility extends StatelessWidget {
   final UnitInfo info;
-  const SpecialAbility({required this.info});
+  const SpecialAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class SpecialAbility extends StatelessWidget {
 
 class SwapAbility extends StatelessWidget {
   final UnitInfo info;
-  const SwapAbility({required this.info});
+  const SwapAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class SwapAbility extends StatelessWidget {
 
 class VersusAbility extends StatelessWidget {
   final UnitInfo info;
-  const VersusAbility({required this.info});
+  const VersusAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class VersusAbility extends StatelessWidget {
 
 class SuperTypeAbility extends StatelessWidget {
   final UnitInfo info;
-  const SuperTypeAbility({required this.info});
+  const SuperTypeAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,7 @@ class SuperTypeAbility extends StatelessWidget {
 
 class SupportAbility extends StatelessWidget {
   final UnitInfo info;
-  const SupportAbility({required this.info});
+  const SupportAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +112,7 @@ class SupportAbility extends StatelessWidget {
 
 class LastTapAbility extends StatelessWidget {
   final UnitInfo info;
-  const LastTapAbility({required this.info});
+  const LastTapAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +134,7 @@ class LastTapAbility extends StatelessWidget {
 
 class RumbleAbility extends StatelessWidget {
   final UnitInfo info;
-  const RumbleAbility({required this.info});
+  const RumbleAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +150,7 @@ class RumbleAbility extends StatelessWidget {
 
 class RumbleSpecial extends StatelessWidget {
   final UnitInfo info;
-  const RumbleSpecial({required this.info});
+  const RumbleSpecial({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +166,7 @@ class RumbleSpecial extends StatelessWidget {
 
 class RumbleResistance extends StatelessWidget {
   final UnitInfo info;
-  const RumbleResistance({required this.info});
+  const RumbleResistance({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +182,7 @@ class RumbleResistance extends StatelessWidget {
 
 class PotentialAbility extends StatelessWidget {
   final UnitInfo info;
-  const PotentialAbility({required this.info});
+  const PotentialAbility({Key? key, required this.info}) : super(key: key);
 
   final List<String> _cPotentials = const [
     "reduce sailor despair duration",
@@ -212,18 +212,18 @@ class PotentialAbility extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> potentials = [];
-    if (info.potential.isNotEmpty && info.potential.length >= 1) {
+    if (info.potential.isNotEmpty && info.potential.isNotEmpty) {
       potentials.add(UnitInfoUtils.instance
           .headerOfSection("res/maxed/potentialLevel.png", "potential".tr()));
-      info.potential.forEach((ability) {
+      for (var ability in info.potential) {
         if (ability != "") {
           potentials.add(
             Row(children: [
-              Text("• ", textAlign: TextAlign.start),
+              const Text("• ", textAlign: TextAlign.start),
               Padding(
-                padding: EdgeInsets.only(right: 6),
+                padding: const EdgeInsets.only(right: 6),
                 child: Container(width: 30, height: 30,
-                  padding: _cPotentials.contains(ability.toLowerCase()) ? EdgeInsets.all(1) : null,
+                  padding: _cPotentials.contains(ability.toLowerCase()) ? const EdgeInsets.all(1) : null,
                   child: Image.asset((_potentialImages[ability.toLowerCase()] ?? "")),
                 ),
               ),
@@ -237,8 +237,8 @@ class PotentialAbility extends StatelessWidget {
             ])
           );
         }
-      });
-      potentials.add(Text("")); // Extra padding at the end of the Potential Section
+      }
+      potentials.add(const Text("")); // Extra padding at the end of the Potential Section
       potentials.add(UnitInfoUtils.instance.divider());
       return  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,7 +252,7 @@ class PotentialAbility extends StatelessWidget {
 
 class SailorAbility extends StatelessWidget {
   final UnitInfo info;
-  const SailorAbility({required this.info});
+  const SailorAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

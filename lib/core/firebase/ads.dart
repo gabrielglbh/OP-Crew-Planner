@@ -25,22 +25,30 @@ class AdManager {
   static int _numInterstitialLoadAttempts = 0;
 
   static String get _bannerAdUnitId {
-    if (Platform.isAndroid) return "[GOOGLE-ANDROID-AD-BANNER-ID]";
-    else if (Platform.isIOS) return "[GOOGLE-iOS-AD-BANNER-ID]";
-    else throw new UnsupportedError("Unsupported platform");
+    if (Platform.isAndroid) {
+      return "[GOOGLE-ANDROID-AD-BANNER-ID]";
+    } else if (Platform.isIOS) {
+      return "[GOOGLE-iOS-AD-BANNER-ID]";
+    } else {
+      throw UnsupportedError("Unsupported platform");
+    }
   }
 
   static String get _interstitialAdUnitId {
-    if (Platform.isAndroid) return "[GOOGLE-ANDROID-AD-INTERSTITIAL-ID]";
-    else if (Platform.isIOS) return "[GOOGLE-iOS-AD-INTERSTITIAL-ID]";
-    else throw new UnsupportedError("Unsupported platform");
+    if (Platform.isAndroid) {
+      return "[GOOGLE-ANDROID-AD-INTERSTITIAL-ID]";
+    } else if (Platform.isIOS) {
+      return "[GOOGLE-iOS-AD-INTERSTITIAL-ID]";
+    } else {
+      throw UnsupportedError("Unsupported platform");
+    }
   }
 
   static createBanner({required Function onLoaded, required Function onFailed}) {
     _bannerAd = BannerAd(
       adUnitId: _bannerAdUnitId,
       size: AdSize.banner,
-      request: AdRequest(),
+      request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
           print("AD LOADED ------------- Ad Code: ${ad.adUnitId}");
@@ -60,19 +68,21 @@ class AdManager {
     if (_bannerAd != null) {
       return Container(
         alignment: Alignment.center,
-        margin: EdgeInsets.only(top: 8, bottom: 8),
+        margin: const EdgeInsets.only(top: 8, bottom: 8),
         child: AdWidget(ad: _bannerAd!),
         width: _bannerAd?.size.width.toDouble(),
         height: _bannerAd?.size.height.toDouble(),
       );
-    } else return Container();
+    } else {
+      return Container();
+    }
   }
 
   static createInterstitial({required Function onLoaded, required Function onFailed,
     required Function onClosed}) {
     InterstitialAd.load(
       adUnitId: _interstitialAdUnitId,
-      request: AdRequest(),
+      request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
           onLoaded();

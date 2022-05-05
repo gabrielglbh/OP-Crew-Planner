@@ -23,18 +23,27 @@ class UtilQueries {
       if (mode == TypeList.team) {
         int length = await TeamQueries.instance.getNumberOfTeams();
         // Validate teams.length <= maxTeams
-        if (length < Data.maxTeams) return true;
-        else return false;
+        if (length < Data.maxTeams) {
+          return true;
+        } else {
+          return false;
+        }
       } else if (mode == TypeList.rumble) {
         int length = await RumbleTeamQueries.instance.getNumberOfRumbleTeams();
         // Validate units.length <= maxUnits
-        if (length < Data.maxRumbleTeams) return true;
-        else return false;
+        if (length < Data.maxRumbleTeams) {
+          return true;
+        } else {
+          return false;
+        }
       } else {
         int length = await UnitQueries.instance.getNumberOfToBeMaxedUnits();
         // Validate units.length <= maxUnits
-        if (length < Data.maxUnits) return true;
-        else return false;
+        if (length < Data.maxUnits) {
+          return true;
+        } else {
+          return false;
+        }
       }
     } else {
       return false;

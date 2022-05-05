@@ -35,12 +35,14 @@ class UnitQueries {
           where: "${Data.unitLastCheckedData}>?", whereArgs: [0]);
       if (res != null) {
         List<Unit> u = generateUnitList(res);
-        u.forEach((unit) async {
+        for (var unit in u) {
           unit.setLastCheckedData(0);
           await _database?.update(Data.unitTable, unit.toJson(), where: "${Data.unitId}=?", whereArgs: [unit.id]);
-        });
+        }
       }
-      else return false;
+      else {
+        return false;
+      }
     }
     return true;
   }
@@ -54,8 +56,11 @@ class UnitQueries {
           orderBy: "${Data.unitLastCheckedData} DESC",
           limit: 128
       );
-      if (res != null) return generateUnitList(res);
-      else return [];
+      if (res != null) {
+        return generateUnitList(res);
+      } else {
+        return [];
+      }
     }
     return [];
   }
@@ -70,7 +75,9 @@ class UnitQueries {
         print("insertUnit: ${err.toString()}");
         return -1;
       }
-    } else return -2;
+    } else {
+      return -2;
+    }
   }
 
   Future<Unit> getUnit(String id) async {
@@ -169,8 +176,11 @@ class UnitQueries {
               "WHERE ${Data.unitMaxLevelLimitBreak} == ? ORDER BY ${Data.unitId}", [1]);
           break;
       }
-      if (res != null) return generateUnitList(res);
-      else return [];
+      if (res != null) {
+        return generateUnitList(res);
+      } else {
+        return [];
+      }
     }
     return [];
   }
@@ -228,8 +238,11 @@ class UnitQueries {
               "WHERE ${Data.unitAvailable} == ? AND ${Data.unitMaxLevelLimitBreak} == ? ORDER BY ${Data.unitId}", [1, 1]);
           break;
       }
-      if (res != null) return generateUnitList(res);
-      else return [];
+      if (res != null) {
+        return generateUnitList(res);
+      } else {
+        return [];
+      }
     }
     return [];
   }
@@ -270,7 +283,9 @@ class UnitQueries {
         units.retainWhere((unit) => ids.remove(unit.id));
         return units;
       }
-      else return [];
+      else {
+        return [];
+      }
     }
     return [];
   }
@@ -381,7 +396,9 @@ class UnitQueries {
         units.retainWhere((unit) => ids.remove(unit.id));
         return units;
       }
-      else return [];
+      else {
+        return [];
+      }
     }
     return [];
   }
@@ -395,8 +412,11 @@ class UnitQueries {
           orderBy: "${Data.unitTaps} DESC",
           limit: 18
       );
-      if (res != null) return generateUnitList(res);
-      else return [];
+      if (res != null) {
+        return generateUnitList(res);
+      } else {
+        return [];
+      }
     }
     return [];
   }
@@ -415,10 +435,11 @@ class UnitQueries {
               "WHERE T.${Data.teamName}=?",
           [name]
       );
-      if (units != null)
+      if (units != null) {
         return List.generate(units.length, (i) { return units[i][Data.relUnitUnit]; });
-      else
+      } else {
         return [];
+      }
     }
     return [];
   }
@@ -430,10 +451,11 @@ class UnitQueries {
               "ON R.${Data.relRumbleUnitTeam}=T.${Data.rumbleTeamName} WHERE T.${Data.rumbleTeamName}=?",
           [name]
       );
-      if (units != null)
+      if (units != null) {
         return List.generate(units.length, (i) { return units[i][Data.relRumbleUnitUnit]; });
-      else
+      } else {
         return [];
+      }
     }
     return [];
   }
@@ -445,10 +467,11 @@ class UnitQueries {
           "OR ${Data.unitLimitBreak} == ? OR ${Data.unitCC} == ? OR ${Data.unitEvolution} == ? "
           "OR ${Data.unitSkills} == ? OR ${Data.unitPotential} == ? OR ${Data.unitRumbleSpecial} == ? "
           "OR ${Data.unitRumbleAbility} == ? OR ${Data.unitMaxLevelLimitBreak} == ?", [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
-      if (res != null)
+      if (res != null) {
         return List.generate(res.length, (i) {return res[i][Data.unitId];}).length;
-      else
+      } else {
         return 0;
+      }
     } else {
       return -1;
     }

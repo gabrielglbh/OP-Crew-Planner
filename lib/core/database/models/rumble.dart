@@ -41,9 +41,9 @@ class RumbleTeam {
     int result = 0;
     int units = 0;
 
-    if (this.name == b.name) result++;
-    if (this.description == b.description) result++;
-    if (this.mode == b.mode) result++;
+    if (name == b.name) result++;
+    if (description == b.description) result++;
+    if (mode == b.mode) result++;
 
     for (int v = 0; v < this.units.length; v++) {
       if (this.units[v].compare(b.units[v],true)) units++;

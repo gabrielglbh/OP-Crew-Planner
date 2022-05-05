@@ -1,7 +1,7 @@
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/database/database.dart';
 import 'package:optcteams/core/database/models/unit.dart';
-import 'package:optcteams/core/database/models/unitInfo.dart';
+import 'package:optcteams/core/database/models/unit_info.dart';
 import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -20,8 +20,11 @@ class UnitInfoQueries {
   Future<bool> insertUnitInfoIntoDatabase(UnitInfo u, Unit unit) async {
     try {
       if (_database != null) {
-        if (u.potential.length == 1) u.potential = [u.potential[0], "", ""];
-        else if (u.potential.length == 2) u.potential = [u.potential[0], u.potential[1], ""];
+        if (u.potential.length == 1) {
+          u.potential = [u.potential[0], "", ""];
+        } else if (u.potential.length == 2) {
+          u.potential = [u.potential[0], u.potential[1], ""];
+        }
         await _database?.insert(Data.dataTable, u.toJson(), conflictAlgorithm: ConflictAlgorithm.abort);
         await _database?.update(Data.unitTable, unit.toJson(), where: "${Data.unitId}=?", whereArgs: [u.unitId]);
       }
@@ -53,14 +56,18 @@ class UnitInfoQueries {
             where: "${Data.unitDataDownloaded}=?", whereArgs: [1]);
         if (res != null) {
           List<Unit> units = UnitQueries.generateUnitList(res);
-          units.forEach((unit) async {
+          for (var unit in units) {
             unit.downloaded = 0;
             await UnitQueries.instance.updateUnit(unit);
-          });
+          }
           return true;
         }
-        else return false;
-      } else return false;
+        else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     } catch (err) {
       return false;
     }
@@ -70,8 +77,9 @@ class UnitInfoQueries {
     if (_database != null) {
       List<Map<String, dynamic>>? res = await _database?.query(Data.dataTable, where: "${Data.dataUnitId}=?", whereArgs: [id]);
       if (res != null) {
-        if (res.isEmpty) return UnitInfo.empty();
-        else {
+        if (res.isEmpty) {
+          return UnitInfo.empty();
+        } else {
           return UnitInfo(
             sailor: {
               UnitInfo.fSailorBase: res[0][Data.sailorBase],
@@ -118,7 +126,9 @@ class UnitInfoQueries {
           );
         }
       }
-      else return UnitInfo.empty();
+      else {
+        return UnitInfo.empty();
+      }
     }
     return UnitInfo.empty();
   }

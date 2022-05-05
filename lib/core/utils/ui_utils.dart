@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:optcteams/core/database/models/unit.dart';
-import 'package:optcteams/ui/widgets/CustomAlert.dart';
+import 'package:optcteams/ui/widgets/custom_alert.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class UI {
@@ -22,7 +22,9 @@ class UI {
     if (date != null) {
       var dateTimeFormat = DateFormat("HH:mm - dd/MM/yyyy").parse(date);
       return dateTimeFormat.millisecondsSinceEpoch;
-    } else return -1;
+    } else {
+      return -1;
+    }
   }
 
   static void showDialogOnExit(BuildContext c) {
@@ -55,13 +57,13 @@ class UI {
   static SnackBar contentSnackBar(String msg, {int duration = 2}) {
     return SnackBar(
       duration: Duration(seconds: duration),
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12))
       ),
       behavior: SnackBarBehavior.floating,
-      margin: EdgeInsets.only(bottom: 32, left: 8, right: 8),
+      margin: const EdgeInsets.only(bottom: 32, left: 8, right: 8),
       content: Row(children: <Widget>[
-        Padding(
+        const Padding(
           padding: EdgeInsets.only(right: 10),
           child: Icon(Icons.info, color: Colors.white),
         ),
@@ -98,8 +100,8 @@ class UI {
               : Image.asset(res);
           },
           imageUrl: img,
-          fadeInDuration: Duration(milliseconds: 200),
-          fadeOutDuration: Duration(milliseconds: 200),
+          fadeInDuration: const Duration(milliseconds: 200),
+          fadeOutDuration: const Duration(milliseconds: 200),
           errorWidget: (context, s, _) => Image.asset(res)
     );
   }
@@ -122,10 +124,10 @@ class UI {
   }
 
   static String getThumbnail(String? id, {bool art = false}) {
-    final String png = ".png";
-    final String slash = "%2F";
-    final String fbUrlUnits = 'https://firebasestorage.googleapis.com/v0/b/optc-teams-96a76.appspot.com/o/units';
-    final String fbUrlArt = 'https://firebasestorage.googleapis.com/v0/b/optc-teams-96a76.appspot.com/o/art';
+    const String png = ".png";
+    const String slash = "%2F";
+    const String fbUrlUnits = 'https://firebasestorage.googleapis.com/v0/b/optc-teams-96a76.appspot.com/o/units';
+    const String fbUrlArt = 'https://firebasestorage.googleapis.com/v0/b/optc-teams-96a76.appspot.com/o/art';
 
     final String? firstFolder = id?.substring(0, 1) ?? "0";
     final String? secondFolder = "${id?.substring(1, 2) ?? "0"}00";

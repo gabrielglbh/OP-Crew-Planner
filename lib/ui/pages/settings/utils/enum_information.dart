@@ -24,15 +24,15 @@ extension InformationLabelExt on InformationLabel {
   Icon get icon {
     switch (this) {
       case InformationLabel.copyright:
-        return Icon(Icons.copyright, size: 20);
+        return const Icon(Icons.copyright, size: 20);
       case InformationLabel.developers:
-        return Icon(Icons.handyman, size: 20);
+        return const Icon(Icons.handyman, size: 20);
       case InformationLabel.contributors:
-        return Icon(Icons.people, size: 20);
+        return const Icon(Icons.people, size: 20);
       case InformationLabel.licenses:
-        return Icon(Icons.apps, size: 20);
+        return const Icon(Icons.apps, size: 20);
       case InformationLabel.privacy:
-        return Icon(Icons.privacy_tip, size: 20);
+        return const Icon(Icons.privacy_tip, size: 20);
     }
   }
 }

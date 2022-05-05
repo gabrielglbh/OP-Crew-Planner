@@ -14,10 +14,11 @@ class UnitListBloc extends Bloc<UnitListEvent, UnitListState> {
       try {
         emit(UnitListStateLoading());
         List<Unit> units = [];
-        if (event.showOnlyAvailable)
+        if (event.showOnlyAvailable) {
           units = await UnitQueries.instance.getUnitsToBeMaxedOutAvailable(event.filter);
-        else
+        } else {
           units = await UnitQueries.instance.getUnitsToBeMaxedOut(event.filter);
+        }
         emit(UnitListStateLoaded(units: units));
       } on Exception {
         emit(UnitListStateFailure());
@@ -43,10 +44,11 @@ class UnitListBloc extends Bloc<UnitListEvent, UnitListState> {
           await UnitQueries.instance.updateUnit(event.unit);
 
           List<Unit> units = [];
-          if (event.showOnlyAvailable)
+          if (event.showOnlyAvailable) {
             units = await UnitQueries.instance.getUnitsToBeMaxedOutAvailable(event.filter);
-          else
+          } else {
             units = await UnitQueries.instance.getUnitsToBeMaxedOut(event.filter);
+          }
           emit(UnitListStateLoaded(units: units));
         } on Exception {
           emit(UnitListStateFailure());
