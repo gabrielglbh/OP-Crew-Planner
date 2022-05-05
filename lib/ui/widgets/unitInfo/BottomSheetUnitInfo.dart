@@ -131,11 +131,17 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
       info.captain = info.captain?.replaceFirst(_escapedCharDual2, _parsedCharDual2);
       info.captain = info.captain?.replaceFirst(_escapedCharDualC, _parsedCharDualC);
     }
+    if (info.llbCaptain != null) {
+      info.llbCaptain = info.llbCaptain?.replaceFirst(_escapedCharDual2, _parsedCharDual2);
+      info.llbCaptain = info.llbCaptain?.replaceFirst(_escapedCharDualC, _parsedCharDualC);
+    }
   }
 
   _formatVSUnit(UnitInfo info) {
     if (info.captain != null) info.captain = info.captain?.replaceAll(_escapedCharVS, _parsedCharVS);
+    if (info.llbCaptain != null) info.llbCaptain = info.llbCaptain?.replaceAll(_escapedCharVS, _parsedCharVS);
     if (info.special != null) info.special = info.special?.replaceAll(_escapedCharVS, _parsedCharVS);
+    if (info.llbSpecial != null) info.llbSpecial = info.llbSpecial?.replaceAll(_escapedCharVS, _parsedCharVS);
     if (info.festAbility != null) info.festAbility = info.festAbility?.replaceAll(_escapedCharVS, _parsedCharVS);
     if (info.festSpecial != null) info.festSpecial = info.festSpecial?.replaceAll(_escapedCharVS, _parsedCharVS);
     if (info.festResistance != null) info.festResistance = info.festResistance?.replaceAll(_escapedCharVS, _parsedCharVS);
