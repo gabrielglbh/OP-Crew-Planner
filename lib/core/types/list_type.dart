@@ -30,4 +30,17 @@ extension TypeListExt on TypeList {
         return "res/icons/rumble.png";
     }
   }
+
+  double get scale {
+    switch (this) {
+      case TypeList.unit:
+        return 2.7;
+      case TypeList.data:
+        return 4.2;
+      case TypeList.team:
+        return 2.9;
+      case TypeList.rumble:
+        return 2.95;
+    }
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:optcteams/core/database/models/unit.dart';
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 
 class UnitSearchList extends StatelessWidget {
   final List<Unit> units;

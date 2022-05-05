@@ -5,7 +5,7 @@ import 'package:optcteams/core/firebase/ads.dart';
 import 'package:optcteams/core/firebase/queries/backup_queries.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 import 'package:optcteams/core/database/models/unit_info.dart';
 import 'package:optcteams/ui/widgets/custom_alert.dart';

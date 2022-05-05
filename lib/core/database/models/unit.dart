@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:optcteams/core/database/data.dart';
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 
 part 'unit.g.dart';
 

@@ -2,9 +2,9 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:optcteams/core/firebase/queries/authentication.dart';
 import 'dart:core';
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:optcteams/ui/pages/user_management/utils/enum_user_mode.dart';
+import 'package:optcteams/core/types/user_login_mode.dart';
 import 'package:optcteams/ui/pages/user_management/widgets/login_button.dart';
 import 'package:optcteams/ui/widgets/loading_widget.dart';
 

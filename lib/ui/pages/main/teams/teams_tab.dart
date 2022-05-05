@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
-import 'package:optcteams/ui/pages/main/enum_lists.dart';
+import 'package:optcteams/core/types/list_type.dart';
 import 'package:optcteams/ui/pages/main/teams/bloc/team_bloc.dart';
 import 'package:optcteams/ui/widgets/action_button.dart';
 import 'package:optcteams/ui/widgets/empty_list.dart';

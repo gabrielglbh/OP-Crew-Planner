@@ -7,7 +7,7 @@ import 'package:optcteams/core/firebase/ads.dart';
 import 'package:optcteams/core/routing/page_names.dart';
 import 'package:optcteams/core/routing/routing.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
-import 'package:optcteams/core/utils/theme_manager.dart';
+import 'package:optcteams/ui/theme/theme_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

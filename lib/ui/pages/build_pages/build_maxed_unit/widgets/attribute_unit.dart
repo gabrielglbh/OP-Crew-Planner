@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:optcteams/ui/pages/build_pages/build_maxed_unit/utils/enum_attribute.dart';
+import 'package:optcteams/core/types/unit_attributes.dart';
 
 class AttributeUnit extends StatelessWidget {
   final Attribute attribute;

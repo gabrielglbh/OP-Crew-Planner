@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
-import 'package:optcteams/ui/pages/settings/utils/enum_information.dart';
+import 'package:optcteams/core/types/settings_information.dart';
 import 'package:optcteams/ui/pages/settings/widgets/contributors.dart';
 import 'package:optcteams/ui/pages/settings/widgets/copyright.dart';
 import 'package:optcteams/ui/pages/settings/widgets/developer.dart';

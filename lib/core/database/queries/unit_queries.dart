@@ -1,7 +1,7 @@
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/database/database.dart';
 import 'package:optcteams/core/database/models/unit.dart';
-import 'package:optcteams/ui/pages/main/units/enum_unit_filters.dart';
+import 'package:optcteams/core/types/unit_filters.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UnitQueries {

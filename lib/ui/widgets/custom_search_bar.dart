@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 

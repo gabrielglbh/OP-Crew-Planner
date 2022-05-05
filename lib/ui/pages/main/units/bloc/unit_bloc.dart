@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
-import 'package:optcteams/ui/pages/main/units/enum_unit_filters.dart';
+import 'package:optcteams/core/types/unit_filters.dart';
 
 part 'unit_event.dart';
 part 'unit_state.dart';

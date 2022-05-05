@@ -1,4 +1,4 @@
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/database/database.dart';
 import 'package:optcteams/core/database/models/rumble.dart';

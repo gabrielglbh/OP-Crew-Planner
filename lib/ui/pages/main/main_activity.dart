@@ -7,7 +7,7 @@ import 'package:optcteams/core/firebase/ads.dart';
 import 'package:optcteams/core/firebase/queries/authentication.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/routing/page_names.dart';
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/core/routing/arguments.dart';
 import 'package:optcteams/core/database/models/team.dart';
@@ -17,7 +17,7 @@ import 'package:optcteams/ui/pages/main/data/data_tab.dart';
 import 'package:optcteams/ui/pages/main/rumble/rumble_tab.dart';
 import 'package:optcteams/ui/pages/main/teams/teams_tab.dart';
 import 'package:optcteams/ui/pages/main/units/units_tab.dart';
-import 'package:optcteams/ui/pages/main/enum_lists.dart';
+import 'package:optcteams/core/types/list_type.dart';
 import 'package:optcteams/ui/widgets/unitInfo/bottom_sheet_unit_info.dart';
 
 class NavigationPage extends StatefulWidget {
@@ -326,18 +326,6 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
   }
 
   BottomNavigationBarItem _navigationBarItem(TypeList mode) {
-    double scale = 3;
-    if (mode == TypeList.unit) {
-      scale = 2.7;
-    } else if (mode == TypeList.data) {
-      scale = 4.2;
-    } else if (mode == TypeList.team) {
-      scale = 2.9;
-    } else if (mode == TypeList.rumble) {
-      scale = 2.95;
-    } else {
-      scale = 2.6;
-    }
-    return BottomNavigationBarItem(label: mode.label, icon: Image.asset(mode.asset, scale: scale));
+    return BottomNavigationBarItem(label: mode.label, icon: Image.asset(mode.asset, scale: mode.scale));
   }
 }

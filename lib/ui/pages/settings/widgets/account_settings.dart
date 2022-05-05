@@ -4,10 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:optcteams/core/firebase/queries/authentication.dart';
 import 'package:optcteams/core/routing/arguments.dart';
 import 'package:optcteams/core/routing/page_names.dart';
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/ui/pages/settings/widgets/setting_tile.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:optcteams/ui/pages/user_management/utils/enum_user_mode.dart';
+import 'package:optcteams/core/types/user_login_mode.dart';
 
 class AccountSettings extends StatefulWidget {
   final String? uid;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:optcteams/core/routing/page_names.dart';
-import 'package:optcteams/ui/pages/build_pages/build_maxed_unit/utils/enum_attribute.dart';
+import 'package:optcteams/core/types/unit_attributes.dart';
 import 'package:optcteams/ui/widgets/custom_alert.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/routing/arguments.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 import 'package:easy_localization/easy_localization.dart';

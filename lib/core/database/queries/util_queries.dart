@@ -3,7 +3,7 @@ import 'package:optcteams/core/database/database.dart';
 import 'package:optcteams/core/database/queries/rumble_team_queries.dart';
 import 'package:optcteams/core/database/queries/team_queries.dart';
 import 'package:optcteams/core/database/queries/unit_queries.dart';
-import 'package:optcteams/ui/pages/main/enum_lists.dart';
+import 'package:optcteams/core/types/list_type.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UtilQueries {

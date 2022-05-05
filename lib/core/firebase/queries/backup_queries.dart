@@ -13,8 +13,8 @@ import 'package:optcteams/core/firebase/firebase.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:optcteams/core/firebase/models/objectify.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
-import 'package:optcteams/core/utils/ui_utils.dart';
-import 'package:optcteams/ui/pages/main/units/enum_unit_filters.dart';
+import 'package:optcteams/ui/utils.dart';
+import 'package:optcteams/core/types/unit_filters.dart';
 
 class BackUpRecords {
   final String _collection = "users";

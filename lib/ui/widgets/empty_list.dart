@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:optcteams/ui/pages/main/enum_lists.dart';
+import 'package:optcteams/core/types/list_type.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class EmptyList extends StatelessWidget {

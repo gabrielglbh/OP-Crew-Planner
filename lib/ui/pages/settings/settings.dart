@@ -6,7 +6,7 @@ import 'package:optcteams/core/firebase/queries/authentication.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
-import 'package:optcteams/core/utils/theme_manager.dart';
+import 'package:optcteams/ui/theme/theme_manager.dart';
 import 'package:optcteams/ui/pages/settings/widgets/account_settings.dart';
 import 'package:optcteams/ui/pages/settings/widgets/back_up_settings.dart';
 import 'package:optcteams/ui/pages/settings/widgets/information_settings.dart';
