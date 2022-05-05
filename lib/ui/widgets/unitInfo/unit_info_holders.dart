@@ -9,10 +9,18 @@ class CaptainAbility extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: info.captain != null && info.captain != "",
-      child: UnitInfoUtils.instance.simpleSection("res/info/captain.png", "captain".tr(), info.captain)
-    );
+    if (info.llbCaptain != null && info.llbCaptain != "") {
+      return Visibility(
+          visible: info.captain != null && info.captain != "",
+          child: UnitInfoUtils.instance.simpleSection("res/info/captain.png", "captain".tr(),
+              info.captain, needsSubsection: true, isLLB: true, subsectionText: info.llbCaptain)
+      );
+    } else {
+      return Visibility(
+          visible: info.captain != null && info.captain != "",
+          child: UnitInfoUtils.instance.simpleSection("res/info/captain.png", "captain".tr(), info.captain)
+      );
+    }
   }
 }
 
@@ -22,12 +30,22 @@ class SpecialAbility extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: info.specialName != null && info.special != null &&
-          info.specialName != "" && info.special != "",
-      child: UnitInfoUtils.instance.simpleSection("res/maxed/specialLevel.png",
-          info.specialName, info.special, italic: true)
-    );
+    if (info.llbSpecial != null && info.llbSpecial != "") {
+      return Visibility(
+          visible: info.specialName != null && info.special != null &&
+              info.specialName != "" && info.special != "",
+          child: UnitInfoUtils.instance.simpleSection("res/maxed/specialLevel.png",
+              info.specialName, info.special, italic: true, isLLB: true,
+              needsSubsection: true, subsectionText: info.llbSpecial)
+      );
+    } else {
+      return Visibility(
+          visible: info.specialName != null && info.special != null &&
+              info.specialName != "" && info.special != "",
+          child: UnitInfoUtils.instance.simpleSection("res/maxed/specialLevel.png",
+              info.specialName, info.special, italic: true)
+      );
+    }
   }
 }
 
@@ -100,7 +118,8 @@ class SupportAbility extends StatelessWidget {
           && info.support?[UnitInfo.fSupChars] != ""
           && info.support?[UnitInfo.fSupDescription] != "",
       child: UnitInfoUtils.instance.simpleSection("res/maxed/support.png", "supportAbility".tr(),
-          "For ${info.support?[UnitInfo.fSupChars]}", support: true, unitInfo: info),
+          "For ${info.support?[UnitInfo.fSupChars]}",
+          needsSubsection: true, subsectionText: info.support?[UnitInfo.fSupDescription]),
     );
   }
 }
@@ -195,7 +214,7 @@ class PotentialAbility extends StatelessWidget {
     "reduce sailor despair duration": "res/potential_abilities/sailorDespair.png",
     "reduce ship bind duration": "res/potential_abilities/shipBind.png",
     "nutrition/reduce hunger duration": "res/potential_abilities/reduceHunger.png",
-    "last tap": "res/info/lastTap.png"
+    "last tap": "res/potential_abilities/lastTap.png"
   };
 
   @override
@@ -245,6 +264,19 @@ class SailorAbility extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool hasLLB = (info.sailor?.keys.contains(UnitInfo.fLLBSailorBase) == true
+        && info.sailor?[UnitInfo.fLLBSailorBase] != "")
+        || (info.sailor?.keys.contains(UnitInfo.fLLBSailorLevel1) == true
+            && info.sailor?[UnitInfo.fLLBSailorLevel1] != "")
+        || (info.sailor?.keys.contains(UnitInfo.fLLBSailorLevel2) == true
+            && info.sailor?[UnitInfo.fLLBSailorLevel2] != "")
+        || (info.sailor?.keys.contains(UnitInfo.fLLBSailorCombined) == true
+            && info.sailor?[UnitInfo.fLLBSailorCombined] != "")
+        || (info.sailor?.keys.contains(UnitInfo.fLLBSailorCharacter1) == true
+            && info.sailor?[UnitInfo.fLLBSailorCharacter1] != "")
+        || (info.sailor?.keys.contains(UnitInfo.fLLBSailorCharacter2) == true
+            && info.sailor?[UnitInfo.fLLBSailorCharacter2] != "");
+
     return Visibility(
       visible: info.sailor != null && (info.sailor?.length ?? 1) >= 1
         && ((info.sailor?.keys.contains(UnitInfo.fSailorBase) == true
@@ -259,7 +291,8 @@ class SailorAbility extends StatelessWidget {
         || (info.sailor?.keys.contains(UnitInfo.fSailorChar1) == true
             && info.sailor?[UnitInfo.fSailorChar1] != "")
         || (info.sailor?.keys.contains(UnitInfo.fSailorChar2) == true
-            && info.sailor?[UnitInfo.fSailorChar2] != "")),
+            && info.sailor?[UnitInfo.fSailorChar2] != "")
+        || hasLLB),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -303,6 +336,46 @@ class SailorAbility extends StatelessWidget {
                 && info.sailor?[UnitInfo.fSailorChar2] != "",
             child: UnitInfoUtils.instance.richText3Ways("c2".tr(),
                 info.sailor?[UnitInfo.fSailorChar2]),
+          ),
+          Visibility(
+            visible: hasLLB,
+            child: UnitInfoUtils.instance.withLevelLimitBreakHeader(),
+          ),
+          Visibility(
+            visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorBase) == true
+                && info.sailor?[UnitInfo.fLLBSailorBase] != "",
+            child: UnitInfoUtils.instance.richText3Ways("base".tr(),
+                info.sailor?[UnitInfo.fLLBSailorBase]),
+          ),
+          Visibility(
+            visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorLevel1) == true
+                && info.sailor?[UnitInfo.fLLBSailorLevel1] != "",
+            child: UnitInfoUtils.instance.richText3Ways("l1".tr(),
+                info.sailor?[UnitInfo.fLLBSailorLevel1]),
+          ),
+          Visibility(
+            visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorLevel2) == true
+                && info.sailor?[UnitInfo.fLLBSailorLevel2] != "",
+            child: UnitInfoUtils.instance.richText3Ways("l2".tr(),
+                info.sailor?[UnitInfo.fLLBSailorLevel2]),
+          ),
+          Visibility(
+            visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorCombined) == true
+                && info.sailor?[UnitInfo.fLLBSailorCombined] != "",
+            child: UnitInfoUtils.instance.richText3Ways("combined".tr(),
+                info.sailor?[UnitInfo.fLLBSailorCombined]),
+          ),
+          Visibility(
+            visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorCharacter1) == true
+                && info.sailor?[UnitInfo.fLLBSailorCharacter1] != "",
+            child: UnitInfoUtils.instance.richText3Ways("c1".tr(),
+                info.sailor?[UnitInfo.fLLBSailorCharacter1]),
+          ),
+          Visibility(
+            visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorCharacter2) == true
+                && info.sailor?[UnitInfo.fLLBSailorCharacter2] != "",
+            child: UnitInfoUtils.instance.richText3Ways("c2".tr(),
+                info.sailor?[UnitInfo.fLLBSailorCharacter2]),
           ),
           UnitInfoUtils.instance.divider()
         ]

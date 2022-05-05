@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 
 enum Attribute {
-  maxLevel, skills, special, cotton, support, potential, evolution, limitBreak,
-  rumbleSpecial, rumbleAbility
+  maxLevel, skills, special, cotton, support, potential,
+  evolution, limitBreak, rumbleSpecial, rumbleAbility, maxLevelLimitBreak
 }
 
 extension AttributeExt on Attribute {
@@ -28,6 +28,8 @@ extension AttributeExt on Attribute {
         return "res/maxed/rumble_special.png";
       case Attribute.rumbleAbility:
         return "res/maxed/rumble_ability.png";
+      case Attribute.maxLevelLimitBreak:
+        return "res/maxed/levelLimitBreak.png";
     }
   }
 
@@ -53,6 +55,8 @@ extension AttributeExt on Attribute {
         return "filterRumbleSpecial".tr();
       case Attribute.rumbleAbility:
         return "filterRumbleAbility".tr();
+      case Attribute.maxLevelLimitBreak:
+        return "filterLLB".tr();
     }
   }
 
@@ -78,6 +82,8 @@ extension AttributeExt on Attribute {
         return 5;
       case Attribute.rumbleAbility:
         return 4.5;
+      case Attribute.maxLevelLimitBreak:
+        return 4;
     }
   }
 }

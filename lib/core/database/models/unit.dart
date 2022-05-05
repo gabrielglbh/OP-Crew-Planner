@@ -17,6 +17,8 @@ class Unit {
   int taps;
   @JsonKey(name: Data.unitMaxLevel)
   int maxLevel;
+  @JsonKey(name: Data.unitMaxLevelLimitBreak)
+  int maxLevelLimitBreak;
   @JsonKey(name: Data.unitSkills)
   int skills;
   @JsonKey(name: Data.unitSpecialLevel)
@@ -46,7 +48,7 @@ class Unit {
     this.maxLevel = 0, this.skills = 0, this.specialLevel = 0, this.cottonCandy = 0,
     this.supportLevel = 0, this.potentialAbility = 0, this.evolution = 0, this.limitBreak = 0,
     this.available = 0, this.rumbleSpecial = 0, this.rumbleAbility = 0, this.lastCheckedData = 0,
-    this.downloaded = 0
+    this.downloaded = 0, this.maxLevelLimitBreak = 0
   });
 
   factory Unit.empty() => Unit(id: "noimage", name: "", type: "", url: "res/units/noimage.png");
@@ -57,10 +59,11 @@ class Unit {
 
   void setTaps(int taps) { this.taps = taps; }
   void setLastCheckedData(int lastCheckedData) { this.lastCheckedData = lastCheckedData; }
-  void setAttributes(int maxLevel, int skills, int specialLevel, int cottonCandy,
-      int supportLevel, int potentialAbility, int evolution, int limitBreak,
-      int available, int rumbleSpecial, int rumbleAbility) {
+  void setAttributes(int maxLevel, int skills, int specialLevel,
+      int cottonCandy, int supportLevel, int potentialAbility, int evolution, int limitBreak,
+      int available, int rumbleSpecial, int rumbleAbility, int maxLevelLimitBreak) {
     this.maxLevel = maxLevel;
+    this.maxLevelLimitBreak = maxLevelLimitBreak;
     this.skills = skills;
     this.specialLevel = specialLevel;
     this.cottonCandy = cottonCandy;
@@ -85,6 +88,7 @@ class Unit {
       if (this.limitBreak == b.limitBreak) result++;
       if (this.cottonCandy == b.cottonCandy) result++;
       if (this.maxLevel == b.maxLevel) result++;
+      if (this.maxLevelLimitBreak == b.maxLevelLimitBreak) result++;
       if (this.specialLevel == b.specialLevel) result++;
       if (this.supportLevel == b.supportLevel) result++;
       if (this.evolution == b.evolution) result++;
@@ -93,7 +97,7 @@ class Unit {
       if (this.available == b.available) result++;
       if (this.rumbleSpecial == b.rumbleSpecial) result++;
       if (this.rumbleAbility == b.rumbleAbility) result++;
-      return result == 14;
+      return result == 15;
     }
   }
 

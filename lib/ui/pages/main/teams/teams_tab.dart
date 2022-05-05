@@ -114,6 +114,7 @@ class _TeamsTabState extends State<TeamsTab> with AutomaticKeepAliveClientMixin 
         onNotification: (notification) => _onScrolling(notification),
         child: RefreshIndicator(
           onRefresh: () async => _addLoadingEvent(blocContext),
+          color: Colors.orange.shade400,
           child: ListView.builder(
             key: PageStorageKey<String>('teamTab'),
             itemCount: state.teams.length,

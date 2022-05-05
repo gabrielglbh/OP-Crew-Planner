@@ -79,7 +79,13 @@ class UnitInfoQueries {
               UnitInfo.fSailorLevel2: res[0][Data.sailorLevel2],
               UnitInfo.fSailorCombined: res[0][Data.sailorCombined],
               UnitInfo.fSailorChar1: res[0][Data.sailorCharacter1],
-              UnitInfo.fSailorChar2: res[0][Data.sailorCharacter2]
+              UnitInfo.fSailorChar2: res[0][Data.sailorCharacter2],
+              UnitInfo.fLLBSailorBase: res[0][Data.llbSailorBase],
+              UnitInfo.fLLBSailorLevel1: res[0][Data.llbSailorLevel1],
+              UnitInfo.fLLBSailorLevel2: res[0][Data.llbSailorLevel2],
+              UnitInfo.fLLBSailorCombined: res[0][Data.llbSailorCombined],
+              UnitInfo.fLLBSailorCharacter1: res[0][Data.llbSailorCharacter1],
+              UnitInfo.fLLBSailorCharacter2: res[0][Data.llbSailorCharacter2]
             },
             special: res[0][Data.special],
             specialName: res[0][Data.specialName],
@@ -103,7 +109,9 @@ class UnitInfoQueries {
             vsSpecial: res[0][Data.vsSpecial],
             art: res[0][Data.art],
             lastTapCondition: res[0][Data.lastTapCondition],
-            lastTapDescription: res[0][Data.lastTapDescription]
+            lastTapDescription: res[0][Data.lastTapDescription],
+            llbCaptain: res[0][Data.llbCaptain],
+            llbSpecial: res[0][Data.llbSpecial]
           );
         }
       }

@@ -1,5 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:optcteams/core/database/models/unitInfo.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/core/utils/ui_utils.dart';
@@ -144,7 +144,8 @@ class UnitInfoUtils {
   }
 
   Column simpleSection(String asset, String? title, String? information,
-      {bool italic = false, bool support = false, UnitInfo? unitInfo}) {
+      {bool italic = false, bool isLLB = false, bool needsSubsection = false,
+        String? subsectionText}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -156,11 +157,15 @@ class UnitInfoUtils {
           ),
         ),
         Visibility(
-          visible: support,
+          visible: isLLB,
+          child: withLevelLimitBreakHeader()
+        ),
+        Visibility(
+          visible: needsSubsection,
           child: RichText(
             textAlign: TextAlign.start,
             text: TextSpan(
-              children: generateColorKeysForTextSpan(unitInfo?.support?[UnitInfo.fSupDescription]),
+              children: generateColorKeysForTextSpan(subsectionText),
             ),
           ),
         ),
@@ -180,6 +185,24 @@ class UnitInfoUtils {
       Expanded(child: Text("\n$title:\n", style: TextStyle(fontWeight: FontWeight.bold,
           fontStyle: italic ? FontStyle.italic : null, fontSize: 18)))
     ],
+    );
+  }
+
+  Widget withLevelLimitBreakHeader() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: [
+          Colors.red.shade600,
+          Colors.orange.shade600,
+          Colors.yellow.shade600
+        ]),
+        borderRadius: BorderRadius.all(Radius.circular(80.0)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Text("withLLB".tr(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
     );
   }
 }

@@ -166,6 +166,7 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
         onNotification: (notification) => _onScrolling(notification),
         child: RefreshIndicator(
           onRefresh: () async => _addLoadingEvent(blocContext),
+          color: Colors.orange.shade400,
           child: ListView.builder(
             key: PageStorageKey<String>('unitTab'),
             itemCount: state.units.length,
@@ -177,7 +178,7 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
                   unit.maxLevel == 1, unit.skills == 1, unit.specialLevel == 1,
                   unit.cottonCandy == 1, unit.supportLevel == 1, unit.potentialAbility == 1,
                   unit.evolution == 1, unit.limitBreak == 1, unit.rumbleSpecial == 1,
-                  unit.rumbleAbility == 1
+                  unit.rumbleAbility == 1, unit.maxLevelLimitBreak == 1
                 ],
                 onTappedImage: () async {
                   _controller?.text = "";

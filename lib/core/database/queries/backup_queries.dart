@@ -20,7 +20,7 @@ class BackUpQueries {
     try {
       // Remove current units in the to-be-maxed list
       for (int y = 0; y < units.length; y++) {
-        units[y].setAttributes(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        units[y].setAttributes(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         await UnitQueries.instance.updateUnit(units[y]);
       }
       // Update units from the backup list

@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 enum UnitFilter {
   all, maxLevel, skills, special, cottonCandy, support, potential, evolution,
-  limitBreak, rumbleSpecial, rumbleAbility
+  limitBreak, rumbleSpecial, rumbleAbility, maxLevelLimitBreak
 }
 
 extension UnitFilterExt on UnitFilter {
@@ -30,6 +30,8 @@ extension UnitFilterExt on UnitFilter {
         return "filterRumbleSpecial".tr();
       case UnitFilter.rumbleAbility:
         return "filterRumbleAbility".tr();
+      case UnitFilter.maxLevelLimitBreak:
+        return "filterLLB".tr();
     }
   }
 
@@ -57,6 +59,8 @@ extension UnitFilterExt on UnitFilter {
         return "res/maxed/rumble_special.png";
       case UnitFilter.rumbleAbility:
         return "res/maxed/rumble_ability.png";
+      case UnitFilter.maxLevelLimitBreak:
+        return "res/maxed/levelLimitBreak.png";
     }
   }
 }

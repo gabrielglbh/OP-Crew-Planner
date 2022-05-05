@@ -89,6 +89,7 @@ class UnitQueries {
             url: res[0][Data.unitUrl],
             taps: res[0][Data.unitTaps],
             maxLevel: res[0][Data.unitMaxLevel],
+            maxLevelLimitBreak: res[0][Data.unitMaxLevelLimitBreak],
             skills: res[0][Data.unitSkills],
             specialLevel: res[0][Data.unitSpecialLevel],
             cottonCandy: res[0][Data.unitCC],
@@ -120,7 +121,8 @@ class UnitQueries {
               "WHERE ${Data.unitMaxLevel} == ? OR ${Data.unitSupportLevel} == ? OR ${Data.unitSpecialLevel} == ? "
               "OR ${Data.unitLimitBreak} == ? OR ${Data.unitCC} == ? OR ${Data.unitEvolution} == ? "
               "OR ${Data.unitSkills} == ? OR ${Data.unitPotential} == ? OR ${Data.unitRumbleSpecial} == ? "
-              "OR ${Data.unitRumbleAbility} == ? ORDER BY ${Data.unitId}", [1, 1, 1, 1, 1, 1, 1 ,1, 1, 1]);
+              "OR ${Data.unitRumbleAbility} == ? OR ${Data.unitMaxLevelLimitBreak} == ? "
+              "ORDER BY ${Data.unitId}", [1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1]);
           break;
         case UnitFilter.maxLevel:
           res = await _database?.rawQuery("SELECT * FROM ${Data.unitTable} "
@@ -161,6 +163,10 @@ class UnitQueries {
         case UnitFilter.rumbleAbility:
           res = await _database?.rawQuery("SELECT * FROM ${Data.unitTable} "
               "WHERE ${Data.unitRumbleAbility} == ? ORDER BY ${Data.unitId}", [1]);
+          break;
+        case UnitFilter.maxLevelLimitBreak:
+          res = await _database?.rawQuery("SELECT * FROM ${Data.unitTable} "
+              "WHERE ${Data.unitMaxLevelLimitBreak} == ? ORDER BY ${Data.unitId}", [1]);
           break;
       }
       if (res != null) return generateUnitList(res);
@@ -217,6 +223,10 @@ class UnitQueries {
           res = await _database?.rawQuery("SELECT * FROM ${Data.unitTable} "
               "WHERE ${Data.unitAvailable} == ? AND ${Data.unitRumbleAbility} == ? ORDER BY ${Data.unitId}", [1, 1]);
           break;
+        case UnitFilter.maxLevelLimitBreak:
+          res = await _database?.rawQuery("SELECT * FROM ${Data.unitTable} "
+              "WHERE ${Data.unitAvailable} == ? AND ${Data.unitMaxLevelLimitBreak} == ? ORDER BY ${Data.unitId}", [1, 1]);
+          break;
       }
       if (res != null) return generateUnitList(res);
       else return [];
@@ -234,8 +244,8 @@ class UnitQueries {
           "AND ${Data.unitSupportLevel} == ? AND ${Data.unitSpecialLevel} == ? "
           "AND ${Data.unitLimitBreak} == ? AND ${Data.unitCC} == ? AND ${Data.unitEvolution} == ? "
           "AND ${Data.unitSkills} == ? AND ${Data.unitPotential} == ? AND ${Data.unitRumbleSpecial} == ? "
-          "AND ${Data.unitRumbleAbility} == ?) ORDER BY ${Data.unitId}",
-          ["%$query%", "%$query%", 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1]);
+          "AND ${Data.unitRumbleAbility} == ? AND ${Data.unitMaxLevelLimitBreak} == ?) ORDER BY ${Data.unitId}",
+          ["%$query%", "%$query%", 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1]);
 
       resAlias = await _database?.rawQuery("SELECT DISTINCT "
           "U.${Data.unitId}, U.${Data.unitName}, ${Data.unitType}, ${Data.unitUrl}, "
@@ -249,7 +259,8 @@ class UnitQueries {
           "OR ${Data.unitSupportLevel} == ? OR ${Data.unitSpecialLevel} == ? "
           "OR ${Data.unitLimitBreak} == ? OR ${Data.unitCC} == ? OR ${Data.unitEvolution} == ? "
           "OR ${Data.unitSkills} == ? OR ${Data.unitPotential} == ? OR ${Data.unitRumbleSpecial} == ? "
-          "OR ${Data.unitRumbleAbility} == ?) ORDER BY U.${Data.unitId}", ["%$query%", "%$query%", "%$query%", 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1]);
+          "OR ${Data.unitRumbleAbility} == ? OR ${Data.unitMaxLevelLimitBreak} == ?) "
+          "ORDER BY U.${Data.unitId}", ["%$query%", "%$query%", "%$query%", 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1]);
 
       if (resUnits != null && resAlias != null) {
         List<Unit> units = generateUnitList(resUnits);
@@ -276,23 +287,24 @@ class UnitQueries {
                 "AND ${Data.unitSupportLevel} == ? AND ${Data.unitSpecialLevel} == ? "
                 "AND ${Data.unitLimitBreak} == ? AND ${Data.unitCC} == ? AND ${Data.unitEvolution} == ? "
                 "AND ${Data.unitSkills} == ? AND ${Data.unitPotential} == ? AND ${Data.unitRumbleSpecial} == ? "
-                "AND ${Data.unitRumbleAbility} == ? ORDER BY ${Data.unitId}",
-            ["%$query%", "%$query%", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                "AND ${Data.unitRumbleAbility} == ? AND ${Data.unitMaxLevelLimitBreak} == ? ORDER BY ${Data.unitId}",
+            ["%$query%", "%$query%", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
         resAlias = await _database?.rawQuery(
             "SELECT DISTINCT U.${Data.unitId}, U.${Data.unitName}, ${Data.unitType}, ${Data.unitUrl}, "
                 "${Data.unitTaps}, ${Data.unitMaxLevel}, ${Data.unitSkills}, ${Data.unitSpecialLevel}, "
                 "${Data.unitCC}, ${Data.unitSupportLevel}, ${Data.unitPotential}, ${Data.unitEvolution}, "
                 "${Data.unitLimitBreak}, ${Data.unitAvailable}, ${Data.unitRumbleSpecial}, "
-                "${Data.unitRumbleAbility}, ${Data.unitLastCheckedData}, ${Data.unitDataDownloaded} "
+                "${Data.unitMaxLevelLimitBreak}, ${Data.unitRumbleAbility}, ${Data.unitLastCheckedData}, "
+                "${Data.unitDataDownloaded} "
                 "FROM ${Data.unitTable} U "
                 "JOIN ${Data.aliasTable} A ON U.${Data.unitId}=A.${Data.aliasUnitId} "
                 "WHERE (U.${Data.unitName} LIKE ? OR A.${Data.aliasName} LIKE ? OR U.${Data.unitId} LIKE ?) AND ${Data.unitMaxLevel} == ? "
                 "AND ${Data.unitSupportLevel} == ? AND ${Data.unitSpecialLevel} == ? "
                 "AND ${Data.unitLimitBreak} == ? AND ${Data.unitCC} == ? AND ${Data.unitEvolution} == ? "
                 "AND ${Data.unitSkills} == ? AND ${Data.unitPotential} == ? AND ${Data.unitRumbleSpecial} == ? "
-                "AND ${Data.unitRumbleAbility}== ? ORDER BY U.${Data.unitId}",
-            ["%$query%", "%$query%", "%$query%", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                "AND ${Data.unitRumbleAbility}== ? AND ${Data.unitMaxLevelLimitBreak} == ? ORDER BY U.${Data.unitId}",
+            ["%$query%", "%$query%", "%$query%", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
       } else {
         resUnits = await _database?.rawQuery(
             "SELECT DISTINCT * FROM ${Data.unitTable} "
@@ -300,23 +312,24 @@ class UnitQueries {
                 "AND ${Data.unitSupportLevel} == ? AND ${Data.unitSpecialLevel} == ? "
                 "AND ${Data.unitLimitBreak} == ? AND ${Data.unitCC} == ? AND ${Data.unitEvolution} == ? "
                 "AND ${Data.unitSkills} == ? AND ${Data.unitPotential} == ? AND ${Data.unitRumbleSpecial} == ? "
-                "AND ${Data.unitRumbleAbility} == ? ORDER BY ${Data.unitId}",
-            ["%$query%", "%$query%", type, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                "AND ${Data.unitRumbleAbility} == ? AND ${Data.unitMaxLevelLimitBreak} == ? ORDER BY ${Data.unitId}",
+            ["%$query%", "%$query%", type, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
         resAlias = await _database?.rawQuery(
             "SELECT DISTINCT U.${Data.unitId}, U.${Data.unitName}, ${Data.unitType}, ${Data.unitUrl}, "
                 "${Data.unitTaps}, ${Data.unitMaxLevel}, ${Data.unitSkills}, ${Data.unitSpecialLevel}, "
                 "${Data.unitCC}, ${Data.unitSupportLevel}, ${Data.unitPotential}, ${Data.unitEvolution}, "
                 "${Data.unitLimitBreak}, ${Data.unitAvailable}, ${Data.unitRumbleSpecial}, "
-                "${Data.unitRumbleAbility}, ${Data.unitLastCheckedData}, ${Data.unitDataDownloaded} "
+                "${Data.unitMaxLevelLimitBreak}, ${Data.unitRumbleAbility}, ${Data.unitLastCheckedData}, "
+                "${Data.unitDataDownloaded} "
                 "FROM ${Data.unitTable} U "
                 "JOIN ${Data.aliasTable} A ON U.${Data.unitId}=A.${Data.aliasUnitId} "
                 "WHERE (U.${Data.unitName} LIKE ? OR A.${Data.aliasName} LIKE ? OR U.${Data.unitId} LIKE ?) AND ${Data.unitType}=? AND ${Data.unitMaxLevel} == ? "
                 "AND ${Data.unitSupportLevel} == ? AND ${Data.unitSpecialLevel} == ? "
                 "AND ${Data.unitLimitBreak} == ? AND ${Data.unitCC} == ? AND ${Data.unitEvolution} == ? "
                 "AND ${Data.unitSkills} == ? AND ${Data.unitPotential} == ? AND ${Data.unitRumbleSpecial} == ? "
-                "AND ${Data.unitRumbleAbility} == ? ORDER BY U.${Data.unitId}",
-            ["%$query%", "%$query%", "%$query%", type, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                "AND ${Data.unitRumbleAbility} == ? AND ${Data.unitMaxLevelLimitBreak} == ? ORDER BY U.${Data.unitId}",
+            ["%$query%", "%$query%", "%$query%", type, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
       }
       if (resUnits != null && resAlias != null) {
         List<Unit> units = generateUnitList(resUnits);
@@ -343,7 +356,7 @@ class UnitQueries {
         resAlias = await _database?.rawQuery("SELECT DISTINCT "
             "U.${Data.unitId}, U.${Data.unitName}, ${Data.unitType}, ${Data.unitUrl}, ${Data.unitTaps}, ${Data.unitMaxLevel}, ${Data.unitSkills}, ${Data.unitSpecialLevel}, "
             "${Data.unitCC}, ${Data.unitSupportLevel}, ${Data.unitPotential}, ${Data.unitEvolution}, ${Data.unitLimitBreak}, ${Data.unitAvailable},"
-            "${Data.unitRumbleSpecial}, ${Data.unitRumbleAbility}, ${Data.unitLastCheckedData}, ${Data.unitDataDownloaded} "
+            "${Data.unitRumbleSpecial}, ${Data.unitRumbleAbility}, ${Data.unitLastCheckedData}, ${Data.unitDataDownloaded}, ${Data.unitMaxLevelLimitBreak} "
             "FROM ${Data.unitTable} U "
             "JOIN ${Data.aliasTable} A ON U.${Data.unitId}=A.${Data.aliasUnitId} "
             "WHERE U.${Data.unitName} LIKE ? OR A.${Data.aliasName} LIKE ? OR U.${Data.unitId} LIKE ? ORDER BY U.${Data.unitId}", ["%$query%", "%$query%", "%$query%"]);
@@ -354,7 +367,7 @@ class UnitQueries {
         resAlias = await _database?.rawQuery("SELECT DISTINCT "
             "U.${Data.unitId}, U.${Data.unitName}, ${Data.unitType}, ${Data.unitUrl}, ${Data.unitTaps}, ${Data.unitMaxLevel}, ${Data.unitSkills}, ${Data.unitSpecialLevel}, "
             "${Data.unitCC}, ${Data.unitSupportLevel}, ${Data.unitPotential}, ${Data.unitEvolution}, ${Data.unitLimitBreak}, ${Data.unitAvailable},"
-            "${Data.unitRumbleSpecial}, ${Data.unitRumbleAbility}, ${Data.unitLastCheckedData}, ${Data.unitDataDownloaded} "
+            "${Data.unitRumbleSpecial}, ${Data.unitRumbleAbility}, ${Data.unitLastCheckedData}, ${Data.unitDataDownloaded}, ${Data.unitMaxLevelLimitBreak} "
             "FROM ${Data.unitTable} U "
             "JOIN ${Data.aliasTable} A ON U.${Data.unitId}=A.${Data.aliasUnitId} "
             "WHERE (U.${Data.unitName} LIKE ? OR A.${Data.aliasName} LIKE ? OR U.${Data.unitId} LIKE ?) AND ${Data.unitType}=? ORDER BY U.${Data.unitId}",
@@ -431,7 +444,7 @@ class UnitQueries {
           "WHERE ${Data.unitMaxLevel} == ? OR ${Data.unitSupportLevel} == ? OR ${Data.unitSpecialLevel} == ? "
           "OR ${Data.unitLimitBreak} == ? OR ${Data.unitCC} == ? OR ${Data.unitEvolution} == ? "
           "OR ${Data.unitSkills} == ? OR ${Data.unitPotential} == ? OR ${Data.unitRumbleSpecial} == ? "
-          "OR ${Data.unitRumbleAbility} == ?", [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+          "OR ${Data.unitRumbleAbility} == ? OR ${Data.unitMaxLevelLimitBreak} == ?", [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
       if (res != null)
         return List.generate(res.length, (i) {return res[i][Data.unitId];}).length;
       else
@@ -449,6 +462,7 @@ class UnitQueries {
           taps: res[i][Data.unitTaps],
           url: res[i][Data.unitUrl],
           maxLevel: res[i][Data.unitMaxLevel],
+          maxLevelLimitBreak: res[i][Data.unitMaxLevelLimitBreak],
           skills: res[i][Data.unitSkills],
           specialLevel: res[i][Data.unitSpecialLevel],
           cottonCandy: res[i][Data.unitCC],

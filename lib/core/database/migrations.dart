@@ -5,6 +5,21 @@ import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Migrations {
+  // LEVEL LIMIT BREAK UPDATE
+  static Future<void> version38to39(Database db) async {
+    try {
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbCaptain} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSpecial} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorBase} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorLevel1} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorLevel2} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorCharacter1} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorCharacter2} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorCombined} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.unitTable} ADD COLUMN ${Data.unitMaxLevelLimitBreak} INTEGER NOT NULL DEFAULT 0");
+    } catch (err) {}
+  }
+
   // Bandai removed the hosted images on their web, had to migrate to Firebase
   static Future<void> version37to38(Database db) async {
     try {

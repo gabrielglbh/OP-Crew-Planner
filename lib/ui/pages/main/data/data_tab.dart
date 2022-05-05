@@ -147,6 +147,7 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
         onNotification: (notification) => _onScrolling(notification),
         child: RefreshIndicator(
           onRefresh: () async => _addLoadingEvent(blocContext),
+          color: Colors.orange.shade400,
           child: GridView.builder(
             key: PageStorageKey<String>('dataTab'),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
@@ -161,6 +162,7 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
                   await UnitQueries.instance.updateHistoryUnit(unit);
                   await AdditionalUnitInfo.callModalSheet(context, unit.id, onClose: () {
                     _addLoadingEvent(blocContext);
+                    widget.focus?.unfocus();
                   });
                 },
                 onLongPress: () {

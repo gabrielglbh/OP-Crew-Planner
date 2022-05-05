@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:optcteams/core/routing/page_names.dart';
-import 'package:optcteams/ui/pages/main/units/enum_unit_attributes.dart';
+import 'package:optcteams/ui/pages/buildPages/buildMaxedUnit/utils/enum_attribute.dart';
 import 'package:optcteams/ui/widgets/CustomAlert.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/core/utils/ui_utils.dart';
@@ -86,9 +86,9 @@ class _MaxedUnitElementState extends State<MaxedUnitElement> {
                             child: Scrollbar(
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: UnitAttributeToMax.values.length,
+                                itemCount: Attribute.values.length,
                                 itemBuilder: (context, index) {
-                                  return attrOnUnit(UnitAttributeToMax.values[index], widget.toBeMaxed[index]);
+                                  return attrOnUnit(Attribute.values[index], widget.toBeMaxed[index]);
                                 }
                               ),
                             )
@@ -108,12 +108,12 @@ class _MaxedUnitElementState extends State<MaxedUnitElement> {
     );
   }
 
-  Visibility attrOnUnit(UnitAttributeToMax f, bool visible) {
+  Visibility attrOnUnit(Attribute f, bool visible) {
     return Visibility(
       visible: visible,
       child: Container(
-        padding: EdgeInsets.only(right: 2, left: 2),
-        child: Image.asset(f.asset, scale: f == UnitAttributeToMax.support ? 9 : null),
+        padding: EdgeInsets.only(right: 2, left: f == Attribute.maxLevelLimitBreak ? 12 : 2),
+        child: Image.asset(f.asset, scale: f.scale),
       )
     );
   }

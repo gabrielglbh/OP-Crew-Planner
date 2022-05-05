@@ -29,7 +29,7 @@ class CustomDatabase {
 
     _database = await openDatabase(
         path,
-        version: 38,
+        version: 39,
         singleInstance: true,
         onCreate: (Database db, int version) async {
           if (onUpdate != null) onUpdate("creatingDB".tr());
@@ -42,6 +42,7 @@ class CustomDatabase {
               "${Data.unitCC} INTEGER NOT NULL DEFAULT 0, "
               "${Data.unitSpecialLevel} INTEGER NOT NULL DEFAULT 0, "
               "${Data.unitMaxLevel} INTEGER NOT NULL DEFAULT 0, "
+              "${Data.unitMaxLevelLimitBreak} INTEGER NOT NULL DEFAULT 0, "
               "${Data.unitLimitBreak} INTEGER NOT NULL DEFAULT 0, "
               "${Data.unitSupportLevel} INTEGER NOT NULL DEFAULT 0, "
               "${Data.unitEvolution} INTEGER NOT NULL DEFAULT 0, "
@@ -124,14 +125,22 @@ class CustomDatabase {
           await db.execute("CREATE TABLE ${Data.dataTable}("
               "${Data.dataUnitId} TEXT NOT NULL PRIMARY KEY, "
               "${Data.sailorBase} TEXT NOT NULL, "
+              "${Data.llbSailorBase} TEXT NOT NULL, "
               "${Data.sailorLevel1} TEXT NOT NULL, "
+              "${Data.llbSailorLevel1} TEXT NOT NULL, "
               "${Data.sailorLevel2} TEXT NOT NULL, "
+              "${Data.llbSailorLevel2} TEXT NOT NULL, "
               "${Data.sailorCombined} TEXT NOT NULL, "
+              "${Data.llbSailorCombined} TEXT NOT NULL, "
               "${Data.sailorCharacter1} TEXT NOT NULL, "
+              "${Data.llbSailorCharacter1} TEXT NOT NULL, "
               "${Data.sailorCharacter2} TEXT NOT NULL, "
+              "${Data.llbSailorCharacter2} TEXT NOT NULL, "
               "${Data.special} TEXT NOT NULL, "
+              "${Data.llbSpecial} TEXT NOT NULL, "
               "${Data.specialName} TEXT NOT NULL, "
               "${Data.captain} TEXT NOT NULL, "
+              "${Data.llbCaptain} TEXT NOT NULL, "
               "${Data.swap} TEXT NOT NULL, "
               "${Data.potentialOne} TEXT NOT NULL, "
               "${Data.potentialTwo} TEXT NOT NULL, "
@@ -169,6 +178,7 @@ class CustomDatabase {
     if (oldVersion <= 35) await Migrations.version35to36(db);
     if (oldVersion <= 36) await Migrations.version36to37(db);
     if (oldVersion <= 37) await Migrations.version37to38(db);
+    if (oldVersion <= 38) await Migrations.version38to39(db);
   }
 
   /// Closes up the current database.

@@ -18,20 +18,31 @@ class UnitInfo {
   String? art;
   String? lastTapCondition;
   String? lastTapDescription;
+  // Level Limit Break
+  String? llbCaptain;
+  String? llbSpecial;
   // Only for Device's Database
   String? unitId;
 
   // Fields for consistency
   static const String fCaptain = "captain";
+  static const String fLLBCaptain = "llbCaptain";
   static const String fSpecial = "special";
+  static const String fLLBSpecial = "llbSpecial";
   static const String fSpecialName = "specialName";
   static const String fSailor = "sailor";
   static const String fSailorBase = "base";
+  static const String fLLBSailorBase = "llbBase";
   static const String fSailorLevel1 = "level1";
+  static const String fLLBSailorLevel1 = "llbLevel1";
   static const String fSailorLevel2 = "level2";
+  static const String fLLBSailorLevel2 = "llbLevel2";
   static const String fSailorCombined = "combined";
+  static const String fLLBSailorCombined = "llbCombined";
   static const String fSailorChar1 = "character1";
+  static const String fLLBSailorCharacter1 = "llbCharacter1";
   static const String fSailorChar2 = "character2";
+  static const String fLLBSailorCharacter2 = "llbCharacter2";
   static const String fSwap = "swap";
   static const String fFestAbility = "festAbility";
   static const String fFestSpecial = "festSpecial";
@@ -51,7 +62,8 @@ class UnitInfo {
   UnitInfo({this.sailor, this.special, this.specialName, this.captain, this.swap,
       this.potential = const [], this.festAbility, this.festSpecial, this.festResistance,
       this.support, this.superSpecial, this.superSpecialCriteria, this.vsSpecial,
-      this.vsCondition, this.art, this.unitId, this.lastTapCondition, this.lastTapDescription
+      this.vsCondition, this.art, this.unitId, this.lastTapCondition, this.lastTapDescription,
+      this.llbCaptain, this.llbSpecial
   });
 
   bool isEqualTo(UnitInfo b) {
@@ -62,7 +74,8 @@ class UnitInfo {
         this.support?.length == b.support?.length && this.superSpecial == b.superSpecial &&
         this.superSpecialCriteria == b.superSpecialCriteria && this.vsCondition == b.vsCondition &&
         this.vsSpecial == b.vsSpecial && this.art == b.art && this.lastTapCondition == b.lastTapCondition &&
-        this.lastTapDescription == b.lastTapDescription && this.unitId == b.unitId;
+        this.lastTapDescription == b.lastTapDescription && this.unitId == b.unitId && this.llbCaptain == b.llbCaptain &&
+        this.llbSpecial == b.llbSpecial;
   }
 
   factory UnitInfo.empty() => UnitInfo(
@@ -82,27 +95,32 @@ class UnitInfo {
       vsSpecial: "",
       art: "",
       lastTapCondition: "",
-      lastTapDescription: ""
+      lastTapDescription: "",
+      llbCaptain: "",
+      llbSpecial: ""
   );
+
   factory UnitInfo.fromJson(Map<String, dynamic> json) {
     return UnitInfo(
-      sailor: json[fSailor] == null ? {} : json[fSailor],
-      special: json[fSpecial] == null ? "" : json[fSpecial],
-      specialName: json[fSpecialName] == null ? "" : json[fSpecialName],
-      captain: json[fCaptain] == null ? "" : json[fCaptain],
-      swap: json[fSwap] == null ? "" : json[fSwap],
+      sailor: json[fSailor] ?? {},
+      special: json[fSpecial] ?? "",
+      specialName: json[fSpecialName] ?? "",
+      captain: json[fCaptain] ?? "",
+      swap: json[fSwap] ?? "",
       potential: json[fPotential] == null ? [] : json[fPotential].cast<String>(),
-      festAbility: json[fFestAbility] == null ? "" : json[fFestAbility],
-      festResistance: json[fFestResist] == null ? "" : json[fFestResist],
-      festSpecial: json[fFestSpecial] == null ? "" : json[fFestSpecial],
+      festAbility: json[fFestAbility] ?? "",
+      festResistance: json[fFestResist] ?? "",
+      festSpecial: json[fFestSpecial] ?? "",
       support: json[fSupport] == null ? {} : json[fSupport][0],
-      superSpecial: json[fSuperSpecial] == null ? "" : json[fSuperSpecial],
-      superSpecialCriteria: json[fSuperCriteria] == null ? "" : json[fSuperCriteria],
-      vsCondition: json[fVSCondition] == null ? "" : json[fVSCondition],
-      vsSpecial: json[fVSSpecial] == null ? "" : json[fVSSpecial],
-      art: json[fArt] == null ? "" : json[fArt],
-      lastTapCondition: json[fLastTapCondition] == null ? "" : json[fLastTapCondition],
-      lastTapDescription: json[fLastTapDescription] == null ? "" : json[fLastTapDescription]
+      superSpecial: json[fSuperSpecial] ?? "",
+      superSpecialCriteria: json[fSuperCriteria] ?? "",
+      vsCondition: json[fVSCondition] ?? "",
+      vsSpecial: json[fVSSpecial] ?? "",
+      art: json[fArt] ?? "",
+      lastTapCondition: json[fLastTapCondition] ?? "",
+      lastTapDescription: json[fLastTapDescription] ?? "",
+      llbCaptain: json[fLLBCaptain] ?? "",
+      llbSpecial: json[fLLBSpecial] ?? ""
     );
   }
 
@@ -111,119 +129,151 @@ class UnitInfo {
     if (potential.length == 0) {
       return {
         Data.dataUnitId: unitId,
-        Data.sailorBase: sailor?[fSailorBase] == null ? "" : sailor![fSailorBase],
-        Data.sailorLevel1: sailor?[fSailorLevel1] == null ? "" : sailor![fSailorLevel1],
-        Data.sailorLevel2: sailor?[fSailorLevel2] == null ? "" : sailor![fSailorLevel2],
-        Data.sailorCombined: sailor?[fSailorCombined] == null ? "" : sailor![fSailorCombined],
-        Data.sailorCharacter1: sailor?[fSailorChar1] == null ? "" : sailor![fSailorChar1],
-        Data.sailorCharacter2: sailor?[fSailorChar2] == null ? "" : sailor![fSailorChar2],
-        Data.special: special == null ? "" : special,
-        Data.specialName: specialName == null ? "" : specialName,
-        Data.captain: captain == null ? "" : captain,
-        Data.swap: swap == null ? "" : swap,
+        Data.sailorBase: sailor?[fSailorBase] ?? "",
+        Data.llbSailorBase: sailor?[fLLBSailorBase] ?? "",
+        Data.sailorLevel1: sailor?[fSailorLevel1] ?? "",
+        Data.llbSailorLevel1: sailor?[fLLBSailorLevel1] ?? "",
+        Data.sailorLevel2: sailor?[fSailorLevel2] ?? "",
+        Data.llbSailorLevel2: sailor?[fLLBSailorLevel2] ?? "",
+        Data.sailorCombined: sailor?[fSailorCombined] ?? "",
+        Data.llbSailorCombined: sailor?[fLLBSailorCombined] ?? "",
+        Data.sailorCharacter1: sailor?[fSailorChar1] ?? "",
+        Data.llbSailorCharacter1: sailor?[fLLBSailorCharacter1] ?? "",
+        Data.sailorCharacter2: sailor?[fSailorChar2] ?? "",
+        Data.llbSailorCharacter2: sailor?[fLLBSailorCharacter2] ?? "",
+        Data.special: special ?? "",
+        Data.llbSpecial: llbSpecial ?? "",
+        Data.specialName: specialName ?? "",
+        Data.captain: captain ?? "",
+        Data.llbCaptain: llbCaptain ?? "",
+        Data.swap: swap ?? "",
         Data.potentialOne: "",
         Data.potentialTwo: "",
         Data.potentialThree: "",
-        Data.festAbility: festAbility == null ? "" : festAbility,
-        Data.festResistance: festResistance == null ? "" : festResistance,
-        Data.festSpecial: festSpecial == null ? "" : festSpecial,
-        Data.supportCharacters: support?[fSupChars] == null ? "" : support![fSupChars],
-        Data.supportDescription: support?[fSupDescription] == null ? "" : support![fSupDescription],
-        Data.superSpecial: superSpecial == null ? "" : superSpecial,
-        Data.superSpecialCriteria: superSpecialCriteria == null ? "" : superSpecialCriteria,
-        Data.vsCondition: vsCondition == null ? "" : vsCondition,
-        Data.vsSpecial: vsSpecial == null ? "" : vsSpecial,
-        Data.art: art == null ? "" : art,
-        Data.lastTapCondition: lastTapCondition == null ? "" : lastTapCondition,
-        Data.lastTapDescription: lastTapDescription == null ? "" : lastTapDescription,
+        Data.festAbility: festAbility ?? "",
+        Data.festResistance: festResistance ?? "",
+        Data.festSpecial: festSpecial ?? "",
+        Data.supportCharacters: support?[fSupChars] ?? "",
+        Data.supportDescription: support?[fSupDescription] ?? "",
+        Data.superSpecial: superSpecial ?? "",
+        Data.superSpecialCriteria: superSpecialCriteria ?? "",
+        Data.vsCondition: vsCondition ?? "",
+        Data.vsSpecial: vsSpecial ?? "",
+        Data.art: art ?? "",
+        Data.lastTapCondition: lastTapCondition ?? "",
+        Data.lastTapDescription: lastTapDescription ?? "",
       };
     }
     else if (potential[0] != "" && potential[1] == "" && potential[2] == "") {
       return {
         Data.dataUnitId: unitId,
-        Data.sailorBase: sailor?[fSailorBase] == null ? "" : sailor![fSailorBase],
-        Data.sailorLevel1: sailor?[fSailorLevel1] == null ? "" : sailor![fSailorLevel1],
-        Data.sailorLevel2: sailor?[fSailorLevel2] == null ? "" : sailor![fSailorLevel2],
-        Data.sailorCombined: sailor?[fSailorCombined] == null ? "" : sailor![fSailorCombined],
-        Data.sailorCharacter1: sailor?[fSailorChar1] == null ? "" : sailor![fSailorChar1],
-        Data.sailorCharacter2: sailor?[fSailorChar2] == null ? "" : sailor![fSailorChar2],
-        Data.special: special == null ? "" : special,
-        Data.specialName: specialName == null ? "" : specialName,
-        Data.captain: captain == null ? "" : captain,
-        Data.swap: swap == null ? "" : swap,
+        Data.sailorBase: sailor?[fSailorBase] ?? "",
+        Data.llbSailorBase: sailor?[fLLBSailorBase] ?? "",
+        Data.sailorLevel1: sailor?[fSailorLevel1] ?? "",
+        Data.llbSailorLevel1: sailor?[fLLBSailorLevel1] ?? "",
+        Data.sailorLevel2: sailor?[fSailorLevel2] ?? "",
+        Data.llbSailorLevel2: sailor?[fLLBSailorLevel2] ?? "",
+        Data.sailorCombined: sailor?[fSailorCombined] ?? "",
+        Data.llbSailorCombined: sailor?[fLLBSailorCombined] ?? "",
+        Data.sailorCharacter1: sailor?[fSailorChar1] ?? "",
+        Data.llbSailorCharacter1: sailor?[fLLBSailorCharacter1] ?? "",
+        Data.sailorCharacter2: sailor?[fSailorChar2] ?? "",
+        Data.llbSailorCharacter2: sailor?[fLLBSailorCharacter2] ?? "",
+        Data.special: special ?? "",
+        Data.llbSpecial: llbSpecial ?? "",
+        Data.specialName: specialName ?? "",
+        Data.captain: captain ?? "",
+        Data.llbCaptain: llbCaptain ?? "",
+        Data.swap: swap ?? "",
         Data.potentialOne: potential[0],
         Data.potentialTwo: "",
         Data.potentialThree: "",
-        Data.festAbility: festAbility == null ? "" : festAbility,
-        Data.festResistance: festResistance == null ? "" : festResistance,
-        Data.festSpecial: festSpecial == null ? "" : festSpecial,
-        Data.supportCharacters: support?[fSupChars] == null ? "" : support![fSupChars],
-        Data.supportDescription: support?[fSupDescription] == null ? "" : support![fSupDescription],
-        Data.superSpecial: superSpecial == null ? "" : superSpecial,
-        Data.superSpecialCriteria: superSpecialCriteria == null ? "" : superSpecialCriteria,
-        Data.vsCondition: vsCondition == null ? "" : vsCondition,
-        Data.vsSpecial: vsSpecial == null ? "" : vsSpecial,
-        Data.art: art == null ? "" : art,
-        Data.lastTapCondition: lastTapCondition == null ? "" : lastTapCondition,
-        Data.lastTapDescription: lastTapDescription == null ? "" : lastTapDescription,
+        Data.festAbility: festAbility ?? "",
+        Data.festResistance: festResistance ?? "",
+        Data.festSpecial: festSpecial ?? "",
+        Data.supportCharacters: support?[fSupChars] ?? "",
+        Data.supportDescription: support?[fSupDescription] ?? "",
+        Data.superSpecial: superSpecial ?? "",
+        Data.superSpecialCriteria: superSpecialCriteria ?? "",
+        Data.vsCondition: vsCondition ?? "",
+        Data.vsSpecial: vsSpecial ?? "",
+        Data.art: art ?? "",
+        Data.lastTapCondition: lastTapCondition ?? "",
+        Data.lastTapDescription: lastTapDescription ?? "",
       };
     } else if (potential[0] != "" && potential[1] != "" && potential[2] == "") {
       return {
         Data.dataUnitId: unitId,
-        Data.sailorBase: sailor?[fSailorBase] == null ? "" : sailor![fSailorBase],
-        Data.sailorLevel1: sailor?[fSailorLevel1] == null ? "" : sailor![fSailorLevel1],
-        Data.sailorLevel2: sailor?[fSailorLevel2] == null ? "" : sailor![fSailorLevel2],
-        Data.sailorCombined: sailor?[fSailorCombined] == null ? "" : sailor![fSailorCombined],
-        Data.sailorCharacter1: sailor?[fSailorChar1] == null ? "" : sailor![fSailorChar1],
-        Data.sailorCharacter2: sailor?[fSailorChar2] == null ? "" : sailor![fSailorChar2],
-        Data.special: special == null ? "" : special,
-        Data.specialName: specialName == null ? "" : specialName,
-        Data.captain: captain == null ? "" : captain,
-        Data.swap: swap == null ? "" : swap,
+        Data.sailorBase: sailor?[fSailorBase] ?? "",
+        Data.llbSailorBase: sailor?[fLLBSailorBase] ?? "",
+        Data.sailorLevel1: sailor?[fSailorLevel1] ?? "",
+        Data.llbSailorLevel1: sailor?[fLLBSailorLevel1] ?? "",
+        Data.sailorLevel2: sailor?[fSailorLevel2] ?? "",
+        Data.llbSailorLevel2: sailor?[fLLBSailorLevel2] ?? "",
+        Data.sailorCombined: sailor?[fSailorCombined] ?? "",
+        Data.llbSailorCombined: sailor?[fLLBSailorCombined] ?? "",
+        Data.sailorCharacter1: sailor?[fSailorChar1] ?? "",
+        Data.llbSailorCharacter1: sailor?[fLLBSailorCharacter1] ?? "",
+        Data.sailorCharacter2: sailor?[fSailorChar2] ?? "",
+        Data.llbSailorCharacter2: sailor?[fLLBSailorCharacter2] ?? "",
+        Data.special: special ?? "",
+        Data.llbSpecial: llbSpecial ?? "",
+        Data.specialName: specialName ?? "",
+        Data.captain: captain ?? "",
+        Data.llbCaptain: llbCaptain ?? "",
+        Data.swap: swap ?? "",
         Data.potentialOne: potential[0],
         Data.potentialTwo: potential[1],
         Data.potentialThree: "",
-        Data.festAbility: festAbility == null ? "" : festAbility,
-        Data.festResistance: festResistance == null ? "" : festResistance,
-        Data.festSpecial: festSpecial == null ? "" : festSpecial,
-        Data.supportCharacters: support?[fSupChars] == null ? "" : support![fSupChars],
-        Data.supportDescription: support?[fSupDescription] == null ? "" : support![fSupDescription],
-        Data.superSpecial: superSpecial == null ? "" : superSpecial,
-        Data.superSpecialCriteria: superSpecialCriteria == null ? "" : superSpecialCriteria,
-        Data.vsCondition: vsCondition == null ? "" : vsCondition,
-        Data.vsSpecial: vsSpecial == null ? "" : vsSpecial,
-        Data.art: art == null ? "" : art,
-        Data.lastTapCondition: lastTapCondition == null ? "" : lastTapCondition,
-        Data.lastTapDescription: lastTapDescription == null ? "" : lastTapDescription,
+        Data.festAbility: festAbility ?? "",
+        Data.festResistance: festResistance ?? "",
+        Data.festSpecial: festSpecial ?? "",
+        Data.supportCharacters: support?[fSupChars] ?? "",
+        Data.supportDescription: support?[fSupDescription] ?? "",
+        Data.superSpecial: superSpecial ?? "",
+        Data.superSpecialCriteria: superSpecialCriteria ?? "",
+        Data.vsCondition: vsCondition ?? "",
+        Data.vsSpecial: vsSpecial ?? "",
+        Data.art: art ?? "",
+        Data.lastTapCondition: lastTapCondition ?? "",
+        Data.lastTapDescription: lastTapDescription ?? "",
       };
     } else {
       return {
         Data.dataUnitId: unitId,
-        Data.sailorBase: sailor?[fSailorBase] == null ? "" : sailor![fSailorBase],
-        Data.sailorLevel1: sailor?[fSailorLevel1] == null ? "" : sailor![fSailorLevel1],
-        Data.sailorLevel2: sailor?[fSailorLevel2] == null ? "" : sailor![fSailorLevel2],
-        Data.sailorCombined: sailor?[fSailorCombined] == null ? "" : sailor![fSailorCombined],
-        Data.sailorCharacter1: sailor?[fSailorChar1] == null ? "" : sailor![fSailorChar1],
-        Data.sailorCharacter2: sailor?[fSailorChar2] == null ? "" : sailor![fSailorChar2],
-        Data.special: special == null ? "" : special,
-        Data.specialName: specialName == null ? "" : specialName,
-        Data.captain: captain == null ? "" : captain,
-        Data.swap: swap == null ? "" : swap,
+        Data.sailorBase: sailor?[fSailorBase] ?? "",
+        Data.llbSailorBase: sailor?[fLLBSailorBase] ?? "",
+        Data.sailorLevel1: sailor?[fSailorLevel1] ?? "",
+        Data.llbSailorLevel1: sailor?[fLLBSailorLevel1] ?? "",
+        Data.sailorLevel2: sailor?[fSailorLevel2] ?? "",
+        Data.llbSailorLevel2: sailor?[fLLBSailorLevel2] ?? "",
+        Data.sailorCombined: sailor?[fSailorCombined] ?? "",
+        Data.llbSailorCombined: sailor?[fLLBSailorCombined] ?? "",
+        Data.sailorCharacter1: sailor?[fSailorChar1] ?? "",
+        Data.llbSailorCharacter1: sailor?[fLLBSailorCharacter1] ?? "",
+        Data.sailorCharacter2: sailor?[fSailorChar2] ?? "",
+        Data.llbSailorCharacter2: sailor?[fLLBSailorCharacter2] ?? "",
+        Data.special: special ?? "",
+        Data.llbSpecial: llbSpecial ?? "",
+        Data.specialName: specialName ?? "",
+        Data.captain: captain ?? "",
+        Data.llbCaptain: llbCaptain ?? "",
+        Data.swap: swap ?? "",
         Data.potentialOne: potential[0],
         Data.potentialTwo: potential[1],
         Data.potentialThree: potential[2],
-        Data.festAbility: festAbility == null ? "" : festAbility,
-        Data.festResistance: festResistance == null ? "" : festResistance,
-        Data.festSpecial: festSpecial == null ? "" : festSpecial,
-        Data.supportCharacters: support?[fSupChars] == null ? "" : support![fSupChars],
-        Data.supportDescription: support?[fSupDescription] == null ? "" : support![fSupDescription],
-        Data.superSpecial: superSpecial == null ? "" : superSpecial,
-        Data.superSpecialCriteria: superSpecialCriteria == null ? "" : superSpecialCriteria,
-        Data.vsCondition: vsCondition == null ? "" : vsCondition,
-        Data.vsSpecial: vsSpecial == null ? "" : vsSpecial,
-        Data.art: art == null ? "" : art,
-        Data.lastTapCondition: lastTapCondition == null ? "" : lastTapCondition,
-        Data.lastTapDescription: lastTapDescription == null ? "" : lastTapDescription,
+        Data.festAbility: festAbility ?? "",
+        Data.festResistance: festResistance ?? "",
+        Data.festSpecial: festSpecial ?? "",
+        Data.supportCharacters: support?[fSupChars] ?? "",
+        Data.supportDescription: support?[fSupDescription] ?? "",
+        Data.superSpecial: superSpecial ?? "",
+        Data.superSpecialCriteria: superSpecialCriteria ?? "",
+        Data.vsCondition: vsCondition ?? "",
+        Data.vsSpecial: vsSpecial ?? "",
+        Data.art: art ?? "",
+        Data.lastTapCondition: lastTapCondition ?? "",
+        Data.lastTapDescription: lastTapDescription ?? "",
       };
     }
   }

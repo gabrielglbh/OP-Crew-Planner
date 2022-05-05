@@ -34,7 +34,7 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
   FocusNode? _focus;
 
   Unit _updateUnit = Unit.empty();
-  List<bool> _checks = [false, false, false, false, false, false, false, false, false, false];
+  List<bool> _checks = List.generate(Attribute.values.length, (_) => false);
   String _img = "";
   String _id = "";
   bool _available = false;
@@ -60,7 +60,8 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
           _updateUnit.evolution == 0 ? false : true,
           _updateUnit.limitBreak == 0 ? false : true,
           _updateUnit.rumbleSpecial == 0 ? false : true,
-          _updateUnit.rumbleAbility == 0 ? false : true
+          _updateUnit.rumbleAbility == 0 ? false : true,
+          _updateUnit.maxLevelLimitBreak == 0 ? false : true
         ];
       });
     }
@@ -88,7 +89,8 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
     _updateUnit.setAttributes(_checks[0] ? 1 : 0, _checks[1] ? 1 : 0,
         _checks[2] ? 1 : 0, _checks[3] ? 1 : 0, _checks[4] ? 1 : 0,
         _checks[5] ? 1 : 0, _checks[6] ? 1 : 0, _checks[7] ? 1 : 0,
-        _available ? 1 : 0, _checks[8] ? 1 : 0, _checks[9] ? 1: 0);
+        _available ? 1 : 0, _checks[8] ? 1 : 0, _checks[9] ? 1: 0,
+        _checks[10] ? 1 : 0);
     UnitQueries.instance.updateUnit(_updateUnit).then((isSuccessful) async {
       if (isSuccessful) {
         if (widget.update) await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.updatedUnitToBeMaxed);
@@ -120,7 +122,7 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
         supportLevel: _checks[4] ? 1 : 0, potentialAbility: _checks[5] ? 1 : 0,
         evolution: _checks[6] ? 1 : 0, limitBreak: _checks[7] ? 1 : 0,
         available: _available ? 1 : 0, rumbleSpecial: _checks[8] ? 1 : 0,
-        rumbleAbility: _checks[9] ? 1 : 0);
+        rumbleAbility: _checks[9] ? 1 : 0, maxLevelLimitBreak: _checks[10] ? 1 : 0);
       // If everything is the exact same, nothing changed OR the entire team is empty, just pop: else show alert
       if (widget.update) {
         bool a = widget.toBeUpdatedUnit.compare(newUnit, false);
@@ -138,7 +140,7 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
             !_checks[4] && !_checks[5] &&
             !_checks[6] && !_checks[7] &&
             !_available && !_checks[8] &&
-            !_checks[9] && _img.contains("noimage")) {
+            !_checks[9] && !_checks[10] && _img.contains("noimage")) {
           if (fromLeading) Navigator.pop(context);
           return true;
         }

@@ -39,6 +39,7 @@
   "filterLimitBreak": "Limit Broken",
   "filterRumbleSpecial": "PvP Special",
   "filterRumbleAbility": "PvP Ability",
+  "filterLLB": "Level Limit Break",
   
   "titleUnitPage": "New Unit",
   "titleUpdateUnitPage": "Unit",
@@ -178,6 +179,7 @@
   "fResistance": "PvP Resistance",
   "stCriteria": "Criteria",
   "dataNotAvailable": "No data found for this unit",
+  "withLLB": "With Level Limit Break",
   
   "databaseTab": "Data",
   "findUnits": "Search information about units",

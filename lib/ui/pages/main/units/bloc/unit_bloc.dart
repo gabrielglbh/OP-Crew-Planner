@@ -39,7 +39,7 @@ class UnitListBloc extends Bloc<UnitListEvent, UnitListState> {
         try {
           emit(UnitListStateLoading());
           await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.deleteUnit);
-          event.unit.setAttributes(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+          event.unit.setAttributes(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
           await UnitQueries.instance.updateUnit(event.unit);
 
           List<Unit> units = [];

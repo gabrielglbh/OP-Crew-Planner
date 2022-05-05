@@ -114,6 +114,7 @@ class _RumbleTabState extends State<RumbleTab> with AutomaticKeepAliveClientMixi
           onNotification: (notification) => _onScrolling(notification),
           child: RefreshIndicator(
             onRefresh: () async => _addLoadingEvent(blocContext),
+            color: Colors.orange.shade400,
             child: ListView.builder(
               key: PageStorageKey<String>('rumbleTab'),
               itemCount: state.teams.length,
