@@ -46,10 +46,3 @@ class DataListEventRemoveData extends DataListEvent {
   @override
   List<Object> get props => [];
 }
-
-class DataListEventDownloadLegends extends DataListEvent {
-  const DataListEventDownloadLegends();
-
-  @override
-  List<Object> get props => [];
-}

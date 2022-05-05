@@ -1,13 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 import 'package:optcteams/core/database/queries/unit_info_queries.dart';
 import 'package:optcteams/core/database/queries/unit_queries.dart';
-import 'package:optcteams/core/firebase/queries/backup_queries.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 part 'data_event.dart';
 part 'data_state.dart';
@@ -71,28 +68,6 @@ class DataListBloc extends Bloc<DataListEvent, DataListState> {
         await UnitInfoQueries.instance.deleteUnitInfoFromDatabase();
         StorageUtils.saveData(StorageUtils.downloadedLegends, false);
         await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.deleteAllDataUnit);
-        List<Unit> units = await UnitQueries.instance.getMostRecentSearchedUnits();
-        emit(DataListStateLoaded(units: units));
-      } on Exception {
-        emit(DataListStateFailure());
-      }
-    });
-
-    on<DataListEventDownloadLegends>((event, emit) async {
-      try {
-        emit(DataListStateLoading(message: "loadingLegends".tr()));
-        for (int x = 0; x < Data.legends.length; x++) {
-          await BackUpRecords.instance.getUnitAdditionalInfo(Data.legends[x]).then((info) async {
-            if (info != null) {
-              Unit unit = await UnitQueries.instance.getUnit(Data.legends[x]);
-              unit.downloaded = 1;
-              info.unitId = Data.legends[x];
-              await UnitInfoQueries.instance.insertUnitInfoIntoDatabase(info, unit);
-            }
-          });
-        }
-        await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.downloadLegends);
-        StorageUtils.saveData(StorageUtils.downloadedLegends, true);
         List<Unit> units = await UnitQueries.instance.getMostRecentSearchedUnits();
         emit(DataListStateLoaded(units: units));
       } on Exception {

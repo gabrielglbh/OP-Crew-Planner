@@ -79,11 +79,6 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
     blocContext.read<DataListBloc>()..add(DataListEventRemoveData());
   }
 
-  _downloadLegends(BuildContext blocContext) {
-    Navigator.of(context).pop();
-    blocContext.read<DataListBloc>()..add(DataListEventDownloadLegends());
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -110,7 +105,6 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
                     onTap: () {
                       widget.focus?.unfocus();
                       MainUtils.instance.showDialogForMenuManage(context,
-                          onAccepted: () => _downloadLegends(context),
                           clearHistory: () => _clearHistory(context),
                           removeData: () => _removeData(context)
                       );
