@@ -16,6 +16,9 @@ class Migrations {
       await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorCharacter1} TEXT");
       await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorCharacter2} TEXT");
       await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorCombined} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbFestSpecial} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbFestAbility} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbFestResistance} TEXT");
       await db.rawQuery("ALTER TABLE ${Data.unitTable} ADD COLUMN ${Data.unitMaxLevelLimitBreak} INTEGER NOT NULL DEFAULT 0");
     } catch (err) {}
   }

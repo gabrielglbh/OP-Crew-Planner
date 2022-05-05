@@ -153,7 +153,7 @@ class UnitInfoUtils {
         RichText(
           textAlign: TextAlign.start,
           text: TextSpan(
-            children: generateColorKeysForTextSpan(information),
+            children: information?.isEmpty == true ? [] : generateColorKeysForTextSpan(information),
           ),
         ),
         Visibility(

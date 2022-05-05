@@ -122,6 +122,9 @@ class Data {
   static const String festAbility = "festAbility";
   static const String festSpecial = "festSpecial";
   static const String festResistance = "festResistance";
+  static const String llbFestAbility = "llbFestAbility";
+  static const String llbFestSpecial = "llbFestSpecial";
+  static const String llbFestResistance = "llbFestResistance";
   static const String supportCharacters = "supportCharacters";
   static const String supportDescription = "supportDescription";
   static const String superSpecial = "superSpecial";

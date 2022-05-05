@@ -21,6 +21,9 @@ class UnitInfo {
   // Level Limit Break
   String? llbCaptain;
   String? llbSpecial;
+  String? llbFestAbility;
+  String? llbFestSpecial;
+  String? llbFestResistance;
   // Only for Device's Database
   String? unitId;
 
@@ -47,6 +50,9 @@ class UnitInfo {
   static const String fFestAbility = "festAbility";
   static const String fFestSpecial = "festSpecial";
   static const String fFestResist = "festResistance";
+  static const String fLLBFestAbility = "llbFestAbility";
+  static const String fLLBFestSpecial = "llbFestSpecial";
+  static const String fLLBFestResist = "llbFestResistance";
   static const String fPotential = "potential";
   static const String fSupport = "support";
   static const String fSupChars = "Characters";
@@ -63,7 +69,7 @@ class UnitInfo {
       this.potential = const [], this.festAbility, this.festSpecial, this.festResistance,
       this.support, this.superSpecial, this.superSpecialCriteria, this.vsSpecial,
       this.vsCondition, this.art, this.unitId, this.lastTapCondition, this.lastTapDescription,
-      this.llbCaptain, this.llbSpecial
+      this.llbCaptain, this.llbSpecial, this.llbFestSpecial, this.llbFestAbility, this.llbFestResistance
   });
 
   bool isEqualTo(UnitInfo b) {
@@ -75,7 +81,8 @@ class UnitInfo {
         this.superSpecialCriteria == b.superSpecialCriteria && this.vsCondition == b.vsCondition &&
         this.vsSpecial == b.vsSpecial && this.art == b.art && this.lastTapCondition == b.lastTapCondition &&
         this.lastTapDescription == b.lastTapDescription && this.unitId == b.unitId && this.llbCaptain == b.llbCaptain &&
-        this.llbSpecial == b.llbSpecial;
+        this.llbSpecial == b.llbSpecial && this.llbFestSpecial == b.llbFestSpecial &&
+        this.llbFestAbility == b.llbFestAbility && this.llbFestResistance == b.llbFestResistance;
   }
 
   factory UnitInfo.empty() => UnitInfo(
@@ -97,7 +104,10 @@ class UnitInfo {
       lastTapCondition: "",
       lastTapDescription: "",
       llbCaptain: "",
-      llbSpecial: ""
+      llbSpecial: "",
+      llbFestSpecial: "",
+      llbFestAbility: "",
+      llbFestResistance: ""
   );
 
   factory UnitInfo.fromJson(Map<String, dynamic> json) {
@@ -120,7 +130,10 @@ class UnitInfo {
       lastTapCondition: json[fLastTapCondition] ?? "",
       lastTapDescription: json[fLastTapDescription] ?? "",
       llbCaptain: json[fLLBCaptain] ?? "",
-      llbSpecial: json[fLLBSpecial] ?? ""
+      llbSpecial: json[fLLBSpecial] ?? "",
+      llbFestAbility: json[fLLBFestAbility] ?? "",
+      llbFestResistance: json[fLLBFestResist] ?? "",
+      llbFestSpecial: json[fLLBFestSpecial] ?? "",
     );
   }
 
@@ -162,6 +175,9 @@ class UnitInfo {
         Data.art: art ?? "",
         Data.lastTapCondition: lastTapCondition ?? "",
         Data.lastTapDescription: lastTapDescription ?? "",
+        Data.llbFestAbility: llbFestAbility ?? "",
+        Data.llbFestResistance: llbFestResistance ?? "",
+        Data.llbFestSpecial: llbFestSpecial ?? "",
       };
     }
     else if (potential[0] != "" && potential[1] == "" && potential[2] == "") {
@@ -200,6 +216,9 @@ class UnitInfo {
         Data.art: art ?? "",
         Data.lastTapCondition: lastTapCondition ?? "",
         Data.lastTapDescription: lastTapDescription ?? "",
+        Data.llbFestAbility: llbFestAbility ?? "",
+        Data.llbFestResistance: llbFestResistance ?? "",
+        Data.llbFestSpecial: llbFestSpecial ?? "",
       };
     } else if (potential[0] != "" && potential[1] != "" && potential[2] == "") {
       return {
@@ -237,6 +256,9 @@ class UnitInfo {
         Data.art: art ?? "",
         Data.lastTapCondition: lastTapCondition ?? "",
         Data.lastTapDescription: lastTapDescription ?? "",
+        Data.llbFestAbility: llbFestAbility ?? "",
+        Data.llbFestResistance: llbFestResistance ?? "",
+        Data.llbFestSpecial: llbFestSpecial ?? "",
       };
     } else {
       return {
@@ -274,6 +296,9 @@ class UnitInfo {
         Data.art: art ?? "",
         Data.lastTapCondition: lastTapCondition ?? "",
         Data.lastTapDescription: lastTapDescription ?? "",
+        Data.llbFestAbility: llbFestAbility ?? "",
+        Data.llbFestResistance: llbFestResistance ?? "",
+        Data.llbFestSpecial: llbFestSpecial ?? "",
       };
     }
   }

@@ -111,7 +111,10 @@ class UnitInfoQueries {
             lastTapCondition: res[0][Data.lastTapCondition],
             lastTapDescription: res[0][Data.lastTapDescription],
             llbCaptain: res[0][Data.llbCaptain],
-            llbSpecial: res[0][Data.llbSpecial]
+            llbSpecial: res[0][Data.llbSpecial],
+            llbFestAbility: res[0][Data.llbFestAbility],
+            llbFestResistance: res[0][Data.llbFestResistance],
+            llbFestSpecial: res[0][Data.llbFestSpecial],
           );
         }
       }

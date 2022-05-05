@@ -9,18 +9,12 @@ class CaptainAbility extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (info.llbCaptain != null && info.llbCaptain != "") {
-      return Visibility(
-          visible: info.captain != null && info.captain != "",
-          child: UnitInfoUtils.instance.simpleSection("res/info/captain.png", "captain".tr(),
-              info.captain, needsSubsection: true, isLLB: true, subsectionText: info.llbCaptain)
-      );
-    } else {
-      return Visibility(
-          visible: info.captain != null && info.captain != "",
-          child: UnitInfoUtils.instance.simpleSection("res/info/captain.png", "captain".tr(), info.captain)
-      );
-    }
+    bool hasLLB = info.llbCaptain != null && info.llbCaptain != "";
+    return Visibility(
+        visible: (info.captain != null && info.captain != "") || hasLLB,
+        child: UnitInfoUtils.instance.simpleSection("res/info/captain.png", "captain".tr(),
+            info.captain, needsSubsection: hasLLB, isLLB: hasLLB, subsectionText: info.llbCaptain)
+    );
   }
 }
 
@@ -30,22 +24,14 @@ class SpecialAbility extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (info.llbSpecial != null && info.llbSpecial != "") {
-      return Visibility(
-          visible: info.specialName != null && info.special != null &&
-              info.specialName != "" && info.special != "",
-          child: UnitInfoUtils.instance.simpleSection("res/maxed/specialLevel.png",
-              info.specialName, info.special, italic: true, isLLB: true,
-              needsSubsection: true, subsectionText: info.llbSpecial)
-      );
-    } else {
-      return Visibility(
-          visible: info.specialName != null && info.special != null &&
-              info.specialName != "" && info.special != "",
-          child: UnitInfoUtils.instance.simpleSection("res/maxed/specialLevel.png",
-              info.specialName, info.special, italic: true)
-      );
-    }
+    bool hasLLB = info.llbSpecial != null && info.llbSpecial != "";
+    return Visibility(
+        visible: (info.specialName != null && info.special != null &&
+            info.specialName != "" && info.special != "") || hasLLB,
+        child: UnitInfoUtils.instance.simpleSection("res/maxed/specialLevel.png",
+            info.specialName, info.special, italic: true, isLLB: hasLLB,
+            needsSubsection: hasLLB, subsectionText: info.llbSpecial)
+    );
   }
 }
 
@@ -152,10 +138,12 @@ class RumbleAbility extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool hasLLB = info.llbFestAbility != null && info.llbFestAbility != "";
     return Visibility(
-      visible: info.festAbility != null && info.festAbility != "",
-      child: UnitInfoUtils.instance.simpleSection("res/maxed/rumble_ability.png",
-          "fAbility".tr(), info.festAbility)
+        visible: (info.festAbility != null && info.festAbility != "") || hasLLB,
+        child: UnitInfoUtils.instance.simpleSection("res/maxed/rumble_ability.png",
+            "fAbility".tr(), info.festAbility, needsSubsection: hasLLB, isLLB: hasLLB,
+            subsectionText: info.llbFestAbility)
     );
   }
 }
@@ -166,10 +154,12 @@ class RumbleSpecial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool hasLLB = info.llbFestSpecial != null && info.llbFestSpecial != "";
     return Visibility(
-      visible: info.festSpecial != null && info.festSpecial != "",
-      child: UnitInfoUtils.instance.simpleSection("res/maxed/rumble_special.png",
-          "fSpecial".tr(), info.festSpecial)
+        visible: (info.festSpecial != null && info.festSpecial != "") || hasLLB,
+        child: UnitInfoUtils.instance.simpleSection("res/maxed/rumble_special.png",
+            "fSpecial".tr(), info.festSpecial, needsSubsection: hasLLB, isLLB: hasLLB,
+            subsectionText: info.llbFestSpecial)
     );
   }
 }
@@ -180,10 +170,12 @@ class RumbleResistance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool hasLLB = info.llbFestResistance != null && info.llbFestResistance != "";
     return Visibility(
-      visible: info.festResistance != null && info.festResistance != "",
-      child: UnitInfoUtils.instance.simpleSection("res/info/resistance.png",
-          "fResistance".tr(), info.festResistance)
+        visible: (info.festResistance != null && info.festResistance != "") || hasLLB,
+        child: UnitInfoUtils.instance.simpleSection("res/info/resistance.png",
+            "fResistance".tr(), info.festResistance, needsSubsection: hasLLB, isLLB: hasLLB,
+            subsectionText: info.llbFestResistance)
     );
   }
 }
