@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:optcteams/core/database/data.dart';
+import 'package:optcteams/core/utils/ui_utils.dart';
 
 part 'unit.g.dart';
 
@@ -110,14 +111,7 @@ class Unit {
   ///   -> 1
   ///       ...
   String getUrlOfUnitImage() {
-    final String png = ".png";
-    final String slash = "%2F";
-    final String fbUrl = 'https://firebasestorage.googleapis.com/v0/b/optc-teams-96a76.appspot.com/o/units';
     final String res = "res/units/";
-
-    final String firstFolder = id.substring(0, 1);
-    final String secondFolder = "${id.substring(1, 2)}00";
-
     switch (id) {
       case 'noimage': return res + 'noimage.png';
       case 'str_none': return res + 'str_none.png';
@@ -126,7 +120,7 @@ class Unit {
       case 'psy_none': return res + 'psy_none.png';
       case 'int_none': return res + 'int_none.png';
       default:
-        return "$fbUrl$slash$firstFolder$slash$secondFolder$slash$id$png?alt=media";
+        return UI.getThumbnail(id);
     }
   }
 }

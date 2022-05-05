@@ -120,4 +120,18 @@ class UI {
       ),
     );
   }
+
+  static String getThumbnail(String? id, {bool art = false}) {
+    final String png = ".png";
+    final String slash = "%2F";
+    final String fbUrlUnits = 'https://firebasestorage.googleapis.com/v0/b/optc-teams-96a76.appspot.com/o/units';
+    final String fbUrlArt = 'https://firebasestorage.googleapis.com/v0/b/optc-teams-96a76.appspot.com/o/art';
+
+    final String? firstFolder = id?.substring(0, 1) ?? "0";
+    final String? secondFolder = "${id?.substring(1, 2) ?? "0"}00";
+
+    return art
+        ? "$fbUrlArt$slash$firstFolder$slash$secondFolder$slash$id$png?alt=media"
+        : "$fbUrlUnits$slash$firstFolder$slash$secondFolder$slash$id$png?alt=media";
+  }
 }

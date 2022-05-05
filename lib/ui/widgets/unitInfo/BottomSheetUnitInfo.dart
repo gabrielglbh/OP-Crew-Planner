@@ -327,6 +327,7 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
     return UnitInfoElevatedButton(
       onPressed: () async {
         if (!_information.isEqualTo(UnitInfo.empty())) {
+          final art = UI.getThumbnail(_information.art ?? "0", art: true);
           await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.showFullArt);
           showDialog(
             context: context,
@@ -342,7 +343,7 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
                 content: FittedBox(
                   child: Container(
                     width: 640, height: 512,
-                    child: UI.placeholderImageWhileLoading(_information.art, fullArt: true)
+                    child: UI.placeholderImageWhileLoading(art, fullArt: true)
                   ),
                 )
               );
