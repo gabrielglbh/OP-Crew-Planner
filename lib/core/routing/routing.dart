@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:optcteams/core/routing/page_names.dart';
-import 'package:optcteams/ui/pages/buildPages/buildMaxedUnit/buildMaxedUnit.dart';
-import 'package:optcteams/ui/pages/buildPages/buildRumbleTeam/buildRumbleTeam.dart';
-import 'package:optcteams/ui/pages/buildPages/buildTeam/buildTeam.dart';
-import 'package:optcteams/ui/pages/loadingScreen/loadingScreen.dart';
+import 'package:optcteams/ui/pages/build_pages/build_maxed_unit/build_maxed_unit.dart';
+import 'package:optcteams/ui/pages/build_pages/build_rumble_team/build_rumble_team.dart';
+import 'package:optcteams/ui/pages/build_pages/build_team/build_team.dart';
+import 'package:optcteams/ui/pages/loading_screen/loading_screen.dart';
 import 'package:optcteams/ui/pages/main/main_activity.dart';
 import 'package:optcteams/ui/pages/settings/settings.dart';
-import 'package:optcteams/ui/pages/userManagement/user_management.dart';
+import 'package:optcteams/ui/pages/user_management/user_management.dart';
 
 import 'arguments.dart';
 
@@ -14,11 +14,11 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
     case OPCrewPlannerPages.welcomePageName:
       return CupertinoPageRoute(builder: (context) {
-        return LoadingScreenPage();
+        return const LoadingScreenPage();
       });
     case OPCrewPlannerPages.navigationPageName:
       return CupertinoPageRoute(builder: (context) {
-        return NavigationPage();
+        return const NavigationPage();
       });
     case OPCrewPlannerPages.buildTeamPageName:
       final TeamBuild args = settings.arguments as TeamBuild;
@@ -40,7 +40,7 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       });
     case OPCrewPlannerPages.settingsPageName:
       return CupertinoPageRoute(builder: (context) {
-        return SettingsPage();
+        return const SettingsPage();
       });
     case OPCrewPlannerPages.userManagementPage:
       final ArgumentsManageAccount args = settings.arguments as ArgumentsManageAccount;

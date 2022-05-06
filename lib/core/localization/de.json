@@ -39,6 +39,7 @@
   "filterLimitBreak": "Grenze Gebrochen",
   "filterRumbleSpecial": "PvP Special",
   "filterRumbleAbility": "PvP Ability",
+  "filterLLB": "Grenze Gebrochen Pegel",
 
   "titleUnitPage": "Neue Einheit",
   "titleUpdateUnitPage": "Einheit",
@@ -178,6 +179,7 @@
   "fResistance": "PvP Widerstand",
   "stCriteria": "Zustand",
   "dataNotAvailable": "Keine Daten für dieses Gerät gefunden",
+  "withLLB": "Mit Grenze Gebrochen Pegel",
 
   "databaseTab": "Daten",
   "findUnits": "Suche nach Geräteinformationen",

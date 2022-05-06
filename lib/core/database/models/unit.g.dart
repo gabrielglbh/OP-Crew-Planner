@@ -25,6 +25,7 @@ Unit _$UnitFromJson(Map<String, dynamic> json) => Unit(
       rumbleAbility: json['rumbleAbility'] as int? ?? 0,
       lastCheckedData: json['lastCheckedData'] as int? ?? 0,
       downloaded: json['downloaded'] as int? ?? 0,
+      maxLevelLimitBreak: json['unitMaxLevelLimitBreak'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$UnitToJson(Unit instance) => <String, dynamic>{
@@ -34,6 +35,7 @@ Map<String, dynamic> _$UnitToJson(Unit instance) => <String, dynamic>{
       'url': instance.url,
       'taps': instance.taps,
       'maxLevel': instance.maxLevel,
+      'unitMaxLevelLimitBreak': instance.maxLevelLimitBreak,
       'skills': instance.skills,
       'specialLevel': instance.specialLevel,
       'cottonCandy': instance.cottonCandy,

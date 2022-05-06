@@ -32,16 +32,19 @@ class ShipQueries {
         print("insertShip: ${err.toString()}");
         return -1;
       }
-    } else return -2;
+    } else {
+      return -2;
+    }
   }
 
   Future<Ship> getShip(String id) async {
     if (_database != null) {
       List<Map<String, dynamic>>? res = await _database?.query(Data.shipTable, where: "${Data.shipId}=?", whereArgs: [id]);
-      if (res != null)
+      if (res != null) {
         return Ship(id: res[0][Data.shipId], name: res[0][Data.shipName], url: res[0][Data.shipUrl]);
-      else
+      } else {
         return Ship.empty;
+      }
     }
     return Ship.empty;
   }
@@ -49,8 +52,11 @@ class ShipQueries {
   Future<List<Ship>> getShips() async {
     if (_database != null) {
       List<Map<String, dynamic>>? res = await _database?.query(Data.shipTable, orderBy: Data.shipId);
-      if (res != null) return generateShipList(res);
-      else return [];
+      if (res != null) {
+        return generateShipList(res);
+      } else {
+        return [];
+      }
     }
     return [];
   }
@@ -62,8 +68,11 @@ class ShipQueries {
               "WHERE T.${Data.teamName}=?",
           [name]
       );
-      if (ship != null) return ship[0][Data.relShipShip];
-      else return "";
+      if (ship != null) {
+        return ship[0][Data.relShipShip];
+      } else {
+        return "";
+      }
     }
     return "";
   }

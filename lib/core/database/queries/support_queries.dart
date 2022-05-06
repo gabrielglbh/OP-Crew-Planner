@@ -22,9 +22,11 @@ class SupportQueries {
               "WHERE T.${Data.teamName}=?",
           [name]
       );
-      if (units != null)
+      if (units != null) {
         return List.generate(units.length, (i) { return units[i][Data.relSupportUnit]; });
-      else return [];
+      } else {
+        return [];
+      }
     }
     return [];
   }

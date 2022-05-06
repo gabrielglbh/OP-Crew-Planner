@@ -1,7 +1,7 @@
 import 'package:optcteams/core/database/models/rumble.dart';
 import 'package:optcteams/core/database/models/team.dart';
 import 'package:optcteams/core/database/models/unit.dart';
-import 'package:optcteams/ui/pages/userManagement/utils/enum_user_mode.dart';
+import 'package:optcteams/core/types/user_login_mode.dart';
 
 class TeamBuild {
   Team team;

@@ -5,20 +5,20 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/ui/pages/main/data/bloc/data_bloc.dart';
-import 'package:optcteams/ui/pages/main/enum_lists.dart';
+import 'package:optcteams/core/types/list_type.dart';
 import 'package:optcteams/ui/pages/main/data/utils.dart';
-import 'package:optcteams/ui/widgets/ActionButton.dart';
-import 'package:optcteams/ui/widgets/EmptyList.dart';
-import 'package:optcteams/ui/widgets/LoadingWidget.dart';
-import 'package:optcteams/ui/widgets/CustomSearchBar.dart';
-import 'package:optcteams/ui/widgets/CustomAlert.dart';
-import 'package:optcteams/ui/widgets/unitInfo/BottomSheetUnitInfo.dart';
+import 'package:optcteams/ui/widgets/action_button.dart';
+import 'package:optcteams/ui/widgets/empty_list.dart';
+import 'package:optcteams/ui/widgets/loading_widget.dart';
+import 'package:optcteams/ui/widgets/custom_search_bar.dart';
+import 'package:optcteams/ui/widgets/custom_alert.dart';
+import 'package:optcteams/ui/widgets/unitInfo/bottom_sheet_unit_info.dart';
 
 class DataTab extends StatefulWidget {
   final FocusNode? focus;
-  const DataTab({required this.focus});
+  const DataTab({Key? key, required this.focus}) : super(key: key);
 
   @override
   _DataTabState createState() => _DataTabState();
@@ -42,7 +42,7 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
     super.dispose();
   }
 
-  _addLoadingEvent(BuildContext blocContext) => blocContext.read<DataListBloc>()..add(DataListEventLoading());
+  _addLoadingEvent(BuildContext blocContext) => blocContext.read<DataListBloc>()..add(const DataListEventLoading());
 
   _showRemoveDownloadedDialog(BuildContext blocContext, Unit unit) {
     showDialog(
@@ -54,7 +54,7 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
           acceptButton: "deleteLabel".tr(),
           dialogContext: context,
           onAccepted: () async {
-            blocContext.read<DataListBloc>()..add(DataListEventDelete(unit));
+            blocContext.read<DataListBloc>().add(DataListEventDelete(unit));
             Navigator.pop(context);
           },
         );
@@ -71,24 +71,19 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
 
   _clearHistory(BuildContext blocContext) {
     Navigator.of(context).pop();
-    blocContext.read<DataListBloc>()..add(DataListEventClearHistory());
+    blocContext.read<DataListBloc>().add(const DataListEventClearHistory());
   }
 
   _removeData(BuildContext blocContext) {
     Navigator.of(context).pop();
-    blocContext.read<DataListBloc>()..add(DataListEventRemoveData());
-  }
-
-  _downloadLegends(BuildContext blocContext) {
-    Navigator.of(context).pop();
-    blocContext.read<DataListBloc>()..add(DataListEventDownloadLegends());
+    blocContext.read<DataListBloc>().add(const DataListEventRemoveData());
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
     return BlocProvider<DataListBloc>(
-      create: (_) => DataListBloc()..add(DataListEventLoading()),
+      create: (_) => DataListBloc()..add(const DataListEventLoading()),
       child: BlocBuilder<DataListBloc, DataListState>(
         builder: (context, state) {
           return Column(
@@ -106,11 +101,10 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
                     ),
                   ),
                   ActionButton(
-                    child: Icon(Icons.menu),
+                    child: const Icon(Icons.menu),
                     onTap: () {
                       widget.focus?.unfocus();
                       MainUtils.instance.showDialogForMenuManage(context,
-                          onAccepted: () => _downloadLegends(context),
                           clearHistory: () => _clearHistory(context),
                           removeData: () => _removeData(context)
                       );
@@ -127,18 +121,20 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
   }
 
   Widget _setWidgetOnState(BuildContext blocContext, DataListState state) {
-    if (state is DataListStateLoading)
+    if (state is DataListStateLoading) {
       return LoadingWidget(msg: state.message);
-    else if (state is DataListEventSearching)
-      return LoadingWidget();
-    else if (state is DataListStateLoaded) {
-      if (state.units.isEmpty)
+    } else if (state is DataListEventSearching) {
+      return const LoadingWidget();
+    } else if (state is DataListStateLoaded) {
+      if (state.units.isEmpty) {
         return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.data);
-      else
+      } else {
         return _dataList(blocContext, state);
+      }
     }
-    else
+    else {
       return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.data);
+    }
   }
 
   Expanded _dataList(BuildContext blocContext, DataListStateLoaded state) {
@@ -147,9 +143,10 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
         onNotification: (notification) => _onScrolling(notification),
         child: RefreshIndicator(
           onRefresh: () async => _addLoadingEvent(blocContext),
+          color: Colors.orange.shade400,
           child: GridView.builder(
-            key: PageStorageKey<String>('dataTab'),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+            key: const PageStorageKey<String>('dataTab'),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
             itemCount: state.units.length,
             itemBuilder: (context, index) {
               Unit unit = state.units[index];
@@ -161,6 +158,7 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
                   await UnitQueries.instance.updateHistoryUnit(unit);
                   await AdditionalUnitInfo.callModalSheet(context, unit.id, onClose: () {
                     _addLoadingEvent(blocContext);
+                    widget.focus?.unfocus();
                   });
                 },
                 onLongPress: () {

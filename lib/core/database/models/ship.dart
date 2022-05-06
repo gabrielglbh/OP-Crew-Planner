@@ -23,16 +23,16 @@ class Ship {
   bool compare(Ship b) {
     int result = 0;
 
-    if (this.name == b.name) result++;
-    if (this.id == b.id) result++;
+    if (name == b.name) result++;
+    if (id == b.id) result++;
 
     return result == 2;
   }
 
   getUrlFromShipImg() {
-    final String _fbUrl = 'https://firebasestorage.googleapis.com/v0/b/optc-teams-96a76.appspot.com/o/ships%2Fship_';
+    const String _fbUrl = 'https://firebasestorage.googleapis.com/v0/b/optc-teams-96a76.appspot.com/o/ships%2Fship_';
 
-    switch (this.id) {
+    switch (id) {
       case '0001': return _fbUrl + '0001_t2.png?alt=media&token=6ce61f71-ad2f-4160-9b70-6bf9744582f8';
       case '0002': return _fbUrl + '0002_t2.png?alt=media&token=828d0f68-b00e-4a20-9ec9-67d82ed2128f';
       case '0003': return _fbUrl + '0003_t2.png?alt=media&token=e367899f-345e-44aa-8c51-e7da6af2cb2a';

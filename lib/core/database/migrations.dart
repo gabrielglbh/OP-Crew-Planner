@@ -5,6 +5,26 @@ import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Migrations {
+  // LEVEL LIMIT BREAK UPDATE
+  static Future<void> version38to39(Database db) async {
+    try {
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbCaptain} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSpecial} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorBase} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorLevel1} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorLevel2} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorCharacter1} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorCharacter2} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbSailorCombined} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbFestSpecial} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbFestAbility} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.llbFestResistance} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.unitTable} ADD COLUMN ${Data.unitMaxLevelLimitBreak} INTEGER NOT NULL DEFAULT 0");
+    } catch (err) {
+      print(err);
+    }
+  }
+
   // Bandai removed the hosted images on their web, had to migrate to Firebase
   static Future<void> version37to38(Database db) async {
     try {
@@ -27,7 +47,9 @@ class Migrations {
     try {
       await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.lastTapCondition} TEXT");
       await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.lastTapDescription} TEXT");
-    } catch (err) {}
+    } catch (err) {
+      print(err);
+    }
 
     // Contrast with the names too in order to not overlap the actual units with the oldIds
     List<String> oldIds = [
@@ -104,7 +126,9 @@ class Migrations {
   static Future<void> version34to35(Database db) async {
     try {
       await db.rawQuery("ALTER TABLE ${Data.teamTable} ADD COLUMN ${Data.teamUpdated} TEXT");
-    } catch (err) {}
+    } catch (err) {
+      print(err);
+    }
     await db.rawQuery("ALTER TABLE ${Data.unitTable} ADD COLUMN ${Data.unitUrl} TEXT");
     List<Map<String, dynamic>> u = await db.query(Data.unitTable);
     List<Unit> units = List.generate(u.length, (i) {

@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:optcteams/core/database/data.dart';
+import 'package:optcteams/ui/utils.dart';
 
 part 'unit.g.dart';
 
@@ -17,6 +18,8 @@ class Unit {
   int taps;
   @JsonKey(name: Data.unitMaxLevel)
   int maxLevel;
+  @JsonKey(name: Data.unitMaxLevelLimitBreak)
+  int maxLevelLimitBreak;
   @JsonKey(name: Data.unitSkills)
   int skills;
   @JsonKey(name: Data.unitSpecialLevel)
@@ -46,7 +49,7 @@ class Unit {
     this.maxLevel = 0, this.skills = 0, this.specialLevel = 0, this.cottonCandy = 0,
     this.supportLevel = 0, this.potentialAbility = 0, this.evolution = 0, this.limitBreak = 0,
     this.available = 0, this.rumbleSpecial = 0, this.rumbleAbility = 0, this.lastCheckedData = 0,
-    this.downloaded = 0
+    this.downloaded = 0, this.maxLevelLimitBreak = 0
   });
 
   factory Unit.empty() => Unit(id: "noimage", name: "", type: "", url: "res/units/noimage.png");
@@ -57,10 +60,11 @@ class Unit {
 
   void setTaps(int taps) { this.taps = taps; }
   void setLastCheckedData(int lastCheckedData) { this.lastCheckedData = lastCheckedData; }
-  void setAttributes(int maxLevel, int skills, int specialLevel, int cottonCandy,
-      int supportLevel, int potentialAbility, int evolution, int limitBreak,
-      int available, int rumbleSpecial, int rumbleAbility) {
+  void setAttributes(int maxLevel, int skills, int specialLevel,
+      int cottonCandy, int supportLevel, int potentialAbility, int evolution, int limitBreak,
+      int available, int rumbleSpecial, int rumbleAbility, int maxLevelLimitBreak) {
     this.maxLevel = maxLevel;
+    this.maxLevelLimitBreak = maxLevelLimitBreak;
     this.skills = skills;
     this.specialLevel = specialLevel;
     this.cottonCandy = cottonCandy;
@@ -76,24 +80,26 @@ class Unit {
   bool compare(Unit b, bool team) {
     int result = 0;
 
-    if (this.name == b.name) result++;
-    if (this.type == b.type) result++;
-    if (this.id == b.id) result++;
+    if (name == b.name) result++;
+    if (type == b.type) result++;
+    if (id == b.id) result++;
 
-    if (team) return result == 3;
-    else {
-      if (this.limitBreak == b.limitBreak) result++;
-      if (this.cottonCandy == b.cottonCandy) result++;
-      if (this.maxLevel == b.maxLevel) result++;
-      if (this.specialLevel == b.specialLevel) result++;
-      if (this.supportLevel == b.supportLevel) result++;
-      if (this.evolution == b.evolution) result++;
-      if (this.skills == b.skills) result++;
-      if (this.potentialAbility == b.potentialAbility) result++;
-      if (this.available == b.available) result++;
-      if (this.rumbleSpecial == b.rumbleSpecial) result++;
-      if (this.rumbleAbility == b.rumbleAbility) result++;
-      return result == 14;
+    if (team) {
+      return result == 3;
+    } else {
+      if (limitBreak == b.limitBreak) result++;
+      if (cottonCandy == b.cottonCandy) result++;
+      if (maxLevel == b.maxLevel) result++;
+      if (maxLevelLimitBreak == b.maxLevelLimitBreak) result++;
+      if (specialLevel == b.specialLevel) result++;
+      if (supportLevel == b.supportLevel) result++;
+      if (evolution == b.evolution) result++;
+      if (skills == b.skills) result++;
+      if (potentialAbility == b.potentialAbility) result++;
+      if (available == b.available) result++;
+      if (rumbleSpecial == b.rumbleSpecial) result++;
+      if (rumbleAbility == b.rumbleAbility) result++;
+      return result == 15;
     }
   }
 
@@ -106,14 +112,7 @@ class Unit {
   ///   -> 1
   ///       ...
   String getUrlOfUnitImage() {
-    final String png = ".png";
-    final String slash = "%2F";
-    final String fbUrl = 'https://firebasestorage.googleapis.com/v0/b/optc-teams-96a76.appspot.com/o/units';
-    final String res = "res/units/";
-
-    final String firstFolder = id.substring(0, 1);
-    final String secondFolder = "${id.substring(1, 2)}00";
-
+    const String res = "res/units/";
     switch (id) {
       case 'noimage': return res + 'noimage.png';
       case 'str_none': return res + 'str_none.png';
@@ -122,7 +121,7 @@ class Unit {
       case 'psy_none': return res + 'psy_none.png';
       case 'int_none': return res + 'int_none.png';
       default:
-        return "$fbUrl$slash$firstFolder$slash$secondFolder$slash$id$png?alt=media";
+        return UI.getThumbnail(id);
     }
   }
 }

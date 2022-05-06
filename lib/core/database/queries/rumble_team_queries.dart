@@ -1,8 +1,8 @@
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/database/database.dart';
 import 'package:optcteams/core/database/models/rumble.dart';
-import 'package:optcteams/core/database/models/rumbleTeamUnit.dart';
+import 'package:optcteams/core/database/models/rumble_team_unit.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:sqflite/sqflite.dart';
@@ -72,7 +72,9 @@ class RumbleTeamQueries {
         }
       }
       // Case 3: Query is for all DEF teams
-      else res = await _database?.query(Data.rumbleTeamTable, where: "${Data.rumbleTeamMode}=?", whereArgs: [1]);
+      else {
+        res = await _database?.query(Data.rumbleTeamTable, where: "${Data.rumbleTeamMode}=?", whereArgs: [1]);
+      }
 
       if (res != null) {
         List<RumbleTeam> teams = generateRumbleTeamList(res);
@@ -113,10 +115,11 @@ class RumbleTeamQueries {
           Data.rumbleTeamTable,
           columns: [Data.rumbleTeamName]
       );
-      if (res != null)
+      if (res != null) {
         return List.generate(res.length, (i) => res[i][Data.rumbleTeamName]);
-      else
+      } else {
         return [];
+      }
     }
     return [];
   }
@@ -147,7 +150,6 @@ class RumbleTeamQueries {
     if (_database != null) {
       await _database?.delete(Data.rumbleTeamTable, where: "${Data.rumbleTeamName}=?", whereArgs: [name]);
     }
-    return null;
   }
 
   Future<bool> updateRumbleTeam(RumbleTeam team, String? lastName) async {
@@ -156,8 +158,7 @@ class RumbleTeamQueries {
       if (lastName != null) {
         // If enter here, user has changed the team name
         List<String> teamNames = await getRumbleTeamNames();
-        if (teamNames.contains(team.name)) return false;
-        else await deleteRumbleTeam(lastName);
+        if (!teamNames.contains(team.name)) await deleteRumbleTeam(lastName);
       }
       await deleteRumbleTeam(team.name);
       await insertRumbleTeam(team);
@@ -168,10 +169,11 @@ class RumbleTeamQueries {
   Future<int> getNumberOfRumbleTeams() async {
     if (_database != null) {
       List<Map<String, dynamic>>? res = await _database?.rawQuery("SELECT ${Data.rumbleTeamName} FROM ${Data.rumbleTeamTable}");
-      if (res != null)
+      if (res != null) {
         return List.generate(res.length, (i) { return res[i][Data.rumbleTeamName]; }).length;
-      else
+      } else {
         return 0;
+      }
     } else {
       return -1;
     }

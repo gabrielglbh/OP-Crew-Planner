@@ -5,8 +5,9 @@ class UnitInfoElevatedButton extends StatelessWidget {
   final Color? color;
   final Widget child;
   const UnitInfoElevatedButton({
+    Key? key,
     required this.child, required this.color, required this.onPressed
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class UnitInfoElevatedButton extends StatelessWidget {
       ),
       child: Container(
         height: 40,
-        margin: EdgeInsets.only(top: 2, bottom: 2),
+        margin: const EdgeInsets.only(top: 2, bottom: 2),
         child: Align(
           alignment: Alignment.center,
           child: child
