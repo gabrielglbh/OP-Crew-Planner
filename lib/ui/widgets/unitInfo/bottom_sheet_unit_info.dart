@@ -145,6 +145,9 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
     if (info.festAbility != null) info.festAbility = info.festAbility?.replaceAll(_escapedCharVS, _parsedCharVS);
     if (info.festSpecial != null) info.festSpecial = info.festSpecial?.replaceAll(_escapedCharVS, _parsedCharVS);
     if (info.festResistance != null) info.festResistance = info.festResistance?.replaceAll(_escapedCharVS, _parsedCharVS);
+    if (info.llbFestAbility != null) info.llbFestAbility = info.llbFestAbility?.replaceAll(_escapedCharVS, _parsedCharVS);
+    if (info.llbFestSpecial != null) info.llbFestSpecial = info.llbFestSpecial?.replaceAll(_escapedCharVS, _parsedCharVS);
+    if (info.llbFestResistance != null) info.llbFestResistance = info.llbFestResistance?.replaceAll(_escapedCharVS, _parsedCharVS);
     if (info.vsSpecial != null) info.vsSpecial = info.vsSpecial?.replaceAll(_escapedCharVS, _parsedCharVS);
   }
 

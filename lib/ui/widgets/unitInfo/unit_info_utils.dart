@@ -27,12 +27,22 @@ class UnitInfoUtils {
   Divider divider() => const Divider(thickness: 2);
 
   List<TextSpan> generateColorKeysForTextSpan(String? primalContent,
-      {String? underlined, bool simple = true, bool parsePotential = false}) {
+      {String? underlined, bool simple = true, bool parsePotential = false, bool isLLB = false}) {
     List<String> parted = [];
     List<TextSpan> texts = [];
     Color? color = (!StorageUtils.readData(StorageUtils.darkMode, false)
         ? Colors.black87 : null);
     Color tColor = Colors.white;
+
+    final llb = TextSpan(text: "${"withLLB".tr()}: ", style: TextStyle(
+        fontWeight: FontWeight.w900,
+        foreground: Paint()..shader = LinearGradient(colors: [
+          Colors.red.shade600,
+          Colors.orange.shade600,
+          Colors.red.shade600,
+        ]).createShader(const Rect.fromLTWH(0.0, 0.0, 150.0, 70.0))
+    ));
+
     // Extract the _keys
     if (primalContent != null) parted = primalContent.split(" ");
 
@@ -40,9 +50,15 @@ class UnitInfoUtils {
     if (!parsePotential) {
       if (!simple) {
         texts.add(TextSpan(text: "• ", style: TextStyle(color: color)));
+        if (isLLB) {
+          texts.add(llb);
+        }
         texts.add(TextSpan(text: "$underlined: ", style: TextStyle(decoration: TextDecoration.underline, color: color)));
       } else {
         texts.add(TextSpan(text: "• ", style: TextStyle(color: color)));
+        if (isLLB) {
+          texts.add(llb);
+        }
       }
     }
     for (var text in parted) {
@@ -134,11 +150,13 @@ class UnitInfoUtils {
     return texts;
   }
 
-  RichText richText3Ways(String? underlined, String? content) {
+  RichText richText3Ways(String? underlined, String? content, {
+    bool isLLB = false
+  }) {
     return RichText(
       textAlign: TextAlign.start,
       text: TextSpan(
-          children: generateColorKeysForTextSpan(content, underlined: underlined, simple: false)
+          children: generateColorKeysForTextSpan(content, underlined: underlined, simple: false, isLLB: isLLB)
       ),
     );
   }
@@ -157,15 +175,11 @@ class UnitInfoUtils {
           ),
         ),
         Visibility(
-          visible: isLLB,
-          child: withLevelLimitBreakHeader()
-        ),
-        Visibility(
           visible: needsSubsection,
           child: RichText(
             textAlign: TextAlign.start,
             text: TextSpan(
-              children: generateColorKeysForTextSpan(subsectionText),
+              children: generateColorKeysForTextSpan(subsectionText, isLLB: isLLB),
             ),
           ),
         ),
@@ -185,24 +199,6 @@ class UnitInfoUtils {
       Expanded(child: Text("\n$title:\n", style: TextStyle(fontWeight: FontWeight.bold,
           fontStyle: italic ? FontStyle.italic : null, fontSize: 18)))
     ],
-    );
-  }
-
-  Widget withLevelLimitBreakHeader() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [
-          Colors.red.shade600,
-          Colors.orange.shade600,
-          Colors.yellow.shade600
-        ]),
-        borderRadius: const BorderRadius.all(Radius.circular(80.0)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Text("withLLB".tr(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
     );
   }
 }

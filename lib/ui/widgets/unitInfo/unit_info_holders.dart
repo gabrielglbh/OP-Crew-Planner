@@ -330,44 +330,40 @@ class SailorAbility extends StatelessWidget {
                 info.sailor?[UnitInfo.fSailorChar2]),
           ),
           Visibility(
-            visible: hasLLB,
-            child: UnitInfoUtils.instance.withLevelLimitBreakHeader(),
-          ),
-          Visibility(
             visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorBase) == true
                 && info.sailor?[UnitInfo.fLLBSailorBase] != "",
             child: UnitInfoUtils.instance.richText3Ways("base".tr(),
-                info.sailor?[UnitInfo.fLLBSailorBase]),
+                info.sailor?[UnitInfo.fLLBSailorBase], isLLB: true),
           ),
           Visibility(
             visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorLevel1) == true
                 && info.sailor?[UnitInfo.fLLBSailorLevel1] != "",
             child: UnitInfoUtils.instance.richText3Ways("l1".tr(),
-                info.sailor?[UnitInfo.fLLBSailorLevel1]),
+                info.sailor?[UnitInfo.fLLBSailorLevel1], isLLB: true),
           ),
           Visibility(
             visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorLevel2) == true
                 && info.sailor?[UnitInfo.fLLBSailorLevel2] != "",
             child: UnitInfoUtils.instance.richText3Ways("l2".tr(),
-                info.sailor?[UnitInfo.fLLBSailorLevel2]),
+                info.sailor?[UnitInfo.fLLBSailorLevel2], isLLB: true),
           ),
           Visibility(
             visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorCombined) == true
                 && info.sailor?[UnitInfo.fLLBSailorCombined] != "",
             child: UnitInfoUtils.instance.richText3Ways("combined".tr(),
-                info.sailor?[UnitInfo.fLLBSailorCombined]),
+                info.sailor?[UnitInfo.fLLBSailorCombined], isLLB: true),
           ),
           Visibility(
             visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorCharacter1) == true
                 && info.sailor?[UnitInfo.fLLBSailorCharacter1] != "",
             child: UnitInfoUtils.instance.richText3Ways("c1".tr(),
-                info.sailor?[UnitInfo.fLLBSailorCharacter1]),
+                info.sailor?[UnitInfo.fLLBSailorCharacter1], isLLB: true),
           ),
           Visibility(
             visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorCharacter2) == true
                 && info.sailor?[UnitInfo.fLLBSailorCharacter2] != "",
             child: UnitInfoUtils.instance.richText3Ways("c2".tr(),
-                info.sailor?[UnitInfo.fLLBSailorCharacter2]),
+                info.sailor?[UnitInfo.fLLBSailorCharacter2], isLLB: true),
           ),
           UnitInfoUtils.instance.divider()
         ]
