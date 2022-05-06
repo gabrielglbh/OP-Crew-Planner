@@ -177,6 +177,15 @@ class _SettingsPageState extends State<SettingsPage> {
                 await launch(Data.storeLink);
               }
             }),
+        SettingTile(
+            title: const Text("OP Crew Planner"),
+            icon: Image.asset("res/icons/github.png", scale: 20),
+            onTap: () async {
+              const url = "https://github.com/gabrielglbh/op-crew-planner";
+              if (await canLaunch(url)) {
+                await launch(url);
+              }
+            }),
         /// Account Settings
         AccountSettings(uid: _uid),
         /// Information Settings
