@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:optcteams/core/firebase/firebase.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:optcteams/ui/pages/userManagement/utils/enum_user_mode.dart';
+import 'package:optcteams/core/types/user_login_mode.dart';
 
 class AuthQueries {
   final String _collection = "users";
@@ -28,8 +28,9 @@ class AuthQueries {
     User? user;
     User? isAlreadySignedIn = _auth?.currentUser;
 
-    if (isAlreadySignedIn != null) user = _auth?.currentUser;
-    else {
+    if (isAlreadySignedIn != null) {
+      user = _auth?.currentUser;
+    } else {
       try {
         if (mode == UserMode.logIn) {
           UserCredential? credential = await _auth?.createUserWithEmailAndPassword(
@@ -142,7 +143,9 @@ class AuthQueries {
           UI.showSnackBar(context, "errChangePassword".tr());
           return false;
         }
-      } else return false;
+      } else {
+        return false;
+      }
     } catch (err) {
       UI.showSnackBar(context, "errChangePassword".tr());
       return false;
@@ -168,7 +171,9 @@ class AuthQueries {
           UI.showSnackBar(context, "errDeleteAccount".tr());
           return false;
         }
-      } else return false;
+      } else {
+        return false;
+      }
     } catch (err) {
       UI.showSnackBar(context, "errDeleteAccount".tr());
       return false;
@@ -207,8 +212,12 @@ class AuthQueries {
               UI.showSnackBar(context, "errDeleteAccount".tr());
               return false;
             }
-          } else return false;
-        } else return false;
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
       } else {
         UI.showSnackBar(context, "errNoGoogleAccount".tr());
         return false;

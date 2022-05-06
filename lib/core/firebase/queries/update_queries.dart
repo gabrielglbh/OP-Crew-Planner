@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:optcteams/core/firebase/ads.dart';
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 import 'package:optcteams/core/database/queries/alias_queries.dart';
@@ -65,8 +65,11 @@ class UpdateQueries {
     try {
       DocumentSnapshot? r = await _ref?.collection("RECENT").doc("recent_units").get();
       List<String>? s = r?.get("units").cast<String>();
-      if (s != null) return s.reversed.toList();
-      else return [];
+      if (s != null) {
+        return s.reversed.toList();
+      } else {
+        return [];
+      }
     } catch (err) {
       print("getRecentUnits: ${err.toString()}");
       return [];

@@ -6,34 +6,14 @@ class Data {
   static const int maxUnits = 100;
 
   static String get storeLink {
-    if (Platform.isAndroid) return "https://play.google.com/store/apps/details?id=com.gabr.garc.optcteams";
-    else if (Platform.isIOS) return "https://apps.apple.com/us/app/op-crew-planner/id1553879484";
-    else return "";
+    if (Platform.isAndroid) {
+      return "https://play.google.com/store/apps/details?id=com.gabr.garc.optcteams";
+    } else if (Platform.isIOS) {
+      return "https://apps.apple.com/us/app/op-crew-planner/id1553879484";
+    } else {
+      return "";
+    }
   }
-
-  static const List<String> legends = [
-    "0261", "0367", "0416", "0459", "0530", "0562", "0578", "0649",
-    "0669", "0718", "0720", "0748", "0870", "0935",
-    "1001", "1035", "1045", "1085", "1121", "1123", "1192", "1240",
-    "1268", "1314", "1362", "1391", "1404", "1413", "1434", "1445", "1473", "1492",
-    "1532", "1543", "1571", "1588", "1593", "1610", "1619", "1652", "1663", "1698",
-    "1707", "1747", "1751", "1763", "1764", "1794", "1816", "1832", "1847", "1869",
-    "1880", "1881", "1883", "1910", "1921", "1922", "1927", "1928", "1935", "1951",
-    "1985", "2001", "2007", "2023", "2025", "2034", "2035", "2066", "2074", "2076",
-    "2099", "2113", "2138", "2148", "2159", "2181", "2195", "2201", "2232", "2234",
-    "2236", "2245", "2251", "2265", "2300", "2302", "2330", "2338", "2357", "2363",
-    "2365", "2372", "2373", "2418", "2433", "2434", "2441", "2444", "2446", "2465",
-    "2475", "2477", "2500", "2505", "2534", "2536", "2561", "2577", "2578", "2588",
-    "2601", "2603", "2631", "2651", "2672", "2681", "2686", "2700", "2739", "2741",
-    "2774", "2776", "2784", "2797", "2802", "2804", "2814", "2830", "2835", "2837",
-    "2860", "2862", "2868", "2895", "2897", "2909", "2930", "2954", "2958", "2960",
-    "2962", "2964", "2980", "2982", "2991", "3007", "3009", "3018", "3027",
-    "3038", "3048", "3065", "3071", "3073", "3079", "3100", "3102", "3118", "3135",
-    "3154", "3157", "3164", "3166", "3175", "3177", "3202", "3204", "3211", "3225",
-    "3227", "3240", "3245", "3253", "3278", "3280", "3282", "3334", "3336", "3338",
-    "3349", "3346", "3350", "3355", "3357", "3376", "3378", "3391", "3393", "3403",
-    "3405"
-  ];
 
   static const String unitPath = "UNITS";
   static const String aliasPath = "ALIASES";
@@ -53,6 +33,7 @@ class Data {
   static const String unitSpecialLevel = "specialLevel";
   static const String unitLimitBreak = "limitBreak";
   static const String unitMaxLevel = "maxLevel";
+  static const String unitMaxLevelLimitBreak = "unitMaxLevelLimitBreak";
   static const String unitSupportLevel = "supportLevel";
   static const String unitEvolution = "evolution";
   static const String unitSkills = "skills";
@@ -122,14 +103,22 @@ class Data {
   static const String dataTable = "DATA";
   static const String dataUnitId = "unitId";
   static const String sailorBase = "sailorBase";
+  static const String llbSailorBase = "llbSailorBase";
   static const String sailorLevel1 = "sailorLevel1";
+  static const String llbSailorLevel1 = "llbSailorLevel1";
   static const String sailorLevel2 = "sailorLevel2";
+  static const String llbSailorLevel2 = "llbSailorLevel2";
   static const String sailorCombined = "sailorCombined";
+  static const String llbSailorCombined = "llbSailorCombined";
   static const String sailorCharacter1 = "sailorCharacter1";
+  static const String llbSailorCharacter1 = "llbSailorCharacter1";
   static const String sailorCharacter2 = "sailorCharacter2";
+  static const String llbSailorCharacter2 = "llbSailorCharacter2";
   static const String special = "special";
+  static const String llbSpecial = "llbSpecial";
   static const String specialName = "specialName";
   static const String captain = "captain";
+  static const String llbCaptain = "llbCaptain";
   static const String swap = "swap";
   static const String potentialOne = "potentialOne";
   static const String potentialTwo = "potentialTwo";
@@ -137,6 +126,9 @@ class Data {
   static const String festAbility = "festAbility";
   static const String festSpecial = "festSpecial";
   static const String festResistance = "festResistance";
+  static const String llbFestAbility = "llbFestAbility";
+  static const String llbFestSpecial = "llbFestSpecial";
+  static const String llbFestResistance = "llbFestResistance";
   static const String supportCharacters = "supportCharacters";
   static const String supportDescription = "supportDescription";
   static const String superSpecial = "superSpecial";

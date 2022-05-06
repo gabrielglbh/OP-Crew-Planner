@@ -35,7 +35,9 @@ class StorageUtils {
         StorageUtils.removeKeyForUnit("ADDEDUNITS");
         StorageUtils.removeKeyForUnit("LASTSEENURLONNAKAMANETWORK");
         StorageUtils.removeKeyForUnit("VERSIONNOTES");
-      } catch (err) {}
+      } catch (err) {
+        print(err);
+      }
       return _preferences?.getKeys().where((key) =>
         key != darkMode && key != maxFilter && key != rumbleMode &&
         key != availableFilter && key != unitListFilter &&
@@ -66,7 +68,10 @@ class StorageUtils {
   }
 
   static dynamic readData(String key, dynamic defaultValue) {
-    if (_preferences?.containsKey(key) == true) return _preferences?.get(key);
-    else return defaultValue;
+    if (_preferences?.containsKey(key) == true) {
+      return _preferences?.get(key);
+    } else {
+      return defaultValue;
+    }
   }
 }

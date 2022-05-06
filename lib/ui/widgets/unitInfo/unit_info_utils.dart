@@ -1,8 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:optcteams/core/database/models/unitInfo.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UnitInfoUtils {
@@ -24,26 +24,45 @@ class UnitInfoUtils {
     }
   }
 
-  Divider divider() => Divider(thickness: 2);
+  Divider divider() => const Divider(thickness: 2);
 
-  List<TextSpan> generateColorKeysForTextSpan(String? primalContent, {String? underlined, bool simple = true}) {
+  List<TextSpan> generateColorKeysForTextSpan(String? primalContent,
+      {String? underlined, bool simple = true, bool parsePotential = false, bool isLLB = false}) {
     List<String> parted = [];
     List<TextSpan> texts = [];
     Color? color = (!StorageUtils.readData(StorageUtils.darkMode, false)
         ? Colors.black87 : null);
     Color tColor = Colors.white;
+
+    final llb = TextSpan(text: "${"withLLB".tr()}: ", style: TextStyle(
+        fontWeight: FontWeight.w900,
+        foreground: Paint()..shader = LinearGradient(colors: [
+          Colors.red.shade600,
+          Colors.orange.shade600,
+          Colors.red.shade600,
+        ]).createShader(const Rect.fromLTWH(0.0, 0.0, 150.0, 70.0))
+    ));
+
     // Extract the _keys
     if (primalContent != null) parted = primalContent.split(" ");
 
     // Draw the widget tree of TextSpans
-    if (!simple) {
-      texts.add(TextSpan(text: "• ", style: TextStyle(color: color)));
-      texts.add(TextSpan(text: "$underlined: ", style: TextStyle(decoration: TextDecoration.underline, color: color)));
-    } else {
-      texts.add(TextSpan(text: "• ", style: TextStyle(color: color)));
+    if (!parsePotential) {
+      if (!simple) {
+        texts.add(TextSpan(text: "• ", style: TextStyle(color: color)));
+        if (isLLB) {
+          texts.add(llb);
+        }
+        texts.add(TextSpan(text: "$underlined: ", style: TextStyle(decoration: TextDecoration.underline, color: color)));
+      } else {
+        texts.add(TextSpan(text: "• ", style: TextStyle(color: color)));
+        if (isLLB) {
+          texts.add(llb);
+        }
+      }
     }
-    parted.forEach((text) {
-      texts.add(TextSpan(text: " "));
+    for (var text in parted) {
+      texts.add(const TextSpan(text: " "));
       switch (text) {
         case "[STR]":
           texts.add(TextSpan(text: " STR ", style: TextStyle(color: tColor, backgroundColor: UI.strT)));
@@ -124,24 +143,27 @@ class UnitInfoUtils {
           texts.add(TextSpan(text: " G ", style: TextStyle(color: tColor, backgroundColor: UI.gT)));
           break;
         default:
-          texts.add(TextSpan(text: "$text", style: TextStyle(color: color)));
+          texts.add(TextSpan(text: text, style: TextStyle(color: color)));
       }
-    });
-    texts.add(TextSpan(text: "\n"));
+    }
+    if (!parsePotential) texts.add(const TextSpan(text: "\n"));
     return texts;
   }
 
-  RichText richText3Ways(String? underlined, String? content) {
+  RichText richText3Ways(String? underlined, String? content, {
+    bool isLLB = false
+  }) {
     return RichText(
       textAlign: TextAlign.start,
       text: TextSpan(
-          children: generateColorKeysForTextSpan(content, underlined: underlined, simple: false)
+          children: generateColorKeysForTextSpan(content, underlined: underlined, simple: false, isLLB: isLLB)
       ),
     );
   }
 
   Column simpleSection(String asset, String? title, String? information,
-      {bool italic = false, bool support = false, UnitInfo? unitInfo}) {
+      {bool italic = false, bool isLLB = false, bool needsSubsection = false,
+        String? subsectionText}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -149,15 +171,15 @@ class UnitInfoUtils {
         RichText(
           textAlign: TextAlign.start,
           text: TextSpan(
-            children: generateColorKeysForTextSpan(information),
+            children: information?.isEmpty == true ? [] : generateColorKeysForTextSpan(information),
           ),
         ),
         Visibility(
-          visible: support,
+          visible: needsSubsection,
           child: RichText(
             textAlign: TextAlign.start,
             text: TextSpan(
-              children: generateColorKeysForTextSpan(unitInfo?.support?[UnitInfo.fSupDescription]),
+              children: generateColorKeysForTextSpan(subsectionText, isLLB: isLLB),
             ),
           ),
         ),
@@ -169,8 +191,8 @@ class UnitInfoUtils {
   Row headerOfSection(String asset, String? title, {bool italic = false}) {
     return Row(children: [
       Padding(
-          padding: EdgeInsets.only(right: 6),
-          child: Container(width: 40, height: 40,
+          padding: const EdgeInsets.only(right: 6),
+          child: SizedBox(width: 40, height: 40,
             child: Image.asset(asset),
           )
       ),

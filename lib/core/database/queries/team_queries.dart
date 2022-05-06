@@ -1,11 +1,11 @@
-import 'package:optcteams/core/utils/ui_utils.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/database/database.dart';
 import 'package:optcteams/core/database/models/ship.dart';
 import 'package:optcteams/core/database/models/skills.dart';
 import 'package:optcteams/core/database/models/team.dart';
-import 'package:optcteams/core/database/models/teamShip.dart';
-import 'package:optcteams/core/database/models/teamUnit.dart';
+import 'package:optcteams/core/database/models/team_ship.dart';
+import 'package:optcteams/core/database/models/team_unit.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 import 'package:optcteams/core/database/queries/ship_queries.dart';
 import 'package:optcteams/core/database/queries/skills_queries.dart';
@@ -41,10 +41,12 @@ class TeamQueries {
           // With the units id, retrieve the info of every unit of a team
           List<Unit> units = [];
           List<Unit> supports = [];
-          for (int y = 0; y < unitsOfTeam.length; y++)
+          for (int y = 0; y < unitsOfTeam.length; y++) {
             units.add(await UnitQueries.instance.getUnit(unitsOfTeam[y]));
-          for (int y = 0; y < supportsOfTeam.length; y++)
+          }
+          for (int y = 0; y < supportsOfTeam.length; y++) {
             supports.add(await UnitQueries.instance.getUnit(supportsOfTeam[y]));
+          }
 
           // Get the ship too
           String shipOfTeam = await ShipQueries.instance.getShipOfTeam(teams[x].name);
@@ -91,7 +93,9 @@ class TeamQueries {
         }
       }
       // Case 3: Query is for all teams that are not maxed
-      else res = await _database?.query(Data.teamTable, where: "${Data.teamMaxed}=?", whereArgs: [1]);
+      else {
+        res = await _database?.query(Data.teamTable, where: "${Data.teamMaxed}=?", whereArgs: [1]);
+      }
 
       if (res != null) {
         List<Team> teams = generateTeamList(res);
@@ -104,10 +108,12 @@ class TeamQueries {
           // With the units id, retrieve the info of every unit of a team
           List<Unit> units = [];
           List<Unit> supports = [];
-          for (int y = 0; y < unitsOfTeam.length; y++)
+          for (int y = 0; y < unitsOfTeam.length; y++) {
             units.add(await UnitQueries.instance.getUnit(unitsOfTeam[y]));
-          for (int y = 0; y < supportsOfTeam.length; y++)
+          }
+          for (int y = 0; y < supportsOfTeam.length; y++) {
             supports.add(await UnitQueries.instance.getUnit(supportsOfTeam[y]));
+          }
 
           // Get the ship too
           String shipOfTeam = await ShipQueries.instance.getShipOfTeam(teams[x].name);
@@ -145,10 +151,11 @@ class TeamQueries {
           Data.teamTable,
           columns: [Data.teamName]
       );
-      if (res != null)
+      if (res != null) {
         return List.generate(res.length, (i) => res[i][Data.teamName]);
-      else
+      } else {
         return [];
+      }
     }
     return [];
   }
@@ -209,7 +216,6 @@ class TeamQueries {
     if (_database != null) {
       await _database?.delete(Data.teamTable, where: "${Data.teamName}=?", whereArgs: [name]);
     }
-    return null;
   }
 
   Future<bool> updateTeam(Team team, String? lastName) async {
@@ -218,8 +224,7 @@ class TeamQueries {
       if (lastName != null) {
         // If enter here, user has changed the team name
         List<String> teamNames = await getTeamNames();
-        if (teamNames.contains(team.name)) return false;
-        else await deleteTeam(lastName);
+        if (!teamNames.contains(team.name)) await deleteTeam(lastName);
       }
       await deleteTeam(team.name);
       await insertTeam(team);
@@ -237,10 +242,11 @@ class TeamQueries {
   Future<int> getNumberOfTeams() async {
     if (_database != null) {
       List<Map<String, dynamic>>? res = await _database?.rawQuery("SELECT ${Data.teamName} FROM ${Data.teamTable}");
-      if (res != null)
+      if (res != null) {
         return List.generate(res.length, (i) { return res[i][Data.teamName]; }).length;
-      else
+      } else {
         return 0;
+      }
     } else {
       return -1;
     }

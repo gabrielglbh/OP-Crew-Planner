@@ -3,18 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
-import 'package:optcteams/ui/pages/main/enum_lists.dart';
+import 'package:optcteams/core/types/list_type.dart';
 import 'package:optcteams/ui/pages/main/teams/bloc/team_bloc.dart';
-import 'package:optcteams/ui/widgets/ActionButton.dart';
-import 'package:optcteams/ui/widgets/EmptyList.dart';
-import 'package:optcteams/ui/widgets/LoadingWidget.dart';
-import 'package:optcteams/ui/widgets/CustomSearchBar.dart';
+import 'package:optcteams/ui/widgets/action_button.dart';
+import 'package:optcteams/ui/widgets/empty_list.dart';
+import 'package:optcteams/ui/widgets/loading_widget.dart';
+import 'package:optcteams/ui/widgets/custom_search_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:optcteams/ui/widgets/TeamElement.dart';
+import 'package:optcteams/ui/widgets/team_element.dart';
 
 class TeamsTab extends StatefulWidget {
   final FocusNode? focus;
-  const TeamsTab({required this.focus});
+  const TeamsTab({Key? key, required this.focus}) : super(key: key);
 
   @override
   _TeamsTabState createState() => _TeamsTabState();
@@ -26,7 +26,7 @@ class _TeamsTabState extends State<TeamsTab> with AutomaticKeepAliveClientMixin 
   bool _showMaxed = true;
 
   _addLoadingEvent(BuildContext blocContext) {
-    blocContext.read<TeamListBloc>()..add(TeamListEventLoading(showMax: _showMaxed));
+    blocContext.read<TeamListBloc>().add(TeamListEventLoading(showMax: _showMaxed));
   }
 
   bool _onScrolling(ScrollNotification sn) {
@@ -97,15 +97,17 @@ class _TeamsTabState extends State<TeamsTab> with AutomaticKeepAliveClientMixin 
   }
 
   Widget _setWidgetOnState(BuildContext blocContext, TeamListState state) {
-    if (state is TeamListStateLoading || state is TeamListStateSearching)
-      return LoadingWidget();
-    else if (state is TeamListStateLoaded) {
-      if (state.teams.isEmpty)
+    if (state is TeamListStateLoading || state is TeamListStateSearching) {
+      return const LoadingWidget();
+    } else if (state is TeamListStateLoaded) {
+      if (state.teams.isEmpty) {
         return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.team);
-      else
+      } else {
         return _teamList(blocContext, state);
-    } else
+      }
+    } else {
       return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.team);
+    }
   }
 
   Expanded _teamList(BuildContext blocContext, TeamListStateLoaded state) {
@@ -114,8 +116,9 @@ class _TeamsTabState extends State<TeamsTab> with AutomaticKeepAliveClientMixin 
         onNotification: (notification) => _onScrolling(notification),
         child: RefreshIndicator(
           onRefresh: () async => _addLoadingEvent(blocContext),
+          color: Colors.orange.shade400,
           child: ListView.builder(
-            key: PageStorageKey<String>('teamTab'),
+            key: const PageStorageKey<String>('teamTab'),
             itemCount: state.teams.length,
             itemBuilder: ((context, index) {
               return TeamElement(
@@ -126,7 +129,7 @@ class _TeamsTabState extends State<TeamsTab> with AutomaticKeepAliveClientMixin 
                   widget.focus?.unfocus();
                 },
                 onDelete: () async {
-                  blocContext.read<TeamListBloc>()..add(
+                  blocContext.read<TeamListBloc>().add(
                       TeamListEventDelete(state.teams[index], showMaxed: _showMaxed));
                   Navigator.pop(context);
                 },

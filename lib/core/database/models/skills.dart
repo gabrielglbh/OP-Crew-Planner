@@ -60,17 +60,17 @@ class Skills {
   bool compare(Skills b) {
     int result = 0;
 
-    if (this.team == b.team) result++;
-    if (this.damageReduction == b.damageReduction) result++;
-    if (this.chargeSpecials == b.chargeSpecials) result++;
-    if (this.bindResistance == b.bindResistance) result++;
-    if (this.despairResistance == b.despairResistance) result++;
-    if (this.autoHeal == b.autoHeal) result++;
-    if (this.rcvBoost == b.rcvBoost) result++;
-    if (this.slotsBoost == b.slotsBoost) result++;
-    if (this.mapResistance == b.mapResistance) result++;
-    if (this.poisonResistance == b.poisonResistance) result++;
-    if (this.resilience == b.resilience) result++;
+    if (team == b.team) result++;
+    if (damageReduction == b.damageReduction) result++;
+    if (chargeSpecials == b.chargeSpecials) result++;
+    if (bindResistance == b.bindResistance) result++;
+    if (despairResistance == b.despairResistance) result++;
+    if (autoHeal == b.autoHeal) result++;
+    if (rcvBoost == b.rcvBoost) result++;
+    if (slotsBoost == b.slotsBoost) result++;
+    if (mapResistance == b.mapResistance) result++;
+    if (poisonResistance == b.poisonResistance) result++;
+    if (resilience == b.resilience) result++;
 
     return result == 11;
   }

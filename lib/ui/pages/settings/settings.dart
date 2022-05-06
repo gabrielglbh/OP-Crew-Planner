@@ -6,20 +6,20 @@ import 'package:optcteams/core/firebase/queries/authentication.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
-import 'package:optcteams/core/utils/theme_manager.dart';
-import 'package:optcteams/ui/pages/settings/widgets/AccountSettings.dart';
-import 'package:optcteams/ui/pages/settings/widgets/BackUpSettings.dart';
-import 'package:optcteams/ui/pages/settings/widgets/InformationSettings.dart';
-import 'package:optcteams/ui/pages/settings/widgets/SettingTile.dart';
-import 'package:optcteams/ui/widgets/BottomSheetChoices.dart';
-import 'package:optcteams/ui/widgets/CustomAlert.dart';
-import 'package:optcteams/ui/widgets/CustomIconButtons.dart';
-import 'package:optcteams/ui/widgets/LoadingWidget.dart';
+import 'package:optcteams/ui/theme/theme_manager.dart';
+import 'package:optcteams/ui/pages/settings/widgets/account_settings.dart';
+import 'package:optcteams/ui/pages/settings/widgets/back_up_settings.dart';
+import 'package:optcteams/ui/pages/settings/widgets/information_settings.dart';
+import 'package:optcteams/ui/pages/settings/widgets/setting_tile.dart';
+import 'package:optcteams/ui/widgets/bottom_sheet_choices.dart';
+import 'package:optcteams/ui/widgets/custom_alert.dart';
+import 'package:optcteams/ui/widgets/custom_icon_buttons.dart';
+import 'package:optcteams/ui/widgets/loading_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class SettingsPage extends StatefulWidget {
-  SettingsPage();
+  const SettingsPage({Key? key}) : super(key: key);
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
@@ -95,7 +95,7 @@ class _SettingsPageState extends State<SettingsPage> {
     if (n.isNotEmpty) {
       List<Text> content = List.generate(n.length, (c) => Text(n[c] + "\n"));
       Scrollbar child = Scrollbar(child: ListView(
-          padding: EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.only(top: 8),
           children: content
       ));
       ChoiceBottomSheet.callModalSheet(context, "versionNotes".tr(), child, height: 2);
@@ -106,8 +106,11 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if (_currentlyLoading) return false;
-        else return true;
+        if (_currentlyLoading) {
+          return false;
+        } else {
+          return true;
+        }
       },
       child: Stack(
         children: [
@@ -131,12 +134,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ],
             ),
-            body: Container(
+            body: SizedBox(
               height: double.infinity,
               child: Center(
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: 56),
+                    padding: const EdgeInsets.only(bottom: 56),
                     child: _settings()
                   )
                 ),
@@ -156,7 +159,7 @@ class _SettingsPageState extends State<SettingsPage> {
         SettingHeader(title: "versionNotes".tr()),
         SettingTile(
             title: Text("newThingsAdded".tr()),
-            icon: Icon(Icons.star, size: 20, color: Colors.green),
+            icon: const Icon(Icons.star, size: 20, color: Colors.green),
             onTap: () => _openBSForVersionNotes()),
         /// BackUp Settings
         BackUpSettings(
@@ -174,10 +177,19 @@ class _SettingsPageState extends State<SettingsPage> {
                 await launch(Data.storeLink);
               }
             }),
+        SettingTile(
+            title: const Text("OP Crew Planner"),
+            icon: Image.asset("res/icons/github.png", scale: 20),
+            onTap: () async {
+              const url = "https://github.com/gabrielglbh/op-crew-planner";
+              if (await canLaunch(url)) {
+                await launch(url);
+              }
+            }),
         /// Account Settings
         AccountSettings(uid: _uid),
         /// Information Settings
-        InformationSettings()
+        const InformationSettings()
       ],
     );
   }

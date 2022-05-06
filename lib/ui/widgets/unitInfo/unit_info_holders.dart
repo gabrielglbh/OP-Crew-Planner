@@ -1,39 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:optcteams/core/database/models/unitInfo.dart';
+import 'package:optcteams/core/database/models/unit_info.dart';
 import 'package:optcteams/ui/widgets/unitInfo/unit_info_utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class CaptainAbility extends StatelessWidget {
   final UnitInfo info;
-  const CaptainAbility({required this.info});
+  const CaptainAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool hasLLB = info.llbCaptain != null && info.llbCaptain != "";
     return Visibility(
-      visible: info.captain != null && info.captain != "",
-      child: UnitInfoUtils.instance.simpleSection("res/info/captain.png", "captain".tr(), info.captain)
+        visible: (info.captain != null && info.captain != "") || hasLLB,
+        child: UnitInfoUtils.instance.simpleSection("res/info/captain.png", "captain".tr(),
+            info.captain, needsSubsection: hasLLB, isLLB: hasLLB, subsectionText: info.llbCaptain)
     );
   }
 }
 
 class SpecialAbility extends StatelessWidget {
   final UnitInfo info;
-  const SpecialAbility({required this.info});
+  const SpecialAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool hasLLB = info.llbSpecial != null && info.llbSpecial != "";
     return Visibility(
-      visible: info.specialName != null && info.special != null &&
-          info.specialName != "" && info.special != "",
-      child: UnitInfoUtils.instance.simpleSection("res/maxed/specialLevel.png",
-          info.specialName, info.special, italic: true)
+        visible: (info.specialName != null && info.special != null &&
+            info.specialName != "" && info.special != "") || hasLLB,
+        child: UnitInfoUtils.instance.simpleSection("res/maxed/specialLevel.png",
+            info.specialName, info.special, italic: true, isLLB: hasLLB,
+            needsSubsection: hasLLB, subsectionText: info.llbSpecial)
     );
   }
 }
 
 class SwapAbility extends StatelessWidget {
   final UnitInfo info;
-  const SwapAbility({required this.info});
+  const SwapAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,7 @@ class SwapAbility extends StatelessWidget {
 
 class VersusAbility extends StatelessWidget {
   final UnitInfo info;
-  const VersusAbility({required this.info});
+  const VersusAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +72,7 @@ class VersusAbility extends StatelessWidget {
 
 class SuperTypeAbility extends StatelessWidget {
   final UnitInfo info;
-  const SuperTypeAbility({required this.info});
+  const SuperTypeAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +94,7 @@ class SuperTypeAbility extends StatelessWidget {
 
 class SupportAbility extends StatelessWidget {
   final UnitInfo info;
-  const SupportAbility({required this.info});
+  const SupportAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -100,14 +104,15 @@ class SupportAbility extends StatelessWidget {
           && info.support?[UnitInfo.fSupChars] != ""
           && info.support?[UnitInfo.fSupDescription] != "",
       child: UnitInfoUtils.instance.simpleSection("res/maxed/support.png", "supportAbility".tr(),
-          "For ${info.support?[UnitInfo.fSupChars]}", support: true, unitInfo: info),
+          "For ${info.support?[UnitInfo.fSupChars]}",
+          needsSubsection: true, subsectionText: info.support?[UnitInfo.fSupDescription]),
     );
   }
 }
 
 class LastTapAbility extends StatelessWidget {
   final UnitInfo info;
-  const LastTapAbility({required this.info});
+  const LastTapAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -129,49 +134,55 @@ class LastTapAbility extends StatelessWidget {
 
 class RumbleAbility extends StatelessWidget {
   final UnitInfo info;
-  const RumbleAbility({required this.info});
+  const RumbleAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool hasLLB = info.llbFestAbility != null && info.llbFestAbility != "";
     return Visibility(
-      visible: info.festAbility != null && info.festAbility != "",
-      child: UnitInfoUtils.instance.simpleSection("res/maxed/rumble_ability.png",
-          "fAbility".tr(), info.festAbility)
+        visible: (info.festAbility != null && info.festAbility != "") || hasLLB,
+        child: UnitInfoUtils.instance.simpleSection("res/maxed/rumble_ability.png",
+            "fAbility".tr(), info.festAbility, needsSubsection: hasLLB, isLLB: hasLLB,
+            subsectionText: info.llbFestAbility)
     );
   }
 }
 
 class RumbleSpecial extends StatelessWidget {
   final UnitInfo info;
-  const RumbleSpecial({required this.info});
+  const RumbleSpecial({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool hasLLB = info.llbFestSpecial != null && info.llbFestSpecial != "";
     return Visibility(
-      visible: info.festSpecial != null && info.festSpecial != "",
-      child: UnitInfoUtils.instance.simpleSection("res/maxed/rumble_special.png",
-          "fSpecial".tr(), info.festSpecial)
+        visible: (info.festSpecial != null && info.festSpecial != "") || hasLLB,
+        child: UnitInfoUtils.instance.simpleSection("res/maxed/rumble_special.png",
+            "fSpecial".tr(), info.festSpecial, needsSubsection: hasLLB, isLLB: hasLLB,
+            subsectionText: info.llbFestSpecial)
     );
   }
 }
 
 class RumbleResistance extends StatelessWidget {
   final UnitInfo info;
-  const RumbleResistance({required this.info});
+  const RumbleResistance({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool hasLLB = info.llbFestResistance != null && info.llbFestResistance != "";
     return Visibility(
-      visible: info.festResistance != null && info.festResistance != "",
-      child: UnitInfoUtils.instance.simpleSection("res/info/resistance.png",
-          "fResistance".tr(), info.festResistance)
+        visible: (info.festResistance != null && info.festResistance != "") || hasLLB,
+        child: UnitInfoUtils.instance.simpleSection("res/info/resistance.png",
+            "fResistance".tr(), info.festResistance, needsSubsection: hasLLB, isLLB: hasLLB,
+            subsectionText: info.llbFestResistance)
     );
   }
 }
 
 class PotentialAbility extends StatelessWidget {
   final UnitInfo info;
-  const PotentialAbility({required this.info});
+  const PotentialAbility({Key? key, required this.info}) : super(key: key);
 
   final List<String> _cPotentials = const [
     "reduce sailor despair duration",
@@ -195,33 +206,39 @@ class PotentialAbility extends StatelessWidget {
     "reduce sailor despair duration": "res/potential_abilities/sailorDespair.png",
     "reduce ship bind duration": "res/potential_abilities/shipBind.png",
     "nutrition/reduce hunger duration": "res/potential_abilities/reduceHunger.png",
-    "last tap": "res/info/lastTap.png"
+    "last tap": "res/potential_abilities/lastTap.png"
   };
 
   @override
   Widget build(BuildContext context) {
     List<Widget> potentials = [];
-    if (info.potential.isNotEmpty && info.potential.length >= 1) {
+    if (info.potential.isNotEmpty && info.potential.isNotEmpty) {
       potentials.add(UnitInfoUtils.instance
           .headerOfSection("res/maxed/potentialLevel.png", "potential".tr()));
-      info.potential.forEach((ability) {
+      for (var ability in info.potential) {
         if (ability != "") {
           potentials.add(
             Row(children: [
-              Text("• ", textAlign: TextAlign.start),
+              const Text("• ", textAlign: TextAlign.start),
               Padding(
-                padding: EdgeInsets.only(right: 6),
+                padding: const EdgeInsets.only(right: 6),
                 child: Container(width: 30, height: 30,
-                  padding: _cPotentials.contains(ability.toLowerCase()) ? EdgeInsets.all(1) : null,
+                  padding: _cPotentials.contains(ability.toLowerCase()) ? const EdgeInsets.all(1) : null,
                   child: Image.asset((_potentialImages[ability.toLowerCase()] ?? "")),
                 ),
               ),
-              Text("$ability", textAlign: TextAlign.start),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  children: UnitInfoUtils.instance.generateColorKeysForTextSpan(
+                      ability, parsePotential: true)
+                ),
+              )
             ])
           );
         }
-      });
-      potentials.add(Text("")); // Extra padding at the end of the Potential Section
+      }
+      potentials.add(const Text("")); // Extra padding at the end of the Potential Section
       potentials.add(UnitInfoUtils.instance.divider());
       return  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -235,10 +252,23 @@ class PotentialAbility extends StatelessWidget {
 
 class SailorAbility extends StatelessWidget {
   final UnitInfo info;
-  const SailorAbility({required this.info});
+  const SailorAbility({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool hasLLB = (info.sailor?.keys.contains(UnitInfo.fLLBSailorBase) == true
+        && info.sailor?[UnitInfo.fLLBSailorBase] != "")
+        || (info.sailor?.keys.contains(UnitInfo.fLLBSailorLevel1) == true
+            && info.sailor?[UnitInfo.fLLBSailorLevel1] != "")
+        || (info.sailor?.keys.contains(UnitInfo.fLLBSailorLevel2) == true
+            && info.sailor?[UnitInfo.fLLBSailorLevel2] != "")
+        || (info.sailor?.keys.contains(UnitInfo.fLLBSailorCombined) == true
+            && info.sailor?[UnitInfo.fLLBSailorCombined] != "")
+        || (info.sailor?.keys.contains(UnitInfo.fLLBSailorCharacter1) == true
+            && info.sailor?[UnitInfo.fLLBSailorCharacter1] != "")
+        || (info.sailor?.keys.contains(UnitInfo.fLLBSailorCharacter2) == true
+            && info.sailor?[UnitInfo.fLLBSailorCharacter2] != "");
+
     return Visibility(
       visible: info.sailor != null && (info.sailor?.length ?? 1) >= 1
         && ((info.sailor?.keys.contains(UnitInfo.fSailorBase) == true
@@ -253,7 +283,8 @@ class SailorAbility extends StatelessWidget {
         || (info.sailor?.keys.contains(UnitInfo.fSailorChar1) == true
             && info.sailor?[UnitInfo.fSailorChar1] != "")
         || (info.sailor?.keys.contains(UnitInfo.fSailorChar2) == true
-            && info.sailor?[UnitInfo.fSailorChar2] != "")),
+            && info.sailor?[UnitInfo.fSailorChar2] != "")
+        || hasLLB),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -297,6 +328,42 @@ class SailorAbility extends StatelessWidget {
                 && info.sailor?[UnitInfo.fSailorChar2] != "",
             child: UnitInfoUtils.instance.richText3Ways("c2".tr(),
                 info.sailor?[UnitInfo.fSailorChar2]),
+          ),
+          Visibility(
+            visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorBase) == true
+                && info.sailor?[UnitInfo.fLLBSailorBase] != "",
+            child: UnitInfoUtils.instance.richText3Ways("base".tr(),
+                info.sailor?[UnitInfo.fLLBSailorBase], isLLB: true),
+          ),
+          Visibility(
+            visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorLevel1) == true
+                && info.sailor?[UnitInfo.fLLBSailorLevel1] != "",
+            child: UnitInfoUtils.instance.richText3Ways("l1".tr(),
+                info.sailor?[UnitInfo.fLLBSailorLevel1], isLLB: true),
+          ),
+          Visibility(
+            visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorLevel2) == true
+                && info.sailor?[UnitInfo.fLLBSailorLevel2] != "",
+            child: UnitInfoUtils.instance.richText3Ways("l2".tr(),
+                info.sailor?[UnitInfo.fLLBSailorLevel2], isLLB: true),
+          ),
+          Visibility(
+            visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorCombined) == true
+                && info.sailor?[UnitInfo.fLLBSailorCombined] != "",
+            child: UnitInfoUtils.instance.richText3Ways("combined".tr(),
+                info.sailor?[UnitInfo.fLLBSailorCombined], isLLB: true),
+          ),
+          Visibility(
+            visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorCharacter1) == true
+                && info.sailor?[UnitInfo.fLLBSailorCharacter1] != "",
+            child: UnitInfoUtils.instance.richText3Ways("c1".tr(),
+                info.sailor?[UnitInfo.fLLBSailorCharacter1], isLLB: true),
+          ),
+          Visibility(
+            visible: info.sailor?.keys.contains(UnitInfo.fLLBSailorCharacter2) == true
+                && info.sailor?[UnitInfo.fLLBSailorCharacter2] != "",
+            child: UnitInfoUtils.instance.richText3Ways("c2".tr(),
+                info.sailor?[UnitInfo.fLLBSailorCharacter2], isLLB: true),
           ),
           UnitInfoUtils.instance.divider()
         ]

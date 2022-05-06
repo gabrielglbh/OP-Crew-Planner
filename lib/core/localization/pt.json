@@ -39,6 +39,7 @@
   "filterLimitBreak": "Limite Superado",
   "filterRumbleSpecial": "Especial PvP",
   "filterRumbleAbility": "Habilidade PvP",
+  "filterLLB": "Limite Superado do Nível",
 
   "titleUnitPage": "Nova Unidade",
   "titleUpdateUnitPage": "Unidade",
@@ -178,6 +179,7 @@
   "fResistance": "Resistência do PvP",
   "stCriteria": "Critério",
   "dataNotAvailable": "Nenhum dado encontrado para essa unidade",
+  "withLLB": "Com Limite Superado do Nível",
 
   "databaseTab": "Dados",
   "findUnits": "Buscar informação sobre unidades",

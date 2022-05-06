@@ -1,7 +1,7 @@
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/database/database.dart';
 import 'package:optcteams/core/database/models/unit.dart';
-import 'package:optcteams/core/database/models/unitInfo.dart';
+import 'package:optcteams/core/database/models/unit_info.dart';
 import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -20,8 +20,11 @@ class UnitInfoQueries {
   Future<bool> insertUnitInfoIntoDatabase(UnitInfo u, Unit unit) async {
     try {
       if (_database != null) {
-        if (u.potential.length == 1) u.potential = [u.potential[0], "", ""];
-        else if (u.potential.length == 2) u.potential = [u.potential[0], u.potential[1], ""];
+        if (u.potential.length == 1) {
+          u.potential = [u.potential[0], "", ""];
+        } else if (u.potential.length == 2) {
+          u.potential = [u.potential[0], u.potential[1], ""];
+        }
         await _database?.insert(Data.dataTable, u.toJson(), conflictAlgorithm: ConflictAlgorithm.abort);
         await _database?.update(Data.unitTable, unit.toJson(), where: "${Data.unitId}=?", whereArgs: [u.unitId]);
       }
@@ -53,14 +56,18 @@ class UnitInfoQueries {
             where: "${Data.unitDataDownloaded}=?", whereArgs: [1]);
         if (res != null) {
           List<Unit> units = UnitQueries.generateUnitList(res);
-          units.forEach((unit) async {
+          for (var unit in units) {
             unit.downloaded = 0;
             await UnitQueries.instance.updateUnit(unit);
-          });
+          }
           return true;
         }
-        else return false;
-      } else return false;
+        else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     } catch (err) {
       return false;
     }
@@ -70,8 +77,9 @@ class UnitInfoQueries {
     if (_database != null) {
       List<Map<String, dynamic>>? res = await _database?.query(Data.dataTable, where: "${Data.dataUnitId}=?", whereArgs: [id]);
       if (res != null) {
-        if (res.isEmpty) return UnitInfo.empty();
-        else {
+        if (res.isEmpty) {
+          return UnitInfo.empty();
+        } else {
           return UnitInfo(
             sailor: {
               UnitInfo.fSailorBase: res[0][Data.sailorBase],
@@ -79,7 +87,13 @@ class UnitInfoQueries {
               UnitInfo.fSailorLevel2: res[0][Data.sailorLevel2],
               UnitInfo.fSailorCombined: res[0][Data.sailorCombined],
               UnitInfo.fSailorChar1: res[0][Data.sailorCharacter1],
-              UnitInfo.fSailorChar2: res[0][Data.sailorCharacter2]
+              UnitInfo.fSailorChar2: res[0][Data.sailorCharacter2],
+              UnitInfo.fLLBSailorBase: res[0][Data.llbSailorBase],
+              UnitInfo.fLLBSailorLevel1: res[0][Data.llbSailorLevel1],
+              UnitInfo.fLLBSailorLevel2: res[0][Data.llbSailorLevel2],
+              UnitInfo.fLLBSailorCombined: res[0][Data.llbSailorCombined],
+              UnitInfo.fLLBSailorCharacter1: res[0][Data.llbSailorCharacter1],
+              UnitInfo.fLLBSailorCharacter2: res[0][Data.llbSailorCharacter2]
             },
             special: res[0][Data.special],
             specialName: res[0][Data.specialName],
@@ -103,11 +117,18 @@ class UnitInfoQueries {
             vsSpecial: res[0][Data.vsSpecial],
             art: res[0][Data.art],
             lastTapCondition: res[0][Data.lastTapCondition],
-            lastTapDescription: res[0][Data.lastTapDescription]
+            lastTapDescription: res[0][Data.lastTapDescription],
+            llbCaptain: res[0][Data.llbCaptain],
+            llbSpecial: res[0][Data.llbSpecial],
+            llbFestAbility: res[0][Data.llbFestAbility],
+            llbFestResistance: res[0][Data.llbFestResistance],
+            llbFestSpecial: res[0][Data.llbFestSpecial],
           );
         }
       }
-      else return UnitInfo.empty();
+      else {
+        return UnitInfo.empty();
+      }
     }
     return UnitInfo.empty();
   }
