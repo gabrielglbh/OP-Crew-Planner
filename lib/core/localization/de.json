@@ -180,6 +180,9 @@
   "stCriteria": "Zustand",
   "dataNotAvailable": "Keine Daten für dieses Gerät gefunden",
   "withLLB": "Mit Grenze Gebrochen Pegel",
+  "lastTap": "Letzte Tap-Aktion",
+  "superTND": "Super Tandem",
+  "superType": "Super Typ/Klasse",
 
   "databaseTab": "Daten",
   "findUnits": "Suche nach Geräteinformationen",

@@ -82,7 +82,7 @@ class SuperTypeAbility extends StatelessWidget {
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            UnitInfoUtils.instance.headerOfSection("res/info/supertype.png", "Super Type"),
+            UnitInfoUtils.instance.headerOfSection("res/info/supertype.png", "superType".tr()),
             UnitInfoUtils.instance.richText3Ways("stCriteria".tr(), info.superSpecialCriteria),
             UnitInfoUtils.instance.richText3Ways("special".tr(), info.superSpecial),
             UnitInfoUtils.instance.divider()
@@ -122,12 +122,34 @@ class LastTapAbility extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          UnitInfoUtils.instance.headerOfSection("res/info/lastTap.png", "Last Tap Action"),
+          UnitInfoUtils.instance.headerOfSection("res/info/lastTap.png", "lastTap".tr()),
           UnitInfoUtils.instance.richText3Ways("stCriteria".tr(), info.lastTapCondition),
           UnitInfoUtils.instance.richText3Ways("special".tr(), info.lastTapDescription),
           UnitInfoUtils.instance.divider()
         ]
       )
+    );
+  }
+}
+
+class SuperTNDAbility extends StatelessWidget {
+  final UnitInfo info;
+  const SuperTNDAbility({Key? key, required this.info}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Visibility(
+        visible: info.superTandemCondition != null && info.superTandemCondition != ""
+            && info.superTandemDescription != null && info.superTandemDescription != "",
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              UnitInfoUtils.instance.headerOfSection("res/info/superTND.png", "superTND".tr()),
+              UnitInfoUtils.instance.richText3Ways("stCriteria".tr(), info.superTandemCondition),
+              UnitInfoUtils.instance.richText3Ways("special".tr(), info.superTandemDescription),
+              UnitInfoUtils.instance.divider()
+            ]
+        )
     );
   }
 }

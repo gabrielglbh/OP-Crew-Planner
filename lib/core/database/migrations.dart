@@ -5,6 +5,16 @@ import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Migrations {
+  // SUPER TANDEM EXPANSION
+  static Future<void> version39to40(Database db) async {
+    try {
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.superTandemCondition} TEXT");
+      await db.rawQuery("ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.superTandemDescription} TEXT");
+    } catch (err) {
+      print(err);
+    }
+  }
+
   // LEVEL LIMIT BREAK UPDATE
   static Future<void> version38to39(Database db) async {
     try {

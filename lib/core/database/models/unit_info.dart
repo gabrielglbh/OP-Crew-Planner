@@ -18,6 +18,8 @@ class UnitInfo {
   String? art;
   String? lastTapCondition;
   String? lastTapDescription;
+  String? superTandemCondition;
+  String? superTandemDescription;
   // Level Limit Break
   String? llbCaptain;
   String? llbSpecial;
@@ -64,12 +66,15 @@ class UnitInfo {
   static const String fArt = "art";
   static const String fLastTapCondition = "lastTapCondition";
   static const String fLastTapDescription = "lastTapDescription";
+  static const String fSuperTandemCondition = "superTandemCondition";
+  static const String fSuperTandemDescription = "superTandemDescription";
 
   UnitInfo({this.sailor, this.special, this.specialName, this.captain, this.swap,
       this.potential = const [], this.festAbility, this.festSpecial, this.festResistance,
       this.support, this.superSpecial, this.superSpecialCriteria, this.vsSpecial,
       this.vsCondition, this.art, this.unitId, this.lastTapCondition, this.lastTapDescription,
-      this.llbCaptain, this.llbSpecial, this.llbFestSpecial, this.llbFestAbility, this.llbFestResistance
+      this.llbCaptain, this.llbSpecial, this.llbFestSpecial, this.llbFestAbility, this.llbFestResistance,
+      this.superTandemCondition, this.superTandemDescription
   });
 
   bool isEqualTo(UnitInfo b) {
@@ -82,7 +87,8 @@ class UnitInfo {
         vsSpecial == b.vsSpecial && art == b.art && lastTapCondition == b.lastTapCondition &&
         lastTapDescription == b.lastTapDescription && unitId == b.unitId && llbCaptain == b.llbCaptain &&
         llbSpecial == b.llbSpecial && llbFestSpecial == b.llbFestSpecial &&
-        llbFestAbility == b.llbFestAbility && llbFestResistance == b.llbFestResistance;
+        llbFestAbility == b.llbFestAbility && llbFestResistance == b.llbFestResistance &&
+        superTandemCondition == b.superTandemCondition && superTandemDescription == b.superTandemDescription;
   }
 
   factory UnitInfo.empty() => UnitInfo(
@@ -107,7 +113,9 @@ class UnitInfo {
       llbSpecial: "",
       llbFestSpecial: "",
       llbFestAbility: "",
-      llbFestResistance: ""
+      llbFestResistance: "",
+      superTandemCondition: "",
+      superTandemDescription: ""
   );
 
   factory UnitInfo.fromJson(Map<String, dynamic> json) {
@@ -134,6 +142,8 @@ class UnitInfo {
       llbFestAbility: json[fLLBFestAbility] ?? "",
       llbFestResistance: json[fLLBFestResist] ?? "",
       llbFestSpecial: json[fLLBFestSpecial] ?? "",
+      superTandemCondition: json[fSuperTandemCondition] ?? "",
+      superTandemDescription: json[fSuperTandemDescription] ?? ""
     );
   }
 
@@ -178,6 +188,8 @@ class UnitInfo {
         Data.llbFestAbility: llbFestAbility ?? "",
         Data.llbFestResistance: llbFestResistance ?? "",
         Data.llbFestSpecial: llbFestSpecial ?? "",
+        Data.superTandemCondition: superTandemCondition ?? "",
+        Data.superTandemDescription: superTandemDescription ?? ""
       };
     }
     else if (potential[0] != "" && potential[1] == "" && potential[2] == "") {
@@ -219,6 +231,8 @@ class UnitInfo {
         Data.llbFestAbility: llbFestAbility ?? "",
         Data.llbFestResistance: llbFestResistance ?? "",
         Data.llbFestSpecial: llbFestSpecial ?? "",
+        Data.superTandemCondition: superTandemCondition ?? "",
+        Data.superTandemDescription: superTandemDescription ?? ""
       };
     } else if (potential[0] != "" && potential[1] != "" && potential[2] == "") {
       return {
@@ -259,6 +273,8 @@ class UnitInfo {
         Data.llbFestAbility: llbFestAbility ?? "",
         Data.llbFestResistance: llbFestResistance ?? "",
         Data.llbFestSpecial: llbFestSpecial ?? "",
+        Data.superTandemCondition: superTandemCondition ?? "",
+        Data.superTandemDescription: superTandemDescription ?? ""
       };
     } else {
       return {
@@ -299,6 +315,8 @@ class UnitInfo {
         Data.llbFestAbility: llbFestAbility ?? "",
         Data.llbFestResistance: llbFestResistance ?? "",
         Data.llbFestSpecial: llbFestSpecial ?? "",
+        Data.superTandemCondition: superTandemCondition ?? "",
+        Data.superTandemDescription: superTandemDescription ?? ""
       };
     }
   }
