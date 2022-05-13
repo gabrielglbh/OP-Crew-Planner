@@ -228,7 +228,8 @@ class PotentialAbility extends StatelessWidget {
     "reduce sailor despair duration": "res/potential_abilities/sailorDespair.png",
     "reduce ship bind duration": "res/potential_abilities/shipBind.png",
     "nutrition/reduce hunger duration": "res/potential_abilities/reduceHunger.png",
-    "last tap": "res/potential_abilities/lastTap.png"
+    "last tap": "res/potential_abilities/lastTap.png",
+    "super tandem": "res/potential_abilities/superTND.png",
   };
 
   @override
