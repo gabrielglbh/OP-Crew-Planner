@@ -180,6 +180,9 @@
   "stCriteria": "Critère",
   "dataNotAvailable": "Aucune donnée pour cette unité",
   "withLLB": "Avec Dépassement de Limite du Niveau",
+  "lastTap" : "Action du dernier robinet",
+  "superTND" : "Super Tandem",
+  "superType" : "Super Type/Classe",
 
   "databaseTab": "Données",
   "findUnits": "Recherche des informations sur une unité",

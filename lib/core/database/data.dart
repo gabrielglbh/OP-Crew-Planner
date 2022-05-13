@@ -138,6 +138,8 @@ class Data {
   static const String art = "art";
   static const String lastTapCondition = "lastTapCondition";
   static const String lastTapDescription = "lastTapDescription";
+  static const String superTandemCondition = "superTandemCondition";
+  static const String superTandemDescription = "superTandemDescription";
 
   static const String allType = "ALL";
   static const String strType = "STR";

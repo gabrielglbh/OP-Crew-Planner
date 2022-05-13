@@ -118,6 +118,8 @@ class UnitInfoQueries {
             art: res[0][Data.art],
             lastTapCondition: res[0][Data.lastTapCondition],
             lastTapDescription: res[0][Data.lastTapDescription],
+            superTandemCondition: res[0][Data.superTandemCondition],
+            superTandemDescription: res[0][Data.superTandemDescription],
             llbCaptain: res[0][Data.llbCaptain],
             llbSpecial: res[0][Data.llbSpecial],
             llbFestAbility: res[0][Data.llbFestAbility],

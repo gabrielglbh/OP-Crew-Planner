@@ -180,6 +180,9 @@
   "stCriteria": "Condición",
   "dataNotAvailable": "No se han encontrado datos de esta unidad",
   "withLLB": "Con Traspaso del Límite de Nivel",
+  "lastTap": "Acción de Último Toque",
+  "superTND": "Super Tandem",
+  "superType": "Super Tipo/Clase",
 
   "databaseTab": "Datos",
   "findUnits": "Busca información sobre las unidades",

@@ -182,13 +182,14 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
                     children: [
                       CaptainAbility(info: _information),
                       SpecialAbility(info: _information),
+                      SailorAbility(info: _information),
                       SuperTypeAbility(info: _information),
                       VersusAbility(info: _information),
                       SwapAbility(info: _information),
-                      SupportAbility(info: _information),
-                      SailorAbility(info: _information),
                       PotentialAbility(info: _information),
                       LastTapAbility(info: _information),
+                      SuperTNDAbility(info: _information),
+                      SupportAbility(info: _information),
                       RumbleSpecial(info: _information),
                       RumbleAbility(info: _information),
                       RumbleResistance(info: _information)

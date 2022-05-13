@@ -29,7 +29,7 @@ class CustomDatabase {
 
     _database = await openDatabase(
         path,
-        version: 39,
+        version: 40,
         singleInstance: true,
         onCreate: (Database db, int version) async {
           if (onUpdate != null) onUpdate("creatingDB".tr());
@@ -158,6 +158,8 @@ class CustomDatabase {
               "${Data.vsCondition} TEXT NOT NULL, "
               "${Data.vsSpecial} TEXT NOT NULL, "
               "${Data.art} TEXT, "
+              "${Data.superTandemCondition} TEXT, "
+              "${Data.superTandemDescription} TEXT, "
               "${Data.lastTapCondition} TEXT, "
               "${Data.lastTapDescription} TEXT)");
         },
@@ -182,6 +184,7 @@ class CustomDatabase {
     if (oldVersion <= 36) await Migrations.version36to37(db);
     if (oldVersion <= 37) await Migrations.version37to38(db);
     if (oldVersion <= 38) await Migrations.version38to39(db);
+    if (oldVersion <= 39) await Migrations.version39to40(db);
   }
 
   /// Closes up the current database.

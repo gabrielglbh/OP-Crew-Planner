@@ -180,6 +180,9 @@
   "stCriteria": "Critério",
   "dataNotAvailable": "Nenhum dado encontrado para essa unidade",
   "withLLB": "Com Limite Superado do Nível",
+  "lastTap": "Acção da última torneira",
+  "superTND": "Super Tandem",
+  "superType": "Super Tipo/Classe",
 
   "databaseTab": "Dados",
   "findUnits": "Buscar informação sobre unidades",

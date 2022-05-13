@@ -180,6 +180,9 @@
   "stCriteria": "Criteria",
   "dataNotAvailable": "No data found for this unit",
   "withLLB": "With Level Limit Break",
+  "lastTap": "Last Tap Action",
+  "superTND": "Super Tandem",
+  "superType": "Super Type/Class",
   
   "databaseTab": "Data",
   "findUnits": "Search information about units",
