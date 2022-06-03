@@ -50,7 +50,8 @@ class OPCrewPlanner extends StatefulWidget {
 
   static void setLocale(BuildContext context, Locale newLocale) async {
     context.setLocale(newLocale);
-    _OPCrewPlannerState? state = context.findAncestorStateOfType<_OPCrewPlannerState>();
+    _OPCrewPlannerState? state =
+        context.findAncestorStateOfType<_OPCrewPlannerState>();
     state?.changeLanguage();
   }
 }
@@ -73,16 +74,15 @@ class _OPCrewPlannerState extends State<OPCrewPlanner> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "OP Crew Planner",
-      debugShowCheckedModeBanner: false,
-      theme: ThemeManager.instance.currentLightThemeData,
-      darkTheme: ThemeManager.instance.currentDarkThemeData,
-      themeMode: ThemeManager.instance.themeMode,
-      locale: context.locale,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      initialRoute: OPCrewPlannerPages.welcomePageName,
-      onGenerateRoute: (settings) => onGenerateRoute(settings)
-    );
+        title: "OP Crew Planner",
+        debugShowCheckedModeBanner: false,
+        theme: ThemeManager.instance.currentLightThemeData,
+        darkTheme: ThemeManager.instance.currentDarkThemeData,
+        themeMode: ThemeManager.instance.themeMode,
+        locale: context.locale,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        initialRoute: OPCrewPlannerPages.welcomePageName,
+        onGenerateRoute: (settings) => onGenerateRoute(settings));
   }
 }

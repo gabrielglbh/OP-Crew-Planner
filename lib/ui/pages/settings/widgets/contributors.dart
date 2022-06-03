@@ -12,7 +12,8 @@ class ContributorsTile extends StatelessWidget {
   final String _nakamaLink = "'Nakama Network'\n";
   final String _nakamaUrl = "https://www.nakama.network/";
   final String _graphicsLink = "'Graphics'\n";
-  final String _graphicsUrl = "https://drive.google.com/drive/u/0/folders/0B2876gCiqJjGQXhfZlRVd2JJUmM";
+  final String _graphicsUrl =
+      "https://drive.google.com/drive/u/0/folders/0B2876gCiqJjGQXhfZlRVd2JJUmM";
   final String _freepikLink = "'Freepik'";
   final String _freepikUrl = "https://www.flaticon.com/authors/freepik";
   final String _flaticonLink = "'www.flaticon.com'\n";
@@ -28,7 +29,8 @@ class ContributorsTile extends StatelessWidget {
               "and".tr(), _nakamaLink, _nakamaUrl),
           _richText("contributorsIcons".tr(), "u/ShokugekiNoZeff", "",
               "contributorsDrive".tr(), _graphicsLink, _graphicsUrl),
-          Text("translators".tr() + "@LenweGLoc, u/EnishiY\n", style: const TextStyle(fontSize: 14)),
+          Text("translators".tr() + "@LenweGLoc, u/EnishiY\n",
+              style: const TextStyle(fontSize: 14)),
           _richText("contributorsFlaticon".tr(), _freepikLink, _freepikUrl,
               "from".tr(), _flaticonLink, _flaticonUrl),
         ],
@@ -41,33 +43,44 @@ class ContributorsTile extends StatelessWidget {
     return RichText(
       text: TextSpan(
         children: [
-          TextSpan(text: firstText, style: TextStyle(
-              color: (!StorageUtils.readData(StorageUtils.darkMode, false)
-                  ? Colors.black87 : null), fontSize: 14)
-          ),
+          TextSpan(
+              text: firstText,
+              style: TextStyle(
+                  color: (!StorageUtils.readData(StorageUtils.darkMode, false)
+                      ? Colors.black87
+                      : null),
+                  fontSize: 14)),
           TextSpan(
             text: firstLink,
-            style: TextStyle(color: firstUrl != ""
-                ? Colors.orange[400] : (!StorageUtils.readData(StorageUtils.darkMode, false)
-                ? Colors.black87 : null),
-                decoration: firstUrl != "" ? TextDecoration.underline : null, fontSize: 14
-            ),
+            style: TextStyle(
+                color: firstUrl != ""
+                    ? Colors.orange[400]
+                    : (!StorageUtils.readData(StorageUtils.darkMode, false)
+                        ? Colors.black87
+                        : null),
+                decoration: firstUrl != "" ? TextDecoration.underline : null,
+                fontSize: 14),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                if (firstUrl != "" ) launch(firstUrl);
+                if (firstUrl != "") launch(firstUrl);
               },
           ),
-          TextSpan(text: secondText, style:  TextStyle(
-              color: (!StorageUtils.readData(StorageUtils.darkMode, false)
-                  ? Colors.black87 : null), fontSize: 14)
-          ),
+          TextSpan(
+              text: secondText,
+              style: TextStyle(
+                  color: (!StorageUtils.readData(StorageUtils.darkMode, false)
+                      ? Colors.black87
+                      : null),
+                  fontSize: 14)),
           TextSpan(
             text: secondLink,
-            style: TextStyle(color: Colors.orange[400],
-                decoration: TextDecoration.underline, fontSize: 14
-            ),
+            style: TextStyle(
+                color: Colors.orange[400],
+                decoration: TextDecoration.underline,
+                fontSize: 14),
             recognizer: TapGestureRecognizer()
-              ..onTap = () { launch(secondUrl);
+              ..onTap = () {
+                launch(secondUrl);
               },
           ),
         ],

@@ -27,7 +27,8 @@ class NavigationPage extends StatefulWidget {
   _NavigationPageState createState() => _NavigationPageState();
 }
 
-class _NavigationPageState extends State<NavigationPage> with SingleTickerProviderStateMixin {
+class _NavigationPageState extends State<NavigationPage>
+    with SingleTickerProviderStateMixin {
   FocusNode? _unitFocusNode;
   FocusNode? _dataFocusNode;
   FocusNode? _teamFocusNode;
@@ -59,7 +60,8 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
     _teamFocusNode = FocusNode();
     _rumbleTeamFocusNode = FocusNode();
     _updateUIBasedOnSession();
-    AdManager.createBanner(onLoaded: _onBannerLoaded, onFailed: _onBannerFailedOrExit);
+    AdManager.createBanner(
+        onLoaded: _onBannerLoaded, onFailed: _onBannerFailedOrExit);
     _banner = AdManager.showBanner();
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
       _recentUnitsLength = await _getRecentUnits();
@@ -169,59 +171,63 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
     return AppBar(
       title: _appBarTitle(),
       automaticallyImplyLeading: false,
-      leading: _uid == null ? null
+      leading: _uid == null
+          ? null
           : Container(
-          padding: const EdgeInsets.only(right: 15),
-          margin: const EdgeInsets.only(left: 15),
-          child: Container(
-              decoration: const BoxDecoration(
-                  color: Colors.green,
-                  shape: BoxShape.circle
-              ),
-              child: Align(
-                alignment: Alignment.center,
-                child: Padding(
-                    padding: const EdgeInsets.only(left: 1),
-                    child: Text((_user?.substring(0, 1).toUpperCase() ?? ""))
-                ),
-              )
-          )
-      ),
+              padding: const EdgeInsets.only(right: 15),
+              margin: const EdgeInsets.only(left: 15),
+              child: Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.green, shape: BoxShape.circle),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                        padding: const EdgeInsets.only(left: 1),
+                        child:
+                            Text((_user?.substring(0, 1).toUpperCase() ?? ""))),
+                  ))),
       actions: [
         Visibility(
           visible: _type != TypeList.data,
           child: IconButton(
-            onPressed: () async {
-              await UtilQueries.instance.checkIfLimitReached(_type).then((success) {
-                if (success) {
-                  if (_type == TypeList.unit) {
-                    Navigator.pushNamed(context, OPCrewPlannerPages.buildMaxedUnitPageName,
-                        arguments: UnitBuild(unit: Unit.empty(), update: false));
-                  } else if (_type == TypeList.team) {
-                    Navigator.pushNamed(context, OPCrewPlannerPages.buildTeamPageName,
-                        arguments: TeamBuild(team: Team.empty(), update: false));
+              onPressed: () async {
+                await UtilQueries.instance
+                    .checkIfLimitReached(_type)
+                    .then((success) {
+                  if (success) {
+                    if (_type == TypeList.unit) {
+                      Navigator.pushNamed(
+                          context, OPCrewPlannerPages.buildMaxedUnitPageName,
+                          arguments:
+                              UnitBuild(unit: Unit.empty(), update: false));
+                    } else if (_type == TypeList.team) {
+                      Navigator.pushNamed(
+                          context, OPCrewPlannerPages.buildTeamPageName,
+                          arguments:
+                              TeamBuild(team: Team.empty(), update: false));
+                    } else if (_type == TypeList.rumble) {
+                      Navigator.pushNamed(
+                          context, OPCrewPlannerPages.buildRumbleTeamPageName,
+                          arguments: RumbleBuild(
+                              team: RumbleTeam.empty(), update: false));
+                    }
+                  } else {
+                    UI.showSnackBar(context, _type.label);
                   }
-                  else if (_type == TypeList.rumble) {
-                    Navigator.pushNamed(context, OPCrewPlannerPages.buildRumbleTeamPageName,
-                        arguments: RumbleBuild(team: RumbleTeam.empty(), update: false));
-                  }
-                } else {
-                  UI.showSnackBar(context, _type.label);
-                }
-              });
-            },
-            icon: const Icon(Icons.add)
-          ),
+                });
+              },
+              icon: const Icon(Icons.add)),
         ),
         IconButton(
-          onPressed: () async {
-            await Navigator.of(context).pushNamed(OPCrewPlannerPages.settingsPageName).then((_) async {
-              await _getEmail();
-              await _getUid();
-            });
-          },
-          icon: const Icon(Icons.settings)
-        ),
+            onPressed: () async {
+              await Navigator.of(context)
+                  .pushNamed(OPCrewPlannerPages.settingsPageName)
+                  .then((_) async {
+                await _getEmail();
+                await _getUid();
+              });
+            },
+            icon: const Icon(Icons.settings)),
       ],
     );
   }
@@ -260,14 +266,18 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("${"lastAddedUnits".tr()} (${_recentUnits.length})", style: const TextStyle(fontWeight: FontWeight.bold)),
+              Text("${"lastAddedUnits".tr()} (${_recentUnits.length})",
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
               GestureDetector(
                 onTap: () async {
-                  await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.closeRecentList);
+                  await UpdateQueries.instance
+                      .registerAnalyticsEvent(AnalyticsEvents.closeRecentList);
                   setState(() => _showLastAddedUnits = false);
-                  StorageUtils.saveData(StorageUtils.lastAddedUnitsLength, _recentUnitsLength);
+                  StorageUtils.saveData(
+                      StorageUtils.lastAddedUnitsLength, _recentUnitsLength);
                 },
-                child: Text("dismiss".tr(), style: const TextStyle(fontStyle: FontStyle.italic)),
+                child: Text("dismiss".tr(),
+                    style: const TextStyle(fontStyle: FontStyle.italic)),
               )
             ],
           ),
@@ -278,8 +288,7 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
                 itemCount: _recentUnits.length,
                 itemBuilder: (context, index) {
                   return _recentUnit(index);
-                }
-            ),
+                }),
           )
         ],
       ),
@@ -289,15 +298,17 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
   InkWell _recentUnit(int index) {
     return InkWell(
         onTap: () async {
-          await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.openUnitDataFromRecentList);
+          await UpdateQueries.instance.registerAnalyticsEvent(
+              AnalyticsEvents.openUnitDataFromRecentList);
           await UnitQueries.instance.updateHistoryUnit(_recentUnits[index]);
-          await AdditionalUnitInfo.callModalSheet(context, _recentUnits[index].id, onClose: () {});
+          await AdditionalUnitInfo.callModalSheet(
+              context, _recentUnits[index].id,
+              onClose: () {});
         },
         child: Padding(
           padding: const EdgeInsets.all(2),
           child: UI.placeholderImageWhileLoading(_recentUnits[index].url),
-        )
-    );
+        ));
   }
 
   Container _bnb() {
@@ -326,6 +337,7 @@ class _NavigationPageState extends State<NavigationPage> with SingleTickerProvid
   }
 
   BottomNavigationBarItem _navigationBarItem(TypeList mode) {
-    return BottomNavigationBarItem(label: mode.label, icon: Image.asset(mode.asset, scale: mode.scale));
+    return BottomNavigationBarItem(
+        label: mode.label, icon: Image.asset(mode.asset, scale: mode.scale));
   }
 }

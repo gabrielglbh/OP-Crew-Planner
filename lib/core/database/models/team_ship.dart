@@ -12,6 +12,7 @@ class TeamShip {
 
   TeamShip({required this.teamId, required this.shipId});
 
-  factory TeamShip.fromJson(Map<String, dynamic> json) => _$TeamShipFromJson(json);
+  factory TeamShip.fromJson(Map<String, dynamic> json) =>
+      _$TeamShipFromJson(json);
   Map<String, dynamic> toJson() => _$TeamShipToJson(this);
 }

@@ -20,12 +20,15 @@ class RumbleTab extends StatefulWidget {
   _RumbleTabState createState() => _RumbleTabState();
 }
 
-class _RumbleTabState extends State<RumbleTab> with AutomaticKeepAliveClientMixin {
+class _RumbleTabState extends State<RumbleTab>
+    with AutomaticKeepAliveClientMixin {
   TextEditingController? _controller;
   bool _showATKRumble = true;
 
   _addLoadingEvent(BuildContext blocContext) {
-    blocContext.read<RumbleListBloc>().add(RumbleListEventLoading(showATK: _showATKRumble));
+    blocContext
+        .read<RumbleListBloc>()
+        .add(RumbleListEventLoading(showATK: _showATKRumble));
   }
 
   bool _onScrolling(ScrollNotification sn) {
@@ -57,42 +60,50 @@ class _RumbleTabState extends State<RumbleTab> with AutomaticKeepAliveClientMixi
   Widget build(BuildContext context) {
     super.build(context);
     return BlocProvider<RumbleListBloc>(
-        create: (_) => RumbleListBloc()..add(RumbleListEventLoading(showATK: _showATKRumble)),
-        child: BlocBuilder<RumbleListBloc, RumbleListState>(
-          builder: (context, state) {
-            return Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: CustomSearchBar(
-                        controller: _controller,
-                        hint: "searchHintTeams".tr(),
-                        focus: widget.focus,
-                        onQuery: (query, type) => context.read<RumbleListBloc>()..add(RumbleListEventSearching(query)),
-                        onExitSearch: () => _addLoadingEvent(context),
-                        mode: SearchMode.rumbleTab,
-                      ),
+      create: (_) => RumbleListBloc()
+        ..add(RumbleListEventLoading(showATK: _showATKRumble)),
+      child: BlocBuilder<RumbleListBloc, RumbleListState>(
+        builder: (context, state) {
+          return Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomSearchBar(
+                      controller: _controller,
+                      hint: "searchHintTeams".tr(),
+                      focus: widget.focus,
+                      onQuery: (query, type) => context.read<RumbleListBloc>()
+                        ..add(RumbleListEventSearching(query)),
+                      onExitSearch: () => _addLoadingEvent(context),
+                      mode: SearchMode.rumbleTab,
                     ),
-                    ActionButton(
+                  ),
+                  ActionButton(
                       child: SizedBox(
-                        width: 40, height: 40,
-                        child: Image.asset(_showATKRumble ? "res/icons/atk.png" : "res/icons/def.png", scale: 2.5),
+                        width: 40,
+                        height: 40,
+                        child: Image.asset(
+                            _showATKRumble
+                                ? "res/icons/atk.png"
+                                : "res/icons/def.png",
+                            scale: 2.5),
                       ),
                       onTap: () async {
-                        await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.rumbleTeamModeFilter);
+                        await UpdateQueries.instance.registerAnalyticsEvent(
+                            AnalyticsEvents.rumbleTeamModeFilter);
                         setState(() => _showATKRumble = !_showATKRumble);
-                        StorageUtils.saveData(StorageUtils.rumbleMode, _showATKRumble);
+                        StorageUtils.saveData(
+                            StorageUtils.rumbleMode, _showATKRumble);
                         _addLoadingEvent(context);
-                      }
-                    )
-                  ],
-                ),
-                _setWidgetOnState(context, state)
-              ],
-            );
-          },
-        ),
+                      })
+                ],
+              ),
+              _setWidgetOnState(context, state)
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -101,44 +112,45 @@ class _RumbleTabState extends State<RumbleTab> with AutomaticKeepAliveClientMixi
       return const LoadingWidget();
     } else if (state is RumbleListStateLoaded) {
       if (state.teams.isEmpty) {
-        return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.team);
+        return EmptyList(
+            onRefresh: () => _addLoadingEvent(blocContext),
+            type: TypeList.team);
       } else {
         return _teamList(blocContext, state);
       }
     } else {
-      return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.team);
+      return EmptyList(
+          onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.team);
     }
   }
 
   Expanded _teamList(BuildContext blocContext, RumbleListStateLoaded state) {
     return Expanded(
         child: NotificationListener<ScrollNotification>(
-          onNotification: (notification) => _onScrolling(notification),
-          child: RefreshIndicator(
-            onRefresh: () async => _addLoadingEvent(blocContext),
-            color: Colors.orange.shade400,
-            child: ListView.builder(
-              key: const PageStorageKey<String>('rumbleTab'),
-              itemCount: state.teams.length,
-              itemBuilder: ((context, index) {
-                return RumbleElement(
-                  team: state.teams[index],
-                  index: index,
-                  onSelected: () {
-                    _controller?.text = "";
-                    widget.focus?.unfocus();
-                  },
-                  onDelete: () async {
-                    blocContext.read<RumbleListBloc>().add(
-                        RumbleListEventDelete(state.teams[index], showATK: _showATKRumble));
-                    Navigator.pop(context);
-                  },
-                );
-              }
+            onNotification: (notification) => _onScrolling(notification),
+            child: RefreshIndicator(
+              onRefresh: () async => _addLoadingEvent(blocContext),
+              color: Colors.orange.shade400,
+              child: ListView.builder(
+                key: const PageStorageKey<String>('rumbleTab'),
+                itemCount: state.teams.length,
+                itemBuilder: ((context, index) {
+                  return RumbleElement(
+                    team: state.teams[index],
+                    index: index,
+                    onSelected: () {
+                      _controller?.text = "";
+                      widget.focus?.unfocus();
+                    },
+                    onDelete: () async {
+                      blocContext.read<RumbleListBloc>().add(
+                          RumbleListEventDelete(state.teams[index],
+                              showATK: _showATKRumble));
+                      Navigator.pop(context);
+                    },
+                  );
+                }),
               ),
-            ),
-          )
-        )
-    );
+            )));
   }
 }

@@ -25,7 +25,9 @@ class DeveloperTile extends StatelessWidget {
             ],
           ),
           InkWell(
-            onTap: () {launch("https://github.com/gabrielglbh");},
+            onTap: () {
+              launch("https://github.com/gabrielglbh");
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -46,39 +48,42 @@ class DeveloperTile extends StatelessWidget {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width / 2,
                     child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(text: "bugsLabel".tr(), style: TextStyle(
-                              color: (!StorageUtils.readData(StorageUtils.darkMode, false)
-                                  ? Colors.black87 : null), fontSize: 14)
-                          ),
-                          TextSpan(
-                            text: "devgglop@gmail.com",
-                            style: TextStyle(color: Colors.orange[400],
-                                decoration: TextDecoration.underline, fontSize: 14
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () async {
-                                final Uri _emailLaunchUri = Uri(
+                      text: TextSpan(children: [
+                        TextSpan(
+                            text: "bugsLabel".tr(),
+                            style: TextStyle(
+                                color: (!StorageUtils.readData(
+                                        StorageUtils.darkMode, false)
+                                    ? Colors.black87
+                                    : null),
+                                fontSize: 14)),
+                        TextSpan(
+                          text: "devgglop@gmail.com",
+                          style: TextStyle(
+                              color: Colors.orange[400],
+                              decoration: TextDecoration.underline,
+                              fontSize: 14),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () async {
+                              final Uri _emailLaunchUri = Uri(
                                   scheme: 'mailto',
                                   path: 'devgglop@gmail.com',
                                   queryParameters: {
                                     'subject': "mailSubject".tr(),
-                                  }
-                                );
-                                String url = _emailLaunchUri.toString().replaceAll("+", "%20");
-                                if (await canLaunch(url)) {
-                                  await launch(url);
-                                } else {
-                                  UI.showSnackBar(context, "errOnLaunch".tr());
-                                }
-                              },
-                          ),
-                        ]
-                      ),
+                                  });
+                              String url = _emailLaunchUri
+                                  .toString()
+                                  .replaceAll("+", "%20");
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                UI.showSnackBar(context, "errOnLaunch".tr());
+                              }
+                            },
+                        ),
+                      ]),
                     ),
-                  )
-              )
+                  ))
             ],
           ),
         ],

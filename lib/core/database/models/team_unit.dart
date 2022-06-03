@@ -12,6 +12,7 @@ class TeamUnit {
 
   TeamUnit({required this.teamId, required this.unitId});
 
-  factory TeamUnit.fromJson(Map<String, dynamic> json) => _$TeamUnitFromJson(json);
+  factory TeamUnit.fromJson(Map<String, dynamic> json) =>
+      _$TeamUnitFromJson(json);
   Map<String, dynamic> toJson() => _$TeamUnitToJson(this);
 }

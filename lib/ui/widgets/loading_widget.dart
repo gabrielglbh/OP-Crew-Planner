@@ -27,7 +27,8 @@ class LoadingWidget extends StatelessWidget {
 
 class FullScreenLoadingWidget extends StatelessWidget {
   final bool isLoading;
-  const FullScreenLoadingWidget({Key? key, required this.isLoading}) : super(key: key);
+  const FullScreenLoadingWidget({Key? key, required this.isLoading})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,4 +49,3 @@ class FullScreenLoadingWidget extends StatelessWidget {
     );
   }
 }
-

@@ -1,8 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 
-enum TypeList {
-  unit, data, team, rumble
-}
+enum TypeList { unit, data, team, rumble }
 
 extension TypeListExt on TypeList {
   String get label {

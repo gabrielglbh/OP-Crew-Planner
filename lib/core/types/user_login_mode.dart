@@ -1,8 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 
-enum UserMode {
-  signIn, logIn, passwordChange
-}
+enum UserMode { signIn, logIn, passwordChange }
 
 extension UserModeExt on UserMode {
   String get label {

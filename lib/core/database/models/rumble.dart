@@ -17,16 +17,23 @@ class RumbleTeam {
   @JsonKey(name: Data.rumbleTeamMode)
   int mode;
 
-  RumbleTeam({required this.name, required this.description, this.units = const [],
-    this.updated, required this.mode});
+  RumbleTeam(
+      {required this.name,
+      required this.description,
+      this.units = const [],
+      this.updated,
+      required this.mode});
 
   factory RumbleTeam.empty() => RumbleTeam(name: "", description: "", mode: 0);
-  factory RumbleTeam.fromJson(Map<String, dynamic> json) => _$RumbleTeamFromJson(json);
+  factory RumbleTeam.fromJson(Map<String, dynamic> json) =>
+      _$RumbleTeamFromJson(json);
   Map<String, dynamic> toJson() => _$RumbleTeamToJson(this);
 
   /// Rumble team helper methods
 
-  void setUpdated(String updated) { this.updated = updated; }
+  void setUpdated(String updated) {
+    this.updated = updated;
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -46,7 +53,7 @@ class RumbleTeam {
     if (mode == b.mode) result++;
 
     for (int v = 0; v < this.units.length; v++) {
-      if (this.units[v].compare(b.units[v],true)) units++;
+      if (this.units[v].compare(b.units[v], true)) units++;
     }
 
     return result == 3 && units == 8;

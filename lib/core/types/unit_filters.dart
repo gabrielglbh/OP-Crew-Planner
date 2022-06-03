@@ -1,8 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
 
 enum UnitFilter {
-  all, maxLevel, skills, special, cottonCandy, support, potential, evolution,
-  limitBreak, rumbleSpecial, rumbleAbility, maxLevelLimitBreak
+  all,
+  maxLevel,
+  skills,
+  special,
+  cottonCandy,
+  support,
+  potential,
+  evolution,
+  limitBreak,
+  rumbleSpecial,
+  rumbleAbility,
+  maxLevelLimitBreak
 }
 
 extension UnitFilterExt on UnitFilter {

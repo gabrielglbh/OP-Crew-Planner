@@ -12,7 +12,8 @@ class TeamListBloc extends Bloc<TeamListEvent, TeamListState> {
     on<TeamListEventLoading>((event, emit) async {
       try {
         emit(TeamListStateLoading());
-        List<Team> teams = await TeamQueries.instance.getTeams(event.showMax, null);
+        List<Team> teams =
+            await TeamQueries.instance.getTeams(event.showMax, null);
         emit(TeamListStateLoaded(teams: teams));
       } on Exception {
         emit(TeamListStateFailure());
@@ -34,8 +35,10 @@ class TeamListBloc extends Bloc<TeamListEvent, TeamListState> {
         try {
           emit(TeamListStateLoading());
           await TeamQueries.instance.deleteTeam(event.team.name);
-          await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.deleteTeam);
-          List<Team> teams = await TeamQueries.instance.getTeams(event.showMaxed, null);
+          await UpdateQueries.instance
+              .registerAnalyticsEvent(AnalyticsEvents.deleteTeam);
+          List<Team> teams =
+              await TeamQueries.instance.getTeams(event.showMaxed, null);
           emit(TeamListStateLoaded(teams: teams));
         } on Exception {
           emit(TeamListStateFailure());

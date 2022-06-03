@@ -17,7 +17,8 @@ class BackUpSettings extends StatefulWidget {
   final String? uid;
   const BackUpSettings({
     Key? key,
-    required this.uid, required this.loading
+    required this.uid,
+    required this.loading,
   }) : super(key: key);
 
   @override
@@ -35,10 +36,9 @@ class _BackUpSettingsState extends State<BackUpSettings> {
   void initState() {
     setState(() => _uid = widget.uid);
     AdManager.createInterstitial(
-      onLoaded: _onInterstitialLoaded,
-      onFailed: _onInterstitialFailedOrExit,
-      onClosed: _onInterstitialClosed
-    );
+        onLoaded: _onInterstitialLoaded,
+        onFailed: _onInterstitialFailedOrExit,
+        onClosed: _onInterstitialClosed);
     super.initState();
   }
 
@@ -60,7 +60,8 @@ class _BackUpSettingsState extends State<BackUpSettings> {
     if (_uid == null) {
       _setStateDateBackup("errNoData".tr());
     } else {
-      BackUpRecords.instance.getLastBackupTime((date) => _setStateDateBackup(date));
+      BackUpRecords.instance
+          .getLastBackupTime((date) => _setStateDateBackup(date));
     }
     super.didChangeDependencies();
   }
@@ -82,85 +83,102 @@ class _BackUpSettingsState extends State<BackUpSettings> {
   _disclaimerBackUpDialog(BackupMode mode) {
     BuildContext dialogContext;
     showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        dialogContext = context;
-        return UIAlert(
-          title: mode.title,
-          content: Text(mode.content),
-          acceptButton: mode.submit,
-          dialogContext: dialogContext,
-          onAccepted: () {
-            Navigator.of(dialogContext).pop();
-            _operationId = mode;
-            if (_isAdReady) {
-              AdManager.showInterstitial(
-              onLoaded: _onInterstitialLoaded,
-              onFailed: _onInterstitialFailedOrExit,
-              onClosed: _onInterstitialClosed
-            );
-            } else {
-              _onAcceptedOperationDialog(mode);
-            }
-          }
-        );
-      }
-    );
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          dialogContext = context;
+          return UIAlert(
+              title: mode.title,
+              content: Text(mode.content),
+              acceptButton: mode.submit,
+              dialogContext: dialogContext,
+              onAccepted: () {
+                Navigator.of(dialogContext).pop();
+                _operationId = mode;
+                if (_isAdReady) {
+                  AdManager.showInterstitial(
+                      onLoaded: _onInterstitialLoaded,
+                      onFailed: _onInterstitialFailedOrExit,
+                      onClosed: _onInterstitialClosed);
+                } else {
+                  _onAcceptedOperationDialog(mode);
+                }
+              });
+        });
   }
 
   _openBSForChangingLanguages() {
-    Scrollbar child = Scrollbar(child: ListView(
+    Scrollbar child = Scrollbar(
+        child: ListView(
       children: [
-        ListTile(title: const Text("English"), onTap: () {
-          UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
-          OPCrewPlanner.setLocale(context, const Locale('en'));
-          StorageUtils.saveData(StorageUtils.language, 'en');
-          Navigator.of(context).pop();
-        }),
-        ListTile(title: const Text("Español"), onTap: () {
-          UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
-          OPCrewPlanner.setLocale(context, const Locale('es'));
-          StorageUtils.saveData(StorageUtils.language, 'es');
-          Navigator.of(context).pop();
-        }),
-        ListTile(title: const Text("Français"), onTap: () {
-          UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
-          OPCrewPlanner.setLocale(context, const Locale('fr'));
-          StorageUtils.saveData(StorageUtils.language, 'fr');
-          Navigator.of(context).pop();
-        }),
-        ListTile(title: const Text("Português"), onTap: () {
-          UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
-          OPCrewPlanner.setLocale(context, const Locale('pt'));
-          StorageUtils.saveData(StorageUtils.language, 'pt');
-          Navigator.of(context).pop();
-        }),
-        ListTile(title: const Text("Deutsch"), onTap: () {
-          UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
-          OPCrewPlanner.setLocale(context, const Locale('de'));
-          StorageUtils.saveData(StorageUtils.language, 'de');
-          Navigator.of(context).pop();
-        }),
+        ListTile(
+            title: const Text("English"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('en'));
+              StorageUtils.saveData(StorageUtils.language, 'en');
+              Navigator.of(context).pop();
+            }),
+        ListTile(
+            title: const Text("Español"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('es'));
+              StorageUtils.saveData(StorageUtils.language, 'es');
+              Navigator.of(context).pop();
+            }),
+        ListTile(
+            title: const Text("Français"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('fr'));
+              StorageUtils.saveData(StorageUtils.language, 'fr');
+              Navigator.of(context).pop();
+            }),
+        ListTile(
+            title: const Text("Português"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('pt'));
+              StorageUtils.saveData(StorageUtils.language, 'pt');
+              Navigator.of(context).pop();
+            }),
+        ListTile(
+            title: const Text("Deutsch"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('de'));
+              StorageUtils.saveData(StorageUtils.language, 'de');
+              Navigator.of(context).pop();
+            }),
       ],
     ));
-    ChoiceBottomSheet.callModalSheet(context, "changeLanguages".tr(), child, height: 2.5);
+    ChoiceBottomSheet.callModalSheet(context, "changeLanguages".tr(), child,
+        height: 2.5);
   }
 
   Future<void> _onAcceptedOperationDialog(BackupMode mode) async {
     widget.loading(true);
     switch (mode) {
       case BackupMode.create:
-        await BackUpRecords.instance.uploadToFireStore(context, (date) =>
-            _setStateDateBackup(date)).then((value) => widget.loading(false));
+        await BackUpRecords.instance
+            .uploadToFireStore(context, (date) => _setStateDateBackup(date))
+            .then((value) => widget.loading(false));
         break;
       case BackupMode.download:
-        await BackUpRecords.instance.getFromFireStore(context).then((value) =>
-            widget.loading(false));
+        await BackUpRecords.instance
+            .getFromFireStore(context)
+            .then((value) => widget.loading(false));
         break;
       case BackupMode.delete:
-        await BackUpRecords.instance.deleteBackUp(context).then((value) =>
-            widget.loading(false));
+        await BackUpRecords.instance
+            .deleteBackUp(context)
+            .then((value) => widget.loading(false));
         break;
     }
   }
@@ -171,7 +189,9 @@ class _BackUpSettingsState extends State<BackUpSettings> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SettingHeader(title: "backUpTab".tr(), subtitle: "lastUpdated".tr() + _lastUpdated),
+        SettingHeader(
+            title: "backUpTab".tr(),
+            subtitle: "lastUpdated".tr() + _lastUpdated),
         SettingTile(
             title: Text("changeLanguages".tr()),
             icon: const Icon(Icons.translate, size: 20),
@@ -185,7 +205,8 @@ class _BackUpSettingsState extends State<BackUpSettings> {
             icon: const Icon(Icons.cloud_download, size: 20),
             onTap: () => _checkOnBackUpOperation(context, BackupMode.download)),
         SettingTile(
-            title: Text("deleteBackup".tr(), style: TextStyle(color: Colors.red[700])),
+            title: Text("deleteBackup".tr(),
+                style: TextStyle(color: Colors.red[700])),
             icon: const Icon(Icons.cloud_off, size: 20),
             onTap: () => _checkOnBackUpOperation(context, BackupMode.delete)),
       ],

@@ -63,42 +63,39 @@ class _SettingsPageState extends State<SettingsPage> {
   _disclaimerInfoOnBackup() {
     BuildContext dialogContext;
     showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        dialogContext = context;
-        return UIAlert(
-          title: "backUpTab".tr(),
-          content: Scrollbar(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Text("infoOnBackUp".tr())
-                ],
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          dialogContext = context;
+          return UIAlert(
+              title: "backUpTab".tr(),
+              content: Scrollbar(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [Text("infoOnBackUp".tr())],
+                  ),
+                ),
               ),
-            ),
-          ),
-          acceptButton: "Ok",
-          dialogContext: dialogContext,
-          cancel: false,
-          onAccepted: () {
-            Navigator.of(context).pop();
-          }
-        );
-      }
-    );
+              acceptButton: "Ok",
+              dialogContext: dialogContext,
+              cancel: false,
+              onAccepted: () {
+                Navigator.of(context).pop();
+              });
+        });
   }
 
   _openBSForVersionNotes() async {
-    UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.openVersionNotes);
+    UpdateQueries.instance
+        .registerAnalyticsEvent(AnalyticsEvents.openVersionNotes);
     List<String> n = await UpdateQueries.instance.getVersionNotes(context);
     if (n.isNotEmpty) {
       List<Text> content = List.generate(n.length, (c) => Text(n[c] + "\n"));
-      Scrollbar child = Scrollbar(child: ListView(
-          padding: const EdgeInsets.only(top: 8),
-          children: content
-      ));
-      ChoiceBottomSheet.callModalSheet(context, "versionNotes".tr(), child, height: 2);
+      Scrollbar child = Scrollbar(
+          child: ListView(
+              padding: const EdgeInsets.only(top: 8), children: content));
+      ChoiceBottomSheet.callModalSheet(context, "versionNotes".tr(), child,
+          height: 2);
     }
   }
 
@@ -115,37 +112,38 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Stack(
         children: [
           Scaffold(
-            appBar: AppBar(
-              title: Text("titleSettings".tr()),
-              automaticallyImplyLeading: false,
-              leading: BackIcon(onTap: () => Navigator.of(context).pop()),
-              actions: [
-                RegularIcon(
-                  icon: Icons.info,
-                  onTap: () { _disclaimerInfoOnBackup(); },
-                ),
-                FaviconIcon(
-                  icon: StorageUtils.readData(StorageUtils.darkMode, false)
-                      ? Icons.wb_sunny : FontAwesomeIcons.moon,
-                  onTap: () async {
-                    await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.changedTheme);
-                    _onThemeChanged();
-                  },
-                ),
-              ],
-            ),
-            body: SizedBox(
-              height: double.infinity,
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 56),
-                    child: _settings()
-                  )
-                ),
+              appBar: AppBar(
+                title: Text("titleSettings".tr()),
+                automaticallyImplyLeading: false,
+                leading: BackIcon(onTap: () => Navigator.of(context).pop()),
+                actions: [
+                  RegularIcon(
+                    icon: Icons.info,
+                    onTap: () {
+                      _disclaimerInfoOnBackup();
+                    },
+                  ),
+                  FaviconIcon(
+                    icon: StorageUtils.readData(StorageUtils.darkMode, false)
+                        ? Icons.wb_sunny
+                        : FontAwesomeIcons.moon,
+                    onTap: () async {
+                      await UpdateQueries.instance
+                          .registerAnalyticsEvent(AnalyticsEvents.changedTheme);
+                      _onThemeChanged();
+                    },
+                  ),
+                ],
               ),
-            )
-          ),
+              body: SizedBox(
+                height: double.infinity,
+                child: Center(
+                  child: SingleChildScrollView(
+                      child: Padding(
+                          padding: const EdgeInsets.only(bottom: 56),
+                          child: _settings())),
+                ),
+              )),
           FullScreenLoadingWidget(isLoading: _currentlyLoading)
         ],
       ),
@@ -161,19 +159,26 @@ class _SettingsPageState extends State<SettingsPage> {
             title: Text("newThingsAdded".tr()),
             icon: const Icon(Icons.star, size: 20, color: Colors.green),
             onTap: () => _openBSForVersionNotes()),
+
         /// BackUp Settings
         BackUpSettings(
           uid: _uid,
           loading: (loading) => setState(() => _currentlyLoading = loading),
         ),
+
         /// Donate
         SettingHeader(title: "support".tr(), subtitle: "donateCheers".tr()),
         SettingTile(
             title: Text("reviewLabel".tr()),
-            icon: Image.asset(Platform.isIOS ? "res/icons/appStore.png" : "res/icons/googlePlay.png", scale: 20),
+            icon: Image.asset(
+                Platform.isIOS
+                    ? "res/icons/appStore.png"
+                    : "res/icons/googlePlay.png",
+                scale: 20),
             onTap: () async {
               if (await canLaunch(Data.storeLink)) {
-                await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.writeReview);
+                await UpdateQueries.instance
+                    .registerAnalyticsEvent(AnalyticsEvents.writeReview);
                 await launch(Data.storeLink);
               }
             }),
@@ -186,8 +191,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 await launch(url);
               }
             }),
+
         /// Account Settings
         AccountSettings(uid: _uid),
+
         /// Information Settings
         const InformationSettings()
       ],

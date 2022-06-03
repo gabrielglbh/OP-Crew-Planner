@@ -14,68 +14,80 @@ class RumbleElement extends StatefulWidget {
   // Only for lose focus when click while searching
   final Function onSelected;
   final Function onDelete;
-  const RumbleElement({Key? key, required this.team, required this.index,
-    required this.onSelected, required this.onDelete}) : super(key: key);
+  const RumbleElement(
+      {Key? key,
+      required this.team,
+      required this.index,
+      required this.onSelected,
+      required this.onDelete})
+      : super(key: key);
 
   @override
   _RumbleElementState createState() => _RumbleElementState();
 }
 
 class _RumbleElementState extends State<RumbleElement> {
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(
-          height: 129,
-          child: InkWell(
-            onTap: () {
-              widget.onSelected();
-              Navigator.of(context).pushNamed(OPCrewPlannerPages.buildRumbleTeamPageName,
-                  arguments: RumbleBuild(team: widget.team, update: true));
-            },
-            onLongPress: () { _showDeleteDialog(); },
-            child: Column(children: <Widget>[
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(widget.team.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)
+            height: 129,
+            child: InkWell(
+              onTap: () {
+                widget.onSelected();
+                Navigator.of(context).pushNamed(
+                    OPCrewPlannerPages.buildRumbleTeamPageName,
+                    arguments: RumbleBuild(team: widget.team, update: true));
+              },
+              onLongPress: () {
+                _showDeleteDialog();
+              },
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(widget.team.name,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18)),
+                      ),
                     ),
                   ),
-                ),
+                  MediaQuery.removePadding(
+                    context: context,
+                    removeTop: true,
+                    removeBottom: true,
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 8),
+                        physics: const ScrollPhysics(),
+                        itemCount: 8,
+                        itemBuilder: (context, unitIndex) {
+                          return unitImage(widget.index, unitIndex);
+                        }),
+                  ),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Text(
+                          "lastUpdated".tr() + (widget.team.updated ?? "")),
+                    ),
+                  )
+                ],
               ),
-              MediaQuery.removePadding(
-                context: context,
-                removeTop: true,
-                removeBottom: true,
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 8),
-                  physics: const ScrollPhysics(),
-                  itemCount: 8,
-                  itemBuilder: (context, unitIndex) {
-                    return unitImage(widget.index, unitIndex);
-                  }
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Text("lastUpdated".tr() + (widget.team.updated ?? "")),
-                ),
-              )
-            ],
-            ),
-          )
-        ),
-        Divider(thickness: 0.1, color: StorageUtils.readData(StorageUtils.darkMode, false)
-            ? Colors.grey[350] : Colors.grey[800])
+            )),
+        Divider(
+            thickness: 0.1,
+            color: StorageUtils.readData(StorageUtils.darkMode, false)
+                ? Colors.grey[350]
+                : Colors.grey[800])
       ],
     );
   }
@@ -83,12 +95,13 @@ class _RumbleElementState extends State<RumbleElement> {
   Container unitImage(int teamsIndex, int unitIndex) {
     Unit unit = widget.team.units[unitIndex];
     return Container(
-      padding: unitIndex > 4 ? null : const EdgeInsets.all(2),
-      decoration: BoxDecoration(
-        border: unitIndex > 4 ? Border.all(color: Colors.blue[700]!, width: 3) : null,
-      ),
-      child: UI.placeholderImageWhileLoadingUnit(unit, little: true)
-    );
+        padding: unitIndex > 4 ? null : const EdgeInsets.all(2),
+        decoration: BoxDecoration(
+          border: unitIndex > 4
+              ? Border.all(color: Colors.blue[700]!, width: 3)
+              : null,
+        ),
+        child: UI.placeholderImageWhileLoadingUnit(unit, little: true));
   }
 
   void _showDeleteDialog() {
@@ -106,7 +119,6 @@ class _RumbleElementState extends State<RumbleElement> {
               widget.onDelete();
             },
           );
-        }
-    );
+        });
   }
 }

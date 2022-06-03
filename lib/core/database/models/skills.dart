@@ -28,9 +28,18 @@ class Skills {
   @JsonKey(name: Data.skillsResilience)
   final int resilience;
 
-  const Skills({this.team = "", this.damageReduction = 0, this.chargeSpecials = 0, this.bindResistance = 0,
-    this.despairResistance = 0, this.autoHeal = 0, this.rcvBoost = 0, this.slotsBoost = 0,
-    this.mapResistance = 0, this.poisonResistance = 0, this.resilience = 0});
+  const Skills(
+      {this.team = "",
+      this.damageReduction = 0,
+      this.chargeSpecials = 0,
+      this.bindResistance = 0,
+      this.despairResistance = 0,
+      this.autoHeal = 0,
+      this.rcvBoost = 0,
+      this.slotsBoost = 0,
+      this.mapResistance = 0,
+      this.poisonResistance = 0,
+      this.resilience = 0});
 
   static const Skills empty = Skills(team: "");
   factory Skills.fromJson(Map<String, dynamic> json) => _$SkillsFromJson(json);

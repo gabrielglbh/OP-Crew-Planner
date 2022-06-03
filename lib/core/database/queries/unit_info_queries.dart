@@ -25,8 +25,10 @@ class UnitInfoQueries {
         } else if (u.potential.length == 2) {
           u.potential = [u.potential[0], u.potential[1], ""];
         }
-        await _database?.insert(Data.dataTable, u.toJson(), conflictAlgorithm: ConflictAlgorithm.abort);
-        await _database?.update(Data.unitTable, unit.toJson(), where: "${Data.unitId}=?", whereArgs: [u.unitId]);
+        await _database?.insert(Data.dataTable, u.toJson(),
+            conflictAlgorithm: ConflictAlgorithm.abort);
+        await _database?.update(Data.unitTable, unit.toJson(),
+            where: "${Data.unitId}=?", whereArgs: [u.unitId]);
       }
     } catch (err) {
       print("insertUnitInfoIntoDatabase: ${err.toString()}");
@@ -39,8 +41,10 @@ class UnitInfoQueries {
     try {
       if (_database != null) {
         unit.downloaded = 0;
-        await _database?.delete(Data.dataTable, where: "${Data.dataUnitId}=?", whereArgs: [unit.id]);
-        await _database?.update(Data.unitTable, unit.toJson(), where: "${Data.unitId}=?", whereArgs: [unit.id]);
+        await _database?.delete(Data.dataTable,
+            where: "${Data.dataUnitId}=?", whereArgs: [unit.id]);
+        await _database?.update(Data.unitTable, unit.toJson(),
+            where: "${Data.unitId}=?", whereArgs: [unit.id]);
       }
     } catch (err) {
       return false;
@@ -61,8 +65,7 @@ class UnitInfoQueries {
             await UnitQueries.instance.updateUnit(unit);
           }
           return true;
-        }
-        else {
+        } else {
           return false;
         }
       } else {
@@ -75,7 +78,8 @@ class UnitInfoQueries {
 
   Future<UnitInfo> getUnitInfoFromDatabase(String id) async {
     if (_database != null) {
-      List<Map<String, dynamic>>? res = await _database?.query(Data.dataTable, where: "${Data.dataUnitId}=?", whereArgs: [id]);
+      List<Map<String, dynamic>>? res = await _database?.query(Data.dataTable,
+          where: "${Data.dataUnitId}=?", whereArgs: [id]);
       if (res != null) {
         if (res.isEmpty) {
           return UnitInfo.empty();
@@ -127,8 +131,7 @@ class UnitInfoQueries {
             llbFestSpecial: res[0][Data.llbFestSpecial],
           );
         }
-      }
-      else {
+      } else {
         return UnitInfo.empty();
       }
     }

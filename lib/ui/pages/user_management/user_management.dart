@@ -14,14 +14,17 @@ class UserManagementPage extends StatefulWidget {
   // Mode 2 --> Change password
   final UserMode mode;
   final bool deleteAccount;
-  const UserManagementPage({Key? key, required this.mode, this.deleteAccount = false}) : super(key: key);
+  const UserManagementPage({
+    Key? key,
+    required this.mode,
+    this.deleteAccount = false,
+  }) : super(key: key);
 
   @override
   _UserManagementPageState createState() => _UserManagementPageState();
 }
 
 class _UserManagementPageState extends State<UserManagementPage> {
-
   GlobalKey<FormState>? _formKey;
   TextEditingController? _firstFieldController;
   TextEditingController? _secondFieldController;
@@ -51,7 +54,8 @@ class _UserManagementPageState extends State<UserManagementPage> {
   }
 
   Future<bool> _onWillPop({bool fromLeading = false}) async {
-    bool _hasFocus = ((_firstFieldFocus?.hasFocus ?? false) || (_secondFieldFocus?.hasFocus ?? false));
+    bool _hasFocus = ((_firstFieldFocus?.hasFocus ?? false) ||
+        (_secondFieldFocus?.hasFocus ?? false));
     if (_hasFocus || _currentlyLoading) {
       _firstFieldFocus?.unfocus();
       _secondFieldFocus?.unfocus();
@@ -68,8 +72,9 @@ class _UserManagementPageState extends State<UserManagementPage> {
         return "errEmailNotValid".tr();
       }
     }
-    if (hint == "hintPassword".tr() || hint == "hintActualPassword".tr()
-        || hint == "hintNewPassword".tr()) {
+    if (hint == "hintPassword".tr() ||
+        hint == "hintActualPassword".tr() ||
+        hint == "hintNewPassword".tr()) {
       if (term.length < 8 || term.isEmpty) {
         if (hint == "hintPassword".tr()) {
           return "errPasswordNotValid".tr();
@@ -104,13 +109,20 @@ class _UserManagementPageState extends State<UserManagementPage> {
     if ((_formKey?.currentState?.validate() ?? false)) {
       if (widget.mode != UserMode.passwordChange) {
         if (widget.deleteAccount) {
-          AuthQueries.instance.deleteAccount(context, (_secondFieldController?.text ?? "")).then((bool success) {
+          AuthQueries.instance
+              .deleteAccount(context, (_secondFieldController?.text ?? ""))
+              .then((bool success) {
             setState(() => _currentlyLoading = false);
             if (success) Navigator.of(context).pop();
           });
         } else {
-          AuthQueries.instance.handleEmailSignIn(context, mode, (_firstFieldController?.text ?? ""),
-              (_secondFieldController?.text ?? "")).then((user) {
+          AuthQueries.instance
+              .handleEmailSignIn(
+                  context,
+                  mode,
+                  (_firstFieldController?.text ?? ""),
+                  (_secondFieldController?.text ?? ""))
+              .then((user) {
             setState(() => _currentlyLoading = false);
             if (user != null) Navigator.of(context).pop();
           });
@@ -120,8 +132,10 @@ class _UserManagementPageState extends State<UserManagementPage> {
           setState(() => _currentlyLoading = false);
           UI.showSnackBar(context, "errSamePassword".tr());
         } else {
-          AuthQueries.instance.changePassword(context, (_firstFieldController?.text ?? ""),
-              (_secondFieldController?.text ?? "")).then((bool success) {
+          AuthQueries.instance
+              .changePassword(context, (_firstFieldController?.text ?? ""),
+                  (_secondFieldController?.text ?? ""))
+              .then((bool success) {
             setState(() => _currentlyLoading = false);
             if (success) Navigator.of(context).pop();
           });
@@ -143,11 +157,15 @@ class _UserManagementPageState extends State<UserManagementPage> {
           onWillPop: _onWillPop,
           child: Scaffold(
             appBar: AppBar(
-              title: Text(widget.deleteAccount ? "titleDeleteAccount".tr() : widget.mode.label),
+              title: Text(widget.deleteAccount
+                  ? "titleDeleteAccount".tr()
+                  : widget.mode.label),
               automaticallyImplyLeading: false,
               leading: InkWell(
                 borderRadius: const BorderRadius.all(Radius.circular(50.0)),
-                onTap: () { _onWillPop(fromLeading: true); },
+                onTap: () {
+                  _onWillPop(fromLeading: true);
+                },
                 child: const Icon(Icons.chevron_left, size: 40),
               ),
             ),
@@ -158,9 +176,8 @@ class _UserManagementPageState extends State<UserManagementPage> {
                   children: [
                     Form(key: _formKey, child: _loginForm()),
                     Container(
-                      margin: const EdgeInsets.only(bottom: 32),
-                      child: _actionButtons()
-                    )
+                        margin: const EdgeInsets.only(bottom: 32),
+                        child: _actionButtons())
                   ],
                 ),
               ),
@@ -176,29 +193,36 @@ class _UserManagementPageState extends State<UserManagementPage> {
     return Column(
       children: [
         Visibility(
-          visible: widget.deleteAccount,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text("infoOnDeleteAccount".tr(), textAlign: TextAlign.justify),
-          )
-        ),
-        _formElement(widget.mode != UserMode.passwordChange ? "hintEmail".tr() : "hintActualPassword".tr()),
-        _formElement(widget.mode != UserMode.passwordChange ? "hintPassword".tr() : "hintNewPassword".tr()),
+            visible: widget.deleteAccount,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text("infoOnDeleteAccount".tr(),
+                  textAlign: TextAlign.justify),
+            )),
+        _formElement(widget.mode != UserMode.passwordChange
+            ? "hintEmail".tr()
+            : "hintActualPassword".tr()),
+        _formElement(widget.mode != UserMode.passwordChange
+            ? "hintPassword".tr()
+            : "hintNewPassword".tr()),
         LoginButton(
-          color: Colors.red[700]!,
-          content: Text("titleLogIn".tr() + "googleSignIn".tr(),
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.white),),
-          visible: widget.deleteAccount,
-          submit: () {
-            _loseFocus();
-            setState(() => _currentlyLoading = true);
-            AuthQueries.instance.deleteGoogleAccount(context).then((bool success) {
-              setState(() => _currentlyLoading = false);
-              if (success) Navigator.of(context).pop();
-            });
-          }
-        )
+            color: Colors.red[700]!,
+            content: Text(
+              "titleLogIn".tr() + "googleSignIn".tr(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.white),
+            ),
+            visible: widget.deleteAccount,
+            submit: () {
+              _loseFocus();
+              setState(() => _currentlyLoading = true);
+              AuthQueries.instance
+                  .deleteGoogleAccount(context)
+                  .then((bool success) {
+                setState(() => _currentlyLoading = false);
+                if (success) Navigator.of(context).pop();
+              });
+            })
       ],
     );
   }
@@ -207,21 +231,26 @@ class _UserManagementPageState extends State<UserManagementPage> {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: TextFormField(
-        controller: (hint == "hintEmail".tr()
-            || hint == "hintActualPassword".tr()) ? _firstFieldController : _secondFieldController,
+        controller:
+            (hint == "hintEmail".tr() || hint == "hintActualPassword".tr())
+                ? _firstFieldController
+                : _secondFieldController,
         obscureText: (hint == "hintEmail".tr()) ? false : true,
-        textInputAction: (hint == "hintEmail".tr()
-            || hint == "hintActualPassword".tr()) ? TextInputAction.next : TextInputAction.done,
-        focusNode: (hint == "hintEmail".tr()
-            || hint == "hintActualPassword".tr()) ? _firstFieldFocus : _secondFieldFocus,
+        textInputAction:
+            (hint == "hintEmail".tr() || hint == "hintActualPassword".tr())
+                ? TextInputAction.next
+                : TextInputAction.done,
+        focusNode:
+            (hint == "hintEmail".tr() || hint == "hintActualPassword".tr())
+                ? _firstFieldFocus
+                : _secondFieldFocus,
         onFieldSubmitted: (term) {
           _focusRequest(hint);
         },
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(8),
-          filled: false,
-          hintText: hint
-        ),
+            contentPadding: const EdgeInsets.all(8),
+            filled: false,
+            hintText: hint),
         validator: (term) {
           if (term != null) return _validateCredentials(hint, term);
           return null;
@@ -240,32 +269,41 @@ class _UserManagementPageState extends State<UserManagementPage> {
 
   Row _actionButtons() {
     return Row(
-      mainAxisAlignment: (widget.mode != UserMode.passwordChange && !widget.deleteAccount)
-          ? MainAxisAlignment.spaceEvenly : MainAxisAlignment.center,
+      mainAxisAlignment:
+          (widget.mode != UserMode.passwordChange && !widget.deleteAccount)
+              ? MainAxisAlignment.spaceEvenly
+              : MainAxisAlignment.center,
       children: [
         LoginButton(
-          color: Colors.red[700]!,
-          content: Text((widget.mode.label) + "googleSignIn".tr(),
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.white),
-          ),
-          visible: (widget.mode != UserMode.passwordChange && !widget.deleteAccount) ? true : false,
-          submit: () {
-            _loseFocus();
-            setState(() => _currentlyLoading = true);
-            AuthQueries.instance.handleGoogleSignIn(context).then((user) {
-              setState(() => _currentlyLoading = false);
-              if (user != null) Navigator.of(context).pop();
-            });
-          }
-        ),
+            color: Colors.red[700]!,
+            content: Text(
+              (widget.mode.label) + "googleSignIn".tr(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.white),
+            ),
+            visible: (widget.mode != UserMode.passwordChange &&
+                    !widget.deleteAccount)
+                ? true
+                : false,
+            submit: () {
+              _loseFocus();
+              setState(() => _currentlyLoading = true);
+              AuthQueries.instance.handleGoogleSignIn(context).then((user) {
+                setState(() => _currentlyLoading = false);
+                if (user != null) Navigator.of(context).pop();
+              });
+            }),
         LoginButton(
-          color: Colors.orange,
-          content: Text(widget.deleteAccount ? "titleDeleteAccount".tr() : widget.mode.label,
-            style: const TextStyle(color: Colors.white)),
-          visible: true,
-          submit: () { _submit(widget.mode); }
-        ),
+            color: Colors.orange,
+            content: Text(
+                widget.deleteAccount
+                    ? "titleDeleteAccount".tr()
+                    : widget.mode.label,
+                style: const TextStyle(color: Colors.white)),
+            visible: true,
+            submit: () {
+              _submit(widget.mode);
+            }),
       ],
     );
   }

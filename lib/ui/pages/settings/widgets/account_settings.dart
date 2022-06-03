@@ -52,12 +52,15 @@ class _AccountSettingsState extends State<AccountSettings> {
   }
 
   _decideNavigateToSignInPage(UserMode mode, {bool deleteAccount = false}) {
-    Navigator.of(context).pushNamed(OPCrewPlannerPages.userManagementPage, arguments:
-      ArgumentsManageAccount(mode: mode, delete: deleteAccount)).then((value) {
-        _getEmail();
-        _getUid();
-        _getEmailVerified();
-      });
+    Navigator.of(context)
+        .pushNamed(OPCrewPlannerPages.userManagementPage,
+            arguments:
+                ArgumentsManageAccount(mode: mode, delete: deleteAccount))
+        .then((value) {
+      _getEmail();
+      _getUid();
+      _getEmailVerified();
+    });
   }
 
   @override
@@ -65,69 +68,71 @@ class _AccountSettingsState extends State<AccountSettings> {
     return Column(
       children: [
         SettingHeader(
-          title: "accountTab".tr(),
-          subtitle: _userEmail + (_uid == null ? ""
-              : (_verified ? "emailVerified".tr() : "verifyEmailDisclaimer".tr())),
-          isAccountTabAndNotLoggedIn: !_verified && _uid != null
-        ),
+            title: "accountTab".tr(),
+            subtitle: _userEmail +
+                (_uid == null
+                    ? ""
+                    : (_verified
+                        ? "emailVerified".tr()
+                        : "verifyEmailDisclaimer".tr())),
+            isAccountTabAndNotLoggedIn: !_verified && _uid != null),
         Visibility(
-          visible: _uid == null,
-          child: SettingTile(
-            title: Text(UserMode.signIn.label), icon: const Icon(Icons.email),
-            onTap: () => _decideNavigateToSignInPage(UserMode.signIn))
-        ),
+            visible: _uid == null,
+            child: SettingTile(
+                title: Text(UserMode.signIn.label),
+                icon: const Icon(Icons.email),
+                onTap: () => _decideNavigateToSignInPage(UserMode.signIn))),
         Visibility(
-          visible: _uid == null,
-          child: SettingTile(
-            title: Text(UserMode.logIn.label),
-            icon: const Padding(
-              padding: EdgeInsets.only(left: 2, top: 2),
-              child: FaIcon(FontAwesomeIcons.rightToBracket, size: 20),
-            ),
-            onTap: () => _decideNavigateToSignInPage(UserMode.logIn))
-        ),
+            visible: _uid == null,
+            child: SettingTile(
+                title: Text(UserMode.logIn.label),
+                icon: const Padding(
+                  padding: EdgeInsets.only(left: 2, top: 2),
+                  child: FaIcon(FontAwesomeIcons.rightToBracket, size: 20),
+                ),
+                onTap: () => _decideNavigateToSignInPage(UserMode.logIn))),
         Visibility(
-          visible: _uid != null,
-          child: SettingTile(
-            title: Text("logOut".tr()),
-            icon: const Padding(
-              padding: EdgeInsets.only(left: 4, top: 2),
-              child: FaIcon(FontAwesomeIcons.rightFromBracket, size: 20),
-            ),
-            onTap: () {
-              AuthQueries.instance.closeSession().then((value) {
-                _getUid();
-                _getEmail();
-                _getEmailVerified();
-              });
-            })
-        ),
+            visible: _uid != null,
+            child: SettingTile(
+                title: Text("logOut".tr()),
+                icon: const Padding(
+                  padding: EdgeInsets.only(left: 4, top: 2),
+                  child: FaIcon(FontAwesomeIcons.rightFromBracket, size: 20),
+                ),
+                onTap: () {
+                  AuthQueries.instance.closeSession().then((value) {
+                    _getUid();
+                    _getEmail();
+                    _getEmailVerified();
+                  });
+                })),
         Visibility(
           visible: _uid != null,
           child: SettingHeader(title: "managementTab".tr()),
         ),
         Visibility(
-          visible: _uid != null,
-          child: SettingTile(
-            title: Text("titleChangePassword".tr()),
-            icon: const Icon(Icons.lock),
-            onTap: () async {
-              User? user = AuthQueries.instance.getCurrentUser();
-              // Checks provider ID. If user is logged in with Email/Password, then proceed
-              if (user != null && user.providerData[0].providerId == "password") {
-                _decideNavigateToSignInPage(UserMode.passwordChange);
-              } else {
-                UI.showSnackBar(context, "errGoogleNotAllowed".tr());
-              }
-            })
-        ),
+            visible: _uid != null,
+            child: SettingTile(
+                title: Text("titleChangePassword".tr()),
+                icon: const Icon(Icons.lock),
+                onTap: () async {
+                  User? user = AuthQueries.instance.getCurrentUser();
+                  // Checks provider ID. If user is logged in with Email/Password, then proceed
+                  if (user != null &&
+                      user.providerData[0].providerId == "password") {
+                    _decideNavigateToSignInPage(UserMode.passwordChange);
+                  } else {
+                    UI.showSnackBar(context, "errGoogleNotAllowed".tr());
+                  }
+                })),
         Visibility(
-          visible: _uid != null,
-          child: SettingTile(
-            title: Text("titleDeleteAccount".tr(), style: TextStyle(color: Colors.red[700])),
-            icon: const Icon(Icons.person_remove_alt_1),
-            onTap: () => _decideNavigateToSignInPage(UserMode.logIn, deleteAccount: true))
-        ),
+            visible: _uid != null,
+            child: SettingTile(
+                title: Text("titleDeleteAccount".tr(),
+                    style: TextStyle(color: Colors.red[700])),
+                icon: const Icon(Icons.person_remove_alt_1),
+                onTap: () => _decideNavigateToSignInPage(UserMode.logIn,
+                    deleteAccount: true))),
       ],
     );
   }

@@ -17,7 +17,8 @@ class AliasQueries {
 
   Future<int> getAllAliasesCount() async {
     if (_database != null) {
-      List<Map<String, dynamic>>? res = await _database?.query(Data.aliasTable, columns: [Data.aliasId]);
+      List<Map<String, dynamic>>? res =
+          await _database?.query(Data.aliasTable, columns: [Data.aliasId]);
       return (res?.length ?? 0);
     }
     return -1;
@@ -26,7 +27,9 @@ class AliasQueries {
   Future<int> insertAlias(String id, String alias) async {
     if (_database != null) {
       try {
-        await _database?.insert(Data.aliasTable, Alias(unitId: id, alias: alias).toJson(), conflictAlgorithm: ConflictAlgorithm.abort);
+        await _database?.insert(
+            Data.aliasTable, Alias(unitId: id, alias: alias).toJson(),
+            conflictAlgorithm: ConflictAlgorithm.abort);
         return 0;
       } catch (err) {
         print("insertAlias: ${err.toString()}");

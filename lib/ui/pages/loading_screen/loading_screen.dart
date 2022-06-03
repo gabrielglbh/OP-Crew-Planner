@@ -35,10 +35,7 @@ class _LoadingScreenPageState extends State<LoadingScreenPage> {
           title: "newVersionTitle".tr(),
           dialogContext: context,
           content: Wrap(
-            children: [
-              Text("${"versionNotes".tr()}: $newVersion\n"),
-              child
-            ],
+            children: [Text("${"versionNotes".tr()}: $newVersion\n"), child],
           ),
           acceptButton: "goToStore".tr(),
           cancel: false,
@@ -47,9 +44,8 @@ class _LoadingScreenPageState extends State<LoadingScreenPage> {
           },
         );
       },
-    ).then((_) => context.read<CheckUpdatesBloc>()..add(CheckUpdatesResumeInstallEvent(
-      context: context
-    )));
+    ).then((_) => context.read<CheckUpdatesBloc>()
+      ..add(CheckUpdatesResumeInstallEvent(context: context)));
   }
 
   @override
@@ -58,38 +54,39 @@ class _LoadingScreenPageState extends State<LoadingScreenPage> {
       onWillPop: () async => false,
       child: Scaffold(
         body: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Center(
-            child: BlocProvider<CheckUpdatesBloc>(
-              create: (_) =>
-                CheckUpdatesBloc()..add(CheckUpdatesInstallEvent(context: context)),
-              child: BlocListener<CheckUpdatesBloc, CheckUpdatesState>(
-                listener: (context, state) async {
-                  if (state is CheckUpdatesNewVersionState) {
-                    await _versionDialog(context, state.version);
-                  } else if (state is CheckUpdatesDoneState) {
-                    Navigator.of(context).pushReplacementNamed(OPCrewPlannerPages.navigationPageName);
-                  }
-                },
-                child: BlocBuilder<CheckUpdatesBloc, CheckUpdatesState>(
-                  builder: (context, state) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 200, height: 200,
-                          child: Image.asset("res/icons/license_icon.png"),
-                        ),
-                        _decideOnState(state)
-                      ],
-                    );
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Center(
+              child: BlocProvider<CheckUpdatesBloc>(
+                create: (_) => CheckUpdatesBloc()
+                  ..add(CheckUpdatesInstallEvent(context: context)),
+                child: BlocListener<CheckUpdatesBloc, CheckUpdatesState>(
+                  listener: (context, state) async {
+                    if (state is CheckUpdatesNewVersionState) {
+                      await _versionDialog(context, state.version);
+                    } else if (state is CheckUpdatesDoneState) {
+                      Navigator.of(context).pushReplacementNamed(
+                          OPCrewPlannerPages.navigationPageName);
+                    }
                   },
+                  child: BlocBuilder<CheckUpdatesBloc, CheckUpdatesState>(
+                    builder: (context, state) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 200,
+                            height: 200,
+                            child: Image.asset("res/icons/license_icon.png"),
+                          ),
+                          _decideOnState(state)
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-          )
-        ),
+            )),
       ),
     );
   }
@@ -111,19 +108,19 @@ class _LoadingScreenPageState extends State<LoadingScreenPage> {
         const Padding(
           padding: EdgeInsets.all(16),
           child: Text("Error\nPotential Fix: Clean cache memory and try again",
-            style: TextStyle(fontSize: 18),
-            textAlign: TextAlign.center),
+              style: TextStyle(fontSize: 18), textAlign: TextAlign.center),
         ),
         Padding(
           padding: const EdgeInsets.all(16),
-          child: Text("lostUpdates".tr(), style: const TextStyle(fontSize: 15),
-            textAlign: TextAlign.center),
+          child: Text("lostUpdates".tr(),
+              style: const TextStyle(fontSize: 15),
+              textAlign: TextAlign.center),
         ),
         Padding(
           padding: const EdgeInsets.all(16),
           child: Text((state as CheckUpdatesFailureState).message,
-            style: const TextStyle(fontSize: 16),
-            textAlign: TextAlign.center),
+              style: const TextStyle(fontSize: 16),
+              textAlign: TextAlign.center),
         ),
       ],
     );
@@ -136,23 +133,23 @@ class _LoadingScreenPageState extends State<LoadingScreenPage> {
         Container(
           padding: const EdgeInsets.all(16),
           child: Center(
-            child: LinearProgressIndicator(
-              value: (state as CheckUpdatesLoadingState).progress,
-              backgroundColor: Colors.orange[100],
-              valueColor: const AlwaysStoppedAnimation<Color>(Colors.orange),
-            )
-          ),
+              child: LinearProgressIndicator(
+            value: (state as CheckUpdatesLoadingState).progress,
+            backgroundColor: Colors.orange[100],
+            valueColor: const AlwaysStoppedAnimation<Color>(Colors.orange),
+          )),
         ),
         Padding(
           padding: const EdgeInsets.all(16),
           child: Text(state.message,
-            style: const TextStyle(fontSize: 18),
-            textAlign: TextAlign.center),
+              style: const TextStyle(fontSize: 18),
+              textAlign: TextAlign.center),
         ),
         Padding(
           padding: const EdgeInsets.all(16),
-          child: Text("lostUpdates".tr(), style: const TextStyle(fontSize: 15),
-            textAlign: TextAlign.center),
+          child: Text("lostUpdates".tr(),
+              style: const TextStyle(fontSize: 15),
+              textAlign: TextAlign.center),
         )
       ],
     );

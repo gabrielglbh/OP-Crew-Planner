@@ -35,8 +35,10 @@ class TeamQueries {
 
         for (int x = 0; x < teams.length; x++) {
           // For each team, retrieve the units id
-          List<String> unitsOfTeam = await UnitQueries.instance.getUnitsOfTeam(teams[x].name);
-          List<String> supportsOfTeam = await SupportQueries.instance.getSupportUnitFromTeam(teams[x].name);
+          List<String> unitsOfTeam =
+              await UnitQueries.instance.getUnitsOfTeam(teams[x].name);
+          List<String> supportsOfTeam = await SupportQueries.instance
+              .getSupportUnitFromTeam(teams[x].name);
 
           // With the units id, retrieve the info of every unit of a team
           List<Unit> units = [];
@@ -49,7 +51,8 @@ class TeamQueries {
           }
 
           // Get the ship too
-          String shipOfTeam = await ShipQueries.instance.getShipOfTeam(teams[x].name);
+          String shipOfTeam =
+              await ShipQueries.instance.getShipOfTeam(teams[x].name);
           Ship ship = await ShipQueries.instance.getShip(shipOfTeam);
 
           // Get the skills too
@@ -63,7 +66,8 @@ class TeamQueries {
 
         // Rearrange teams based on date
         teams.sort((a, b) {
-          return UI.formatDateToMilliseconds(a.updated)
+          return UI
+              .formatDateToMilliseconds(a.updated)
               .compareTo(UI.formatDateToMilliseconds(b.updated));
         });
 
@@ -71,8 +75,7 @@ class TeamQueries {
       } else {
         return [];
       }
-    }
-    else {
+    } else {
       await CustomDatabase.instance.open(onUpdate: (_) {});
       return getAllTeams();
     }
@@ -86,15 +89,18 @@ class TeamQueries {
       if (maxed) {
         if (query != null) {
           // Case 1: Query is for all teams with specific name to be searched
-          res = await _database?.query(Data.teamTable, where: "${Data.teamName} LIKE ?", whereArgs: ["%$query%"]);
+          res = await _database?.query(Data.teamTable,
+              where: "${Data.teamName} LIKE ?", whereArgs: ["%$query%"]);
         } else {
           // Case 2: Query is for only the maxed teams
-          res = await _database?.query(Data.teamTable, where: "${Data.teamMaxed}=?", whereArgs: [0]);
+          res = await _database?.query(Data.teamTable,
+              where: "${Data.teamMaxed}=?", whereArgs: [0]);
         }
       }
       // Case 3: Query is for all teams that are not maxed
       else {
-        res = await _database?.query(Data.teamTable, where: "${Data.teamMaxed}=?", whereArgs: [1]);
+        res = await _database?.query(Data.teamTable,
+            where: "${Data.teamMaxed}=?", whereArgs: [1]);
       }
 
       if (res != null) {
@@ -102,8 +108,10 @@ class TeamQueries {
 
         for (int x = 0; x < teams.length; x++) {
           // For each team, retrieve the units id
-          List<String> unitsOfTeam = await UnitQueries.instance.getUnitsOfTeam(teams[x].name);
-          List<String> supportsOfTeam = await SupportQueries.instance.getSupportUnitFromTeam(teams[x].name);
+          List<String> unitsOfTeam =
+              await UnitQueries.instance.getUnitsOfTeam(teams[x].name);
+          List<String> supportsOfTeam = await SupportQueries.instance
+              .getSupportUnitFromTeam(teams[x].name);
 
           // With the units id, retrieve the info of every unit of a team
           List<Unit> units = [];
@@ -116,7 +124,8 @@ class TeamQueries {
           }
 
           // Get the ship too
-          String shipOfTeam = await ShipQueries.instance.getShipOfTeam(teams[x].name);
+          String shipOfTeam =
+              await ShipQueries.instance.getShipOfTeam(teams[x].name);
           Ship ship = await ShipQueries.instance.getShip(shipOfTeam);
 
           // Get the skills too
@@ -130,7 +139,8 @@ class TeamQueries {
 
         // Rearrange teams based on date
         teams.sort((a, b) {
-          return UI.formatDateToMilliseconds(a.updated)
+          return UI
+              .formatDateToMilliseconds(a.updated)
               .compareTo(UI.formatDateToMilliseconds(b.updated));
         });
 
@@ -138,8 +148,7 @@ class TeamQueries {
       } else {
         return [];
       }
-    }
-    else {
+    } else {
       await CustomDatabase.instance.open(onUpdate: (_) {});
       return getTeams(maxed, query);
     }
@@ -147,10 +156,8 @@ class TeamQueries {
 
   Future<List<String>> getTeamNames() async {
     if (_database != null) {
-      List<Map<String, dynamic>>? res = await _database?.query(
-          Data.teamTable,
-          columns: [Data.teamName]
-      );
+      List<Map<String, dynamic>>? res =
+          await _database?.query(Data.teamTable, columns: [Data.teamName]);
       if (res != null) {
         return List.generate(res.length, (i) => res[i][Data.teamName]);
       } else {
@@ -165,56 +172,55 @@ class TeamQueries {
       await _database?.insert(Data.teamTable, team.toMap(),
           conflictAlgorithm: ConflictAlgorithm.abort);
       // Insert ship
-      await _database?.insert(Data.relShipTable, TeamShip(
-          teamId: team.name,
-          shipId: team.ship.id
-      ).toJson(), conflictAlgorithm: ConflictAlgorithm.abort);
+      await _database?.insert(Data.relShipTable,
+          TeamShip(teamId: team.name, shipId: team.ship.id).toJson(),
+          conflictAlgorithm: ConflictAlgorithm.abort);
       // Insert units & support units
       for (int x = 0; x < team.units.length; x++) {
         try {
-          await _database?.insert(Data.relUnitTable, TeamUnit(
-              teamId: team.name,
-              unitId: team.units[x].id
-          ).toJson(), conflictAlgorithm: ConflictAlgorithm.abort);
+          await _database?.insert(Data.relUnitTable,
+              TeamUnit(teamId: team.name, unitId: team.units[x].id).toJson(),
+              conflictAlgorithm: ConflictAlgorithm.abort);
         } catch (e) {
-          await _database?.insert(Data.relUnitTable, TeamUnit(
-              teamId: team.name,
-              unitId: "noimage"
-          ).toJson(), conflictAlgorithm: ConflictAlgorithm.abort);
+          await _database?.insert(Data.relUnitTable,
+              TeamUnit(teamId: team.name, unitId: "noimage").toJson(),
+              conflictAlgorithm: ConflictAlgorithm.abort);
         }
         try {
-          await _database?.insert(Data.relSupportTable, TeamUnit(
-              teamId: team.name,
-              unitId: team.supports[x].id
-          ).toJson(), conflictAlgorithm: ConflictAlgorithm.abort);
+          await _database?.insert(Data.relSupportTable,
+              TeamUnit(teamId: team.name, unitId: team.supports[x].id).toJson(),
+              conflictAlgorithm: ConflictAlgorithm.abort);
         } catch (e) {
-          await _database?.insert(Data.relSupportTable, TeamUnit(
-              teamId: team.name,
-              unitId: "noimage"
-          ).toJson(), conflictAlgorithm: ConflictAlgorithm.abort);
+          await _database?.insert(Data.relSupportTable,
+              TeamUnit(teamId: team.name, unitId: "noimage").toJson(),
+              conflictAlgorithm: ConflictAlgorithm.abort);
         }
       }
       // Insert skills
-      await _database?.insert(Data.skillsTable, Skills(
-          team: team.name,
-          damageReduction: team.skills.damageReduction,
-          chargeSpecials: team.skills.chargeSpecials,
-          bindResistance: team.skills.bindResistance,
-          despairResistance: team.skills.despairResistance,
-          autoHeal: team.skills.autoHeal,
-          rcvBoost: team.skills.rcvBoost,
-          slotsBoost: team.skills.slotsBoost,
-          mapResistance: team.skills.mapResistance,
-          poisonResistance: team.skills.poisonResistance,
-          resilience: team.skills.resilience
-      ).toJson(), conflictAlgorithm: ConflictAlgorithm.abort);
+      await _database?.insert(
+          Data.skillsTable,
+          Skills(
+                  team: team.name,
+                  damageReduction: team.skills.damageReduction,
+                  chargeSpecials: team.skills.chargeSpecials,
+                  bindResistance: team.skills.bindResistance,
+                  despairResistance: team.skills.despairResistance,
+                  autoHeal: team.skills.autoHeal,
+                  rcvBoost: team.skills.rcvBoost,
+                  slotsBoost: team.skills.slotsBoost,
+                  mapResistance: team.skills.mapResistance,
+                  poisonResistance: team.skills.poisonResistance,
+                  resilience: team.skills.resilience)
+              .toJson(),
+          conflictAlgorithm: ConflictAlgorithm.abort);
     }
     return true;
   }
 
   Future<void> deleteTeam(String name) async {
     if (_database != null) {
-      await _database?.delete(Data.teamTable, where: "${Data.teamName}=?", whereArgs: [name]);
+      await _database?.delete(Data.teamTable,
+          where: "${Data.teamName}=?", whereArgs: [name]);
     }
   }
 
@@ -234,16 +240,20 @@ class TeamQueries {
 
   Future<bool> updateIsMaxed(Team team) async {
     if (_database != null) {
-      _database?.update(Data.teamTable, team.toMap(), where: "${Data.teamName}=?", whereArgs: [team.name]);
+      _database?.update(Data.teamTable, team.toMap(),
+          where: "${Data.teamName}=?", whereArgs: [team.name]);
     }
     return true;
   }
 
   Future<int> getNumberOfTeams() async {
     if (_database != null) {
-      List<Map<String, dynamic>>? res = await _database?.rawQuery("SELECT ${Data.teamName} FROM ${Data.teamTable}");
+      List<Map<String, dynamic>>? res = await _database
+          ?.rawQuery("SELECT ${Data.teamName} FROM ${Data.teamTable}");
       if (res != null) {
-        return List.generate(res.length, (i) { return res[i][Data.teamName]; }).length;
+        return List.generate(res.length, (i) {
+          return res[i][Data.teamName];
+        }).length;
       } else {
         return 0;
       }

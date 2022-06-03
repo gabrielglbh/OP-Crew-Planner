@@ -1,8 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 
 enum Attribute {
-  maxLevel, skills, special, cotton, support, potential,
-  evolution, limitBreak, rumbleSpecial, rumbleAbility, maxLevelLimitBreak
+  maxLevel,
+  skills,
+  special,
+  cotton,
+  support,
+  potential,
+  evolution,
+  limitBreak,
+  rumbleSpecial,
+  rumbleAbility,
+  maxLevelLimitBreak
 }
 
 extension AttributeExt on Attribute {

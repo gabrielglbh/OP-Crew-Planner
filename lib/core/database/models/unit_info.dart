@@ -69,26 +69,59 @@ class UnitInfo {
   static const String fSuperTandemCondition = "superTandemCondition";
   static const String fSuperTandemDescription = "superTandemDescription";
 
-  UnitInfo({this.sailor, this.special, this.specialName, this.captain, this.swap,
-      this.potential = const [], this.festAbility, this.festSpecial, this.festResistance,
-      this.support, this.superSpecial, this.superSpecialCriteria, this.vsSpecial,
-      this.vsCondition, this.art, this.unitId, this.lastTapCondition, this.lastTapDescription,
-      this.llbCaptain, this.llbSpecial, this.llbFestSpecial, this.llbFestAbility, this.llbFestResistance,
-      this.superTandemCondition, this.superTandemDescription
-  });
+  UnitInfo(
+      {this.sailor,
+      this.special,
+      this.specialName,
+      this.captain,
+      this.swap,
+      this.potential = const [],
+      this.festAbility,
+      this.festSpecial,
+      this.festResistance,
+      this.support,
+      this.superSpecial,
+      this.superSpecialCriteria,
+      this.vsSpecial,
+      this.vsCondition,
+      this.art,
+      this.unitId,
+      this.lastTapCondition,
+      this.lastTapDescription,
+      this.llbCaptain,
+      this.llbSpecial,
+      this.llbFestSpecial,
+      this.llbFestAbility,
+      this.llbFestResistance,
+      this.superTandemCondition,
+      this.superTandemDescription});
 
   bool isEqualTo(UnitInfo b) {
-    return sailor?.length == b.sailor?.length && special == b.special &&
-        specialName == b.specialName && captain == b.captain && swap == b.swap &&
-        potential.length == b.potential.length && festAbility == b.festAbility &&
-        festSpecial == b.festSpecial && festResistance == b.festResistance &&
-        support?.length == b.support?.length && superSpecial == b.superSpecial &&
-        superSpecialCriteria == b.superSpecialCriteria && vsCondition == b.vsCondition &&
-        vsSpecial == b.vsSpecial && art == b.art && lastTapCondition == b.lastTapCondition &&
-        lastTapDescription == b.lastTapDescription && unitId == b.unitId && llbCaptain == b.llbCaptain &&
-        llbSpecial == b.llbSpecial && llbFestSpecial == b.llbFestSpecial &&
-        llbFestAbility == b.llbFestAbility && llbFestResistance == b.llbFestResistance &&
-        superTandemCondition == b.superTandemCondition && superTandemDescription == b.superTandemDescription;
+    return sailor?.length == b.sailor?.length &&
+        special == b.special &&
+        specialName == b.specialName &&
+        captain == b.captain &&
+        swap == b.swap &&
+        potential.length == b.potential.length &&
+        festAbility == b.festAbility &&
+        festSpecial == b.festSpecial &&
+        festResistance == b.festResistance &&
+        support?.length == b.support?.length &&
+        superSpecial == b.superSpecial &&
+        superSpecialCriteria == b.superSpecialCriteria &&
+        vsCondition == b.vsCondition &&
+        vsSpecial == b.vsSpecial &&
+        art == b.art &&
+        lastTapCondition == b.lastTapCondition &&
+        lastTapDescription == b.lastTapDescription &&
+        unitId == b.unitId &&
+        llbCaptain == b.llbCaptain &&
+        llbSpecial == b.llbSpecial &&
+        llbFestSpecial == b.llbFestSpecial &&
+        llbFestAbility == b.llbFestAbility &&
+        llbFestResistance == b.llbFestResistance &&
+        superTandemCondition == b.superTandemCondition &&
+        superTandemDescription == b.superTandemDescription;
   }
 
   factory UnitInfo.empty() => UnitInfo(
@@ -115,36 +148,35 @@ class UnitInfo {
       llbFestAbility: "",
       llbFestResistance: "",
       superTandemCondition: "",
-      superTandemDescription: ""
-  );
+      superTandemDescription: "");
 
   factory UnitInfo.fromJson(Map<String, dynamic> json) {
     return UnitInfo(
-      sailor: json[fSailor] ?? {},
-      special: json[fSpecial] ?? "",
-      specialName: json[fSpecialName] ?? "",
-      captain: json[fCaptain] ?? "",
-      swap: json[fSwap] ?? "",
-      potential: json[fPotential] == null ? [] : json[fPotential].cast<String>(),
-      festAbility: json[fFestAbility] ?? "",
-      festResistance: json[fFestResist] ?? "",
-      festSpecial: json[fFestSpecial] ?? "",
-      support: json[fSupport] == null ? {} : json[fSupport][0],
-      superSpecial: json[fSuperSpecial] ?? "",
-      superSpecialCriteria: json[fSuperCriteria] ?? "",
-      vsCondition: json[fVSCondition] ?? "",
-      vsSpecial: json[fVSSpecial] ?? "",
-      art: json[fArt] ?? "",
-      lastTapCondition: json[fLastTapCondition] ?? "",
-      lastTapDescription: json[fLastTapDescription] ?? "",
-      llbCaptain: json[fLLBCaptain] ?? "",
-      llbSpecial: json[fLLBSpecial] ?? "",
-      llbFestAbility: json[fLLBFestAbility] ?? "",
-      llbFestResistance: json[fLLBFestResist] ?? "",
-      llbFestSpecial: json[fLLBFestSpecial] ?? "",
-      superTandemCondition: json[fSuperTandemCondition] ?? "",
-      superTandemDescription: json[fSuperTandemDescription] ?? ""
-    );
+        sailor: json[fSailor] ?? {},
+        special: json[fSpecial] ?? "",
+        specialName: json[fSpecialName] ?? "",
+        captain: json[fCaptain] ?? "",
+        swap: json[fSwap] ?? "",
+        potential:
+            json[fPotential] == null ? [] : json[fPotential].cast<String>(),
+        festAbility: json[fFestAbility] ?? "",
+        festResistance: json[fFestResist] ?? "",
+        festSpecial: json[fFestSpecial] ?? "",
+        support: json[fSupport] == null ? {} : json[fSupport][0],
+        superSpecial: json[fSuperSpecial] ?? "",
+        superSpecialCriteria: json[fSuperCriteria] ?? "",
+        vsCondition: json[fVSCondition] ?? "",
+        vsSpecial: json[fVSSpecial] ?? "",
+        art: json[fArt] ?? "",
+        lastTapCondition: json[fLastTapCondition] ?? "",
+        lastTapDescription: json[fLastTapDescription] ?? "",
+        llbCaptain: json[fLLBCaptain] ?? "",
+        llbSpecial: json[fLLBSpecial] ?? "",
+        llbFestAbility: json[fLLBFestAbility] ?? "",
+        llbFestResistance: json[fLLBFestResist] ?? "",
+        llbFestSpecial: json[fLLBFestSpecial] ?? "",
+        superTandemCondition: json[fSuperTandemCondition] ?? "",
+        superTandemDescription: json[fSuperTandemDescription] ?? "");
   }
 
   // Only for Device's Database
@@ -191,8 +223,7 @@ class UnitInfo {
         Data.superTandemCondition: superTandemCondition ?? "",
         Data.superTandemDescription: superTandemDescription ?? ""
       };
-    }
-    else if (potential[0] != "" && potential[1] == "" && potential[2] == "") {
+    } else if (potential[0] != "" && potential[1] == "" && potential[2] == "") {
       return {
         Data.dataUnitId: unitId,
         Data.sailorBase: sailor?[fSailorBase] ?? "",

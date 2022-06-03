@@ -14,7 +14,8 @@ class DataListBloc extends Bloc<DataListEvent, DataListState> {
     on<DataListEventLoading>((event, emit) async {
       try {
         emit(const DataListStateLoading());
-        List<Unit> units = await UnitQueries.instance.getMostRecentSearchedUnits();
+        List<Unit> units =
+            await UnitQueries.instance.getMostRecentSearchedUnits();
         emit(DataListStateLoaded(units: units));
       } on Exception {
         emit(DataListStateFailure());
@@ -24,11 +25,13 @@ class DataListBloc extends Bloc<DataListEvent, DataListState> {
     on<DataListEventSearching>((event, emit) async {
       try {
         emit(const DataListStateLoading());
-        List<Unit> units = await UnitQueries.instance.getUnitsAccordingToName(event.query, event.type);
+        List<Unit> units = await UnitQueries.instance
+            .getUnitsAccordingToName(event.query, event.type);
         List<Unit> parsedUnits = [];
         parsedUnits.addAll(units);
         for (var unit in units) {
-          if (unit.name.contains("[VS Unit]") || unit.name.contains("[Dual Unit]")) {
+          if (unit.name.contains("[VS Unit]") ||
+              unit.name.contains("[Dual Unit]")) {
             parsedUnits.remove(unit);
           }
         }
@@ -42,9 +45,12 @@ class DataListBloc extends Bloc<DataListEvent, DataListState> {
       if (state is DataListStateLoaded) {
         try {
           emit(const DataListStateLoading());
-          await UnitInfoQueries.instance.deleteSpecificUnitInfoFromDatabase(event.unit);
-          await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.deleteDataUnit);
-          List<Unit> units = await UnitQueries.instance.getMostRecentSearchedUnits();
+          await UnitInfoQueries.instance
+              .deleteSpecificUnitInfoFromDatabase(event.unit);
+          await UpdateQueries.instance
+              .registerAnalyticsEvent(AnalyticsEvents.deleteDataUnit);
+          List<Unit> units =
+              await UnitQueries.instance.getMostRecentSearchedUnits();
           emit(DataListStateLoaded(units: units));
         } on Exception {
           emit(DataListStateFailure());
@@ -56,7 +62,8 @@ class DataListBloc extends Bloc<DataListEvent, DataListState> {
       try {
         emit(const DataListStateLoading());
         await UnitQueries.instance.clearHistory();
-        await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.clearHistory);
+        await UpdateQueries.instance
+            .registerAnalyticsEvent(AnalyticsEvents.clearHistory);
         emit(const DataListStateLoaded(units: []));
       } on Exception {
         emit(DataListStateFailure());
@@ -68,8 +75,10 @@ class DataListBloc extends Bloc<DataListEvent, DataListState> {
         emit(const DataListStateLoading());
         await UnitInfoQueries.instance.deleteUnitInfoFromDatabase();
         StorageUtils.saveData(StorageUtils.downloadedLegends, false);
-        await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.deleteAllDataUnit);
-        List<Unit> units = await UnitQueries.instance.getMostRecentSearchedUnits();
+        await UpdateQueries.instance
+            .registerAnalyticsEvent(AnalyticsEvents.deleteAllDataUnit);
+        List<Unit> units =
+            await UnitQueries.instance.getMostRecentSearchedUnits();
         emit(DataListStateLoaded(units: units));
       } on Exception {
         emit(DataListStateFailure());

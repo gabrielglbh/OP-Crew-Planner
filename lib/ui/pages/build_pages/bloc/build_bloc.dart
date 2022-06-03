@@ -13,7 +13,8 @@ class BuildBloc extends Bloc<BuildEvent, BuildState> {
     on<BuildEventLoading>((event, emit) async {
       try {
         emit(BuildStateLoading());
-        List<Unit> units = await UnitQueries.instance.getMostRecentSearchedUnits();
+        List<Unit> units =
+            await UnitQueries.instance.getMostRecentSearchedUnits();
         emit(BuildStateLoaded(units: units));
       } on Exception {
         emit(BuildStateFailure());
@@ -25,14 +26,17 @@ class BuildBloc extends Bloc<BuildEvent, BuildState> {
         emit(BuildStateLoading());
         List<Unit> units = [];
         if (event.filterOnMaxUnits) {
-          units = await UnitQueries.instance.getUnitsCurrentlyNotMaxing(event.query, event.type);
+          units = await UnitQueries.instance
+              .getUnitsCurrentlyNotMaxing(event.query, event.type);
         } else {
-          units = await UnitQueries.instance.getUnitsAccordingToName(event.query, event.type);
+          units = await UnitQueries.instance
+              .getUnitsAccordingToName(event.query, event.type);
         }
         List<Unit> parsedUnits = [];
         parsedUnits.addAll(units);
         for (var unit in units) {
-          if (unit.name.contains("[VS Unit]") || unit.name.contains("[Dual Unit]")) {
+          if (unit.name.contains("[VS Unit]") ||
+              unit.name.contains("[Dual Unit]")) {
             parsedUnits.remove(unit);
           }
         }

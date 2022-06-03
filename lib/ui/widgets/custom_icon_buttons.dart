@@ -17,7 +17,8 @@ class BackIcon extends StatelessWidget {
 class RegularIcon extends StatelessWidget {
   final Function() onTap;
   final IconData icon;
-  const RegularIcon({Key? key, required this.onTap, required this.icon}) : super(key: key);
+  const RegularIcon({Key? key, required this.onTap, required this.icon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,8 @@ class RegularIcon extends StatelessWidget {
 class FaviconIcon extends StatelessWidget {
   final Function() onTap;
   final IconData icon;
-  const FaviconIcon({Key? key, required this.onTap, required this.icon}) : super(key: key);
+  const FaviconIcon({Key? key, required this.onTap, required this.icon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

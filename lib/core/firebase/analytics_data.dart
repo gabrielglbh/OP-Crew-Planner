@@ -27,8 +27,10 @@ class AnalyticsEvents {
   static const String deleteUnit = "deleted_unit";
   static const String deleteTeam = "deleted_team";
   static const String deleteRumbleTeam = "deleted_rumble_team";
-  static const String openUnitDataFromUnitList = "view_unit_data_from_unit_list";
-  static const String openUnitDataFromRecentList = "view_unit_data_from_recent_list";
+  static const String openUnitDataFromUnitList =
+      "view_unit_data_from_unit_list";
+  static const String openUnitDataFromRecentList =
+      "view_unit_data_from_recent_list";
   static const String unitReadyFilter = "filtered_units_by_rdy";
   static const String teamMaxFilter = "filtered_teams_by_maxed";
   static const String rumbleTeamModeFilter = "filtered_rumble_teams_by_mode";
@@ -41,7 +43,8 @@ class AnalyticsEvents {
   static const String showFullArt = "show_full_art";
 
   static const String openUnitDataFromUnit = "view_unit_data_from_build_unit";
-  static const String openUnitDataFromUnitInfoButton = "view_unit_data_from_build_unit_info";
+  static const String openUnitDataFromUnitInfoButton =
+      "view_unit_data_from_build_unit_info";
   static const String createdUnitToBeMaxed = "created_to_be_maxed_unit";
   static const String updatedUnitToBeMaxed = "updated_to_be_maxed_unit";
 
@@ -50,11 +53,14 @@ class AnalyticsEvents {
   static const String createdTeam = "created_team";
   static const String updatedTeam = "updated_team";
   static const String removeUnitFromTeam = "remove_unit_from_team_on_creation";
-  static const String openUnitDataFromUnitOnTeam = "view_unit_data_from_unit_on_team";
+  static const String openUnitDataFromUnitOnTeam =
+      "view_unit_data_from_unit_on_team";
 
   static const String resetRumbleTeam = "empty_rumble_team_on_creation";
   static const String createdRumbleTeam = "created_rumble_team";
   static const String updatedRumbleTeam = "updated_rumble_team";
-  static const String removeUnitFromRumbleTeam = "remove_unit_from_rumble_team_on_creation";
-  static const String openUnitDataFromUnitOnRumbleTeam = "view_unit_data_from_unit_on_rumble_team";
+  static const String removeUnitFromRumbleTeam =
+      "remove_unit_from_rumble_team_on_creation";
+  static const String openUnitDataFromUnitOnRumbleTeam =
+      "view_unit_data_from_unit_on_rumble_team";
 }

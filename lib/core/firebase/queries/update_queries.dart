@@ -28,14 +28,17 @@ class UpdateQueries {
   static UpdateQueries get instance => _instance;
 
   Future<void> registerAnalyticsEvent(String event) async {
-    if (!AdManager.test) await FirebaseAnalytics.instance.logEvent(name: event, parameters: null);
+    if (!AdManager.test) {
+      await FirebaseAnalytics.instance.logEvent(name: event, parameters: null);
+    }
   }
 
   Future<String> getVersion(BuildContext context) async {
     String latestVersion = "";
 
     try {
-      final Future<DocumentSnapshot>? ref = _ref?.collection(_versionCollection).doc("actual_version").get();
+      final Future<DocumentSnapshot>? ref =
+          _ref?.collection(_versionCollection).doc("actual_version").get();
       await ref?.then((snapshot) {
         latestVersion = snapshot.get("version");
       });
@@ -49,9 +52,12 @@ class UpdateQueries {
     List<String> notes = [];
 
     try {
-      final Future<DocumentSnapshot>? ref = _ref?.collection(_versionCollection).doc("notes").get();
+      final Future<DocumentSnapshot>? ref =
+          _ref?.collection(_versionCollection).doc("notes").get();
       await ref?.then((snapshot) {
-        notes = snapshot.get(Localizations.localeOf(context).languageCode).cast<String>();
+        notes = snapshot
+            .get(Localizations.localeOf(context).languageCode)
+            .cast<String>();
       });
     } catch (err) {
       UI.showSnackBar(context, "errGeneral".tr());
@@ -63,7 +69,8 @@ class UpdateQueries {
 
   Future<List<String>> getRecentUnits() async {
     try {
-      DocumentSnapshot? r = await _ref?.collection("RECENT").doc("recent_units").get();
+      DocumentSnapshot? r =
+          await _ref?.collection("RECENT").doc("recent_units").get();
       List<String>? s = r?.get("units").cast<String>();
       if (s != null) {
         return s.reversed.toList();
@@ -86,22 +93,24 @@ class UpdateQueries {
   ///    await CustomDatabase.updateUnit(u);
   ///    See db > migration.dart
   Future<void> uploadNewData() async {
-    Map<String, dynamic> units = {
-
-    };
+    Map<String, dynamic> units = {};
 
     List<String> unitsKeys = units.keys.toList();
     for (int x = 0; x < unitsKeys.length; x++) {
-      await FirebaseFirestore.instance.collection(Data.unitPath).doc(unitsKeys[x]).set(units[unitsKeys[x]]);
+      await FirebaseFirestore.instance
+          .collection(Data.unitPath)
+          .doc(unitsKeys[x])
+          .set(units[unitsKeys[x]]);
     }
 
-    Map<String, dynamic> aliases = {
-
-    };
+    Map<String, dynamic> aliases = {};
 
     List<String> aliasKeys = aliases.keys.toList();
     for (int x = 0; x < aliasKeys.length; x++) {
-      await FirebaseFirestore.instance.collection(Data.aliasPath).doc(aliasKeys[x]).set(aliases[aliasKeys[x]]);
+      await FirebaseFirestore.instance
+          .collection(Data.aliasPath)
+          .doc(aliasKeys[x])
+          .set(aliases[aliasKeys[x]]);
     }
   }
 
@@ -114,27 +123,45 @@ class UpdateQueries {
     /// with all fields in order to be updated along with the aliases.
 
     /// UNCOMMENT THIS TO UPLOAD NEW UNITS AND ALIASES
-    /// await uploadNewData();
+    ///await uploadNewData();
 
     try {
       onUpdate("checkingForUpdates".tr(), 0);
       int units = 0;
       int aliases = 0;
       int ships = 0;
-      await UnitQueries.instance.getAllUnitsCount().then((u) { if (u != -1) units = u; });
-      await AliasQueries.instance.getAllAliasesCount().then((a) { if (a != -1) aliases = a; });
-      await ShipQueries.instance.getAllShipsCount().then((s) { if (s != -1) ships = s; });
+      await UnitQueries.instance.getAllUnitsCount().then((u) {
+        if (u != -1) units = u;
+      });
+      await AliasQueries.instance.getAllAliasesCount().then((a) {
+        if (a != -1) aliases = a;
+      });
+      await ShipQueries.instance.getAllShipsCount().then((s) {
+        if (s != -1) ships = s;
+      });
 
       // Retrieves the document with the highest PK to see how many units there are
-      QuerySnapshot? u = await _ref?.collection(Data.unitPath).orderBy(Data.unitKey, descending: true).limit(1).get();
+      QuerySnapshot? u = await _ref
+          ?.collection(Data.unitPath)
+          .orderBy(Data.unitKey, descending: true)
+          .limit(1)
+          .get();
       int fUnits = u?.docs[0].get(Data.unitKey);
 
       // Retrieves the document with the highest ID to see how many aliases there are
-      QuerySnapshot? a = await _ref?.collection(Data.aliasPath).orderBy(Data.aliasKey, descending: true).limit(1).get();
+      QuerySnapshot? a = await _ref
+          ?.collection(Data.aliasPath)
+          .orderBy(Data.aliasKey, descending: true)
+          .limit(1)
+          .get();
       int fAliases = a?.docs[0].get(Data.aliasKey);
 
       // Retrieves the document with the highest PK to see how many ships there are
-      QuerySnapshot? s = await _ref?.collection(Data.shipsPath).orderBy(Data.shipKey, descending: true).limit(1).get();
+      QuerySnapshot? s = await _ref
+          ?.collection(Data.shipsPath)
+          .orderBy(Data.shipKey, descending: true)
+          .limit(1)
+          .get();
       int fShips = s?.docs[0].get(Data.shipKey);
 
       // Check if there are any storage utils units for updating them
@@ -143,9 +170,12 @@ class UpdateQueries {
       List<String>? keys = StorageUtils?.getKeysForUnits();
       if (keys != null) {
         for (int un = 0; un < keys.length; un++) {
-          DocumentSnapshot? unit = await _ref?.collection(Data.unitPath).doc(keys[un]).get();
+          DocumentSnapshot? unit =
+              await _ref?.collection(Data.unitPath).doc(keys[un]).get();
           if (unit != null && unit.get(Data.unitUrl) != "") {
-            onUpdate("${((un/keys.length)*100).toStringAsFixed(2)}% ${"unitUpdates".tr()} (${keys.length})", un/keys.length);
+            onUpdate(
+                "${((un / keys.length) * 100).toStringAsFixed(2)}% ${"unitUpdates".tr()} (${keys.length})",
+                un / keys.length);
             String unitId = StorageUtils.readData(keys[un], "");
             Unit dbUnit = await UnitQueries.instance.getUnit(unitId);
             dbUnit.url = unit.get(Data.unitUrl);
@@ -159,21 +189,26 @@ class UpdateQueries {
       if (units < fUnits) {
         int newUnits = fUnits - units;
         onUpdate("${"unitInsertion".tr()} ($newUnits)", 0);
-        QuerySnapshot? un = await _ref?.collection(Data.unitPath)
-            .orderBy(Data.unitKey, descending: true).limit(newUnits).get();
+        QuerySnapshot? un = await _ref
+            ?.collection(Data.unitPath)
+            .orderBy(Data.unitKey, descending: true)
+            .limit(newUnits)
+            .get();
         if (un != null) {
           for (int unit = 0; unit < un.size; unit++) {
             // If the image is not yet provided, put Shared Preference for keep tracking
             if (un.docs[unit].get(Data.unitUrl) == "") {
-              StorageUtils?.saveData(un.docs[unit].get(Data.unitKey).toString(), un.docs[unit].get(Data.unitId));
+              StorageUtils?.saveData(un.docs[unit].get(Data.unitKey).toString(),
+                  un.docs[unit].get(Data.unitId));
             }
-            onUpdate("${((unit/newUnits)*100).toStringAsFixed(2)}% ${"unitInsertion".tr()} ($newUnits)", unit/newUnits);
+            onUpdate(
+                "${((unit / newUnits) * 100).toStringAsFixed(2)}% ${"unitInsertion".tr()} ($newUnits)",
+                unit / newUnits);
             await UnitQueries.instance.insertUnit(
                 un.docs[unit].get(Data.unitId),
                 un.docs[unit].get(Data.unitName),
                 un.docs[unit].get(Data.unitType),
-                un.docs[unit].get(Data.unitUrl)
-            );
+                un.docs[unit].get(Data.unitUrl));
           }
         }
       }
@@ -182,11 +217,16 @@ class UpdateQueries {
       if (aliases < fAliases) {
         int newAliases = fAliases - aliases;
         onUpdate("${"aliasInsertion".tr()} ($newAliases)", 0);
-        QuerySnapshot? an = await _ref?.collection(Data.aliasPath)
-            .orderBy(Data.aliasKey, descending: true).limit(newAliases).get();
+        QuerySnapshot? an = await _ref
+            ?.collection(Data.aliasPath)
+            .orderBy(Data.aliasKey, descending: true)
+            .limit(newAliases)
+            .get();
         if (an != null) {
           for (int alias = 0; alias < an.size; alias++) {
-            onUpdate("${((alias/newAliases)*100).toStringAsFixed(2)}% ${"aliasInsertion".tr()} ($newAliases)", alias/newAliases);
+            onUpdate(
+                "${((alias / newAliases) * 100).toStringAsFixed(2)}% ${"aliasInsertion".tr()} ($newAliases)",
+                alias / newAliases);
             await AliasQueries.instance.insertAlias(
               an.docs[alias].get(Data.aliasUnitId),
               an.docs[alias].get(Data.aliasName),
@@ -199,11 +239,16 @@ class UpdateQueries {
       if (ships < fShips) {
         int newShips = fShips - ships;
         onUpdate("${"shipInsertion".tr()} ($newShips)", 0);
-        QuerySnapshot? sn = await _ref?.collection(Data.shipsPath)
-            .orderBy(Data.shipKey, descending: true).limit(newShips).get();
+        QuerySnapshot? sn = await _ref
+            ?.collection(Data.shipsPath)
+            .orderBy(Data.shipKey, descending: true)
+            .limit(newShips)
+            .get();
         if (sn != null) {
           for (int ship = 0; ship < sn.size; ship++) {
-            onUpdate("${((ship/newShips)*100).toStringAsFixed(2)}% ${"shipInsertion".tr()} ($newShips)", ship/newShips);
+            onUpdate(
+                "${((ship / newShips) * 100).toStringAsFixed(2)}% ${"shipInsertion".tr()} ($newShips)",
+                ship / newShips);
             await ShipQueries.instance.insertShip(
               sn.docs[ship].get(Data.shipId),
               sn.docs[ship].get(Data.shipName),

@@ -1,8 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 
-enum BackupMode {
-  create, download, delete
-}
+enum BackupMode { create, download, delete }
 
 extension BackupModeExt on BackupMode {
   String get title {

@@ -12,7 +12,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 /// Appears upon performing an operation in the backup
 
 class AdManager {
-
   /// false --> RELEASE
   /// --------------------------
   /// true --> DEVELOPMENT
@@ -44,23 +43,20 @@ class AdManager {
     }
   }
 
-  static createBanner({required Function onLoaded, required Function onFailed}) {
+  static createBanner(
+      {required Function onLoaded, required Function onFailed}) {
     _bannerAd = BannerAd(
-      adUnitId: _bannerAdUnitId,
-      size: AdSize.banner,
-      request: const AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (Ad ad) {
+        adUnitId: _bannerAdUnitId,
+        size: AdSize.banner,
+        request: const AdRequest(),
+        listener: BannerAdListener(onAdLoaded: (Ad ad) {
           print("AD LOADED ------------- Ad Code: ${ad.adUnitId}");
           onLoaded();
-        },
-        onAdFailedToLoad: (Ad ad, err) {
+        }, onAdFailedToLoad: (Ad ad, err) {
           print("AD ERROR ------------- Error: ${err.message}.");
           onFailed();
           ad.dispose();
-        }
-      )
-    );
+        }));
     _bannerAd?.load();
   }
 
@@ -78,46 +74,49 @@ class AdManager {
     }
   }
 
-  static createInterstitial({required Function onLoaded, required Function onFailed,
-    required Function onClosed}) {
+  static createInterstitial(
+      {required Function onLoaded,
+      required Function onFailed,
+      required Function onClosed}) {
     InterstitialAd.load(
-      adUnitId: _interstitialAdUnitId,
-      request: const AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (InterstitialAd ad) {
+        adUnitId: _interstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback:
+            InterstitialAdLoadCallback(onAdLoaded: (InterstitialAd ad) {
           onLoaded();
           _interstitialAd = ad;
           _numInterstitialLoadAttempts = 0;
           _interstitialAd?.setImmersiveMode(true);
-        },
-        onAdFailedToLoad: (LoadAdError error) {
+        }, onAdFailedToLoad: (LoadAdError error) {
           onFailed();
           _numInterstitialLoadAttempts += 1;
           _interstitialAd = null;
           if (_numInterstitialLoadAttempts <= _maxFailedLoadAttempts) {
-            createInterstitial(onLoaded: onLoaded, onFailed: onFailed, onClosed: onClosed);
+            createInterstitial(
+                onLoaded: onLoaded, onFailed: onFailed, onClosed: onClosed);
           }
-        }
-      )
-    );
+        }));
   }
 
-  static void showInterstitial({required Function onLoaded, required Function onFailed,
-    required Function onClosed}) {
+  static void showInterstitial(
+      {required Function onLoaded,
+      required Function onFailed,
+      required Function onClosed}) {
     if (_interstitialAd == null) {
       print('Warning: attempt to show interstitial before loaded.');
       return;
     }
-    _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
-      onAdDismissedFullScreenContent: (ad) {
-        ad.dispose();
-        onClosed();
-        createInterstitial(onLoaded: onLoaded, onFailed: onFailed, onClosed: onClosed);
-      },
-      onAdFailedToShowFullScreenContent: (ad, error) {
-        ad.dispose();
-        createInterstitial(onLoaded: onLoaded, onFailed: onFailed, onClosed: onClosed);
-      });
+    _interstitialAd?.fullScreenContentCallback =
+        FullScreenContentCallback(onAdDismissedFullScreenContent: (ad) {
+      ad.dispose();
+      onClosed();
+      createInterstitial(
+          onLoaded: onLoaded, onFailed: onFailed, onClosed: onClosed);
+    }, onAdFailedToShowFullScreenContent: (ad, error) {
+      ad.dispose();
+      createInterstitial(
+          onLoaded: onLoaded, onFailed: onFailed, onClosed: onClosed);
+    });
     _interstitialAd?.show();
     _interstitialAd = null;
   }

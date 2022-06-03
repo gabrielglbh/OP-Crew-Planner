@@ -15,9 +15,14 @@ class MaxedUnitElement extends StatefulWidget {
   final Function onSelected;
   final Function onTappedImage;
   final Function onDelete;
-  const MaxedUnitElement({Key? key, required this.unit, required this.onSelected,
-    required this.onDelete, required this.onTappedImage,
-    required this.toBeMaxed}) : super(key: key);
+  const MaxedUnitElement(
+      {Key? key,
+      required this.unit,
+      required this.onSelected,
+      required this.onDelete,
+      required this.onTappedImage,
+      required this.toBeMaxed})
+      : super(key: key);
 
   @override
   _MaxedUnitElementState createState() => _MaxedUnitElementState();
@@ -25,31 +30,35 @@ class MaxedUnitElement extends StatefulWidget {
 
 class _MaxedUnitElementState extends State<MaxedUnitElement> {
   @override
-  Stack build(BuildContext context){
+  Stack build(BuildContext context) {
     return Stack(
       children: [
         Column(
           children: [
             SizedBox(
-              height: 80,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  InkWell(
-                    onTap: () => widget.onTappedImage(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(4),
-                      child: UI.placeholderImageWhileLoadingUnit(widget.unit),
+                height: 80,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      onTap: () => widget.onTappedImage(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: UI.placeholderImageWhileLoadingUnit(widget.unit),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: InkWell(
+                    Expanded(
+                        child: InkWell(
                       onTap: () {
                         widget.onSelected();
-                          Navigator.of(context).pushNamed(OPCrewPlannerPages.buildMaxedUnitPageName,
-                            arguments: UnitBuild(unit: widget.unit, update: true));
+                        Navigator.of(context).pushNamed(
+                            OPCrewPlannerPages.buildMaxedUnitPageName,
+                            arguments:
+                                UnitBuild(unit: widget.unit, update: true));
                       },
-                      onLongPress: () { _showDeleteDialog(); },
+                      onLongPress: () {
+                        _showDeleteDialog();
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -59,49 +68,53 @@ class _MaxedUnitElementState extends State<MaxedUnitElement> {
                               Visibility(
                                 visible: widget.unit.available == 1,
                                 child: Container(
-                                  width: 40,
-                                  height: 20,
-                                  margin: const EdgeInsets.only(bottom: 8),
-                                  decoration: BoxDecoration(
-                                    color: Colors.orange[400],
-                                    borderRadius: const BorderRadius.all(Radius.circular(12))
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text("readyBubble".tr(),
-                                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: Colors.white)),
-                                  )
-                                ),
+                                    width: 40,
+                                    height: 20,
+                                    margin: const EdgeInsets.only(bottom: 8),
+                                    decoration: BoxDecoration(
+                                        color: Colors.orange[400],
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(12))),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text("readyBubble".tr(),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 11,
+                                              color: Colors.white)),
+                                    )),
                               ),
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 4, right: 4, bottom: 8),
-                                  child: Text(widget.unit.name, overflow: TextOverflow.ellipsis),
+                                  padding: const EdgeInsets.only(
+                                      left: 4, right: 4, bottom: 8),
+                                  child: Text(widget.unit.name,
+                                      overflow: TextOverflow.ellipsis),
                                 ),
                               )
                             ],
                           ),
                           SizedBox(
-                            height: 41,
-                            child: Scrollbar(
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: Attribute.values.length,
-                                itemBuilder: (context, index) {
-                                  return attrOnUnit(Attribute.values[index], widget.toBeMaxed[index]);
-                                }
-                              ),
-                            )
-                          )
+                              height: 41,
+                              child: Scrollbar(
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: Attribute.values.length,
+                                    itemBuilder: (context, index) {
+                                      return attrOnUnit(Attribute.values[index],
+                                          widget.toBeMaxed[index]);
+                                    }),
+                              ))
                         ],
                       ),
-                    )
-                  )
-                ],
-              )
-            ),
-            Divider(thickness: 0.1, color: StorageUtils.readData(StorageUtils.darkMode, false)
-                ? Colors.grey[350] : Colors.grey[800])
+                    ))
+                  ],
+                )),
+            Divider(
+                thickness: 0.1,
+                color: StorageUtils.readData(StorageUtils.darkMode, false)
+                    ? Colors.grey[350]
+                    : Colors.grey[800])
           ],
         )
       ],
@@ -110,12 +123,12 @@ class _MaxedUnitElementState extends State<MaxedUnitElement> {
 
   Visibility attrOnUnit(Attribute f, bool visible) {
     return Visibility(
-      visible: visible,
-      child: Container(
-        padding: EdgeInsets.only(right: 2, left: f == Attribute.maxLevelLimitBreak ? 12 : 2),
-        child: Image.asset(f.asset, scale: f.scale),
-      )
-    );
+        visible: visible,
+        child: Container(
+          padding: EdgeInsets.only(
+              right: 2, left: f == Attribute.maxLevelLimitBreak ? 12 : 2),
+          child: Image.asset(f.asset, scale: f.scale),
+        ));
   }
 
   _showDeleteDialog() {
@@ -133,7 +146,6 @@ class _MaxedUnitElementState extends State<MaxedUnitElement> {
               widget.onDelete();
             },
           );
-        }
-    );
+        });
   }
 }

@@ -1,9 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-enum InformationLabel {
-  copyright, developers, contributors, licenses, privacy
-}
+enum InformationLabel { copyright, developers, contributors, licenses, privacy }
 
 extension InformationLabelExt on InformationLabel {
   String get label {

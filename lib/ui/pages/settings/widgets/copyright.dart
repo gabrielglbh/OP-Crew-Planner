@@ -9,7 +9,8 @@ class CopyrightTile extends StatelessWidget {
     return Scrollbar(
       child: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 8),
-        child: Text("contributorsOwners".tr(), style: const TextStyle(fontSize: 14)),
+        child: Text("contributorsOwners".tr(),
+            style: const TextStyle(fontSize: 14)),
       ),
     );
   }

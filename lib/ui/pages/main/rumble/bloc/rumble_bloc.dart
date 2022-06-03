@@ -12,7 +12,8 @@ class RumbleListBloc extends Bloc<RumbleListEvent, RumbleListState> {
     on<RumbleListEventLoading>((event, emit) async {
       try {
         emit(RumbleListStateLoading());
-        List<RumbleTeam> teams = await RumbleTeamQueries.instance.getRumbleTeams(event.showATK, null);
+        List<RumbleTeam> teams = await RumbleTeamQueries.instance
+            .getRumbleTeams(event.showATK, null);
         emit(RumbleListStateLoaded(teams: teams));
       } on Exception {
         emit(RumbleListStateFailure());
@@ -22,7 +23,8 @@ class RumbleListBloc extends Bloc<RumbleListEvent, RumbleListState> {
     on<RumbleListEventSearching>((event, emit) async {
       try {
         emit(RumbleListStateLoading());
-        final teams = await RumbleTeamQueries.instance.getRumbleTeams(true, event.query);
+        final teams =
+            await RumbleTeamQueries.instance.getRumbleTeams(true, event.query);
         emit(RumbleListStateLoaded(teams: teams));
       } on Exception {
         emit(RumbleListStateFailure());
@@ -34,8 +36,10 @@ class RumbleListBloc extends Bloc<RumbleListEvent, RumbleListState> {
         try {
           emit(RumbleListStateLoading());
           await RumbleTeamQueries.instance.deleteRumbleTeam(event.team.name);
-          await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.deleteRumbleTeam);
-          List<RumbleTeam> teams = await RumbleTeamQueries.instance.getRumbleTeams(event.showATK, null);
+          await UpdateQueries.instance
+              .registerAnalyticsEvent(AnalyticsEvents.deleteRumbleTeam);
+          List<RumbleTeam> teams = await RumbleTeamQueries.instance
+              .getRumbleTeams(event.showATK, null);
           emit(RumbleListStateLoaded(teams: teams));
         } on Exception {
           emit(RumbleListStateFailure());

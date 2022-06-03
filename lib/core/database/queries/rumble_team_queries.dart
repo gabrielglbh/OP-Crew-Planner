@@ -22,14 +22,16 @@ class RumbleTeamQueries {
   Future<List<RumbleTeam>> getAllRumbleTeams() async {
     if (_database != null) {
       // Get all teams
-      List<Map<String, dynamic>>? res = await _database?.query(Data.rumbleTeamTable);
+      List<Map<String, dynamic>>? res =
+          await _database?.query(Data.rumbleTeamTable);
 
       if (res != null) {
         List<RumbleTeam> teams = generateRumbleTeamList(res);
 
         for (int x = 0; x < teams.length; x++) {
           // For each team, retrieve the units id
-          List<String> unitsOfTeam = await UnitQueries.instance.getUnitsOfRumbleTeam(teams[x].name);
+          List<String> unitsOfTeam =
+              await UnitQueries.instance.getUnitsOfRumbleTeam(teams[x].name);
 
           // With the units id, retrieve the info of every unit of a team
           List<Unit> units = [];
@@ -42,7 +44,8 @@ class RumbleTeamQueries {
 
         // Rearrange teams based on date
         teams.sort((a, b) {
-          return UI.formatDateToMilliseconds(a.updated)
+          return UI
+              .formatDateToMilliseconds(a.updated)
               .compareTo(UI.formatDateToMilliseconds(b.updated));
         });
 
@@ -50,8 +53,7 @@ class RumbleTeamQueries {
       } else {
         return [];
       }
-    }
-    else {
+    } else {
       await CustomDatabase.instance.open(onUpdate: (_) {});
       return getAllRumbleTeams();
     }
@@ -65,15 +67,18 @@ class RumbleTeamQueries {
       if (mode) {
         if (query != null) {
           // Case 1: Query is for all teams with specific name to be searched
-          res = await _database?.query(Data.rumbleTeamTable, where: "${Data.rumbleTeamName} LIKE ?", whereArgs: ["%$query%"]);
+          res = await _database?.query(Data.rumbleTeamTable,
+              where: "${Data.rumbleTeamName} LIKE ?", whereArgs: ["%$query%"]);
         } else {
           // Case 2: Query is for only the ATK teams
-          res = await _database?.query(Data.rumbleTeamTable, where: "${Data.rumbleTeamMode}=?", whereArgs: [0]);
+          res = await _database?.query(Data.rumbleTeamTable,
+              where: "${Data.rumbleTeamMode}=?", whereArgs: [0]);
         }
       }
       // Case 3: Query is for all DEF teams
       else {
-        res = await _database?.query(Data.rumbleTeamTable, where: "${Data.rumbleTeamMode}=?", whereArgs: [1]);
+        res = await _database?.query(Data.rumbleTeamTable,
+            where: "${Data.rumbleTeamMode}=?", whereArgs: [1]);
       }
 
       if (res != null) {
@@ -81,7 +86,8 @@ class RumbleTeamQueries {
 
         for (int x = 0; x < teams.length; x++) {
           // For each team, retrieve the units id
-          List<String> unitsOfTeam = await UnitQueries.instance.getUnitsOfRumbleTeam(teams[x].name);
+          List<String> unitsOfTeam =
+              await UnitQueries.instance.getUnitsOfRumbleTeam(teams[x].name);
 
           // With the units id, retrieve the info of every unit of a team
           List<Unit> units = [];
@@ -94,7 +100,8 @@ class RumbleTeamQueries {
 
         // Rearrange teams based on date
         teams.sort((a, b) {
-          return UI.formatDateToMilliseconds(a.updated)
+          return UI
+              .formatDateToMilliseconds(a.updated)
               .compareTo(UI.formatDateToMilliseconds(b.updated));
         });
 
@@ -102,8 +109,7 @@ class RumbleTeamQueries {
       } else {
         return [];
       }
-    }
-    else {
+    } else {
       await CustomDatabase.instance.open(onUpdate: (_) {});
       return getRumbleTeams(mode, query);
     }
@@ -111,10 +117,8 @@ class RumbleTeamQueries {
 
   Future<List<String>> getRumbleTeamNames() async {
     if (_database != null) {
-      List<Map<String, dynamic>>? res = await _database?.query(
-          Data.rumbleTeamTable,
-          columns: [Data.rumbleTeamName]
-      );
+      List<Map<String, dynamic>>? res = await _database
+          ?.query(Data.rumbleTeamTable, columns: [Data.rumbleTeamName]);
       if (res != null) {
         return List.generate(res.length, (i) => res[i][Data.rumbleTeamName]);
       } else {
@@ -131,15 +135,15 @@ class RumbleTeamQueries {
       // Insert units
       for (int x = 0; x < team.units.length; x++) {
         try {
-          await _database?.insert(Data.relRumbleUnitTable, RumbleTeamUnit(
-              teamId: team.name,
-              unitId: team.units[x].id
-          ).toJson(), conflictAlgorithm: ConflictAlgorithm.abort);
+          await _database?.insert(
+              Data.relRumbleUnitTable,
+              RumbleTeamUnit(teamId: team.name, unitId: team.units[x].id)
+                  .toJson(),
+              conflictAlgorithm: ConflictAlgorithm.abort);
         } catch (e) {
-          await _database?.insert(Data.relRumbleUnitTable, RumbleTeamUnit(
-              teamId: team.name,
-              unitId: "noimage"
-          ).toJson(), conflictAlgorithm: ConflictAlgorithm.abort);
+          await _database?.insert(Data.relRumbleUnitTable,
+              RumbleTeamUnit(teamId: team.name, unitId: "noimage").toJson(),
+              conflictAlgorithm: ConflictAlgorithm.abort);
         }
       }
     }
@@ -148,7 +152,8 @@ class RumbleTeamQueries {
 
   Future<void> deleteRumbleTeam(String name) async {
     if (_database != null) {
-      await _database?.delete(Data.rumbleTeamTable, where: "${Data.rumbleTeamName}=?", whereArgs: [name]);
+      await _database?.delete(Data.rumbleTeamTable,
+          where: "${Data.rumbleTeamName}=?", whereArgs: [name]);
     }
   }
 
@@ -168,9 +173,12 @@ class RumbleTeamQueries {
 
   Future<int> getNumberOfRumbleTeams() async {
     if (_database != null) {
-      List<Map<String, dynamic>>? res = await _database?.rawQuery("SELECT ${Data.rumbleTeamName} FROM ${Data.rumbleTeamTable}");
+      List<Map<String, dynamic>>? res = await _database?.rawQuery(
+          "SELECT ${Data.rumbleTeamName} FROM ${Data.rumbleTeamTable}");
       if (res != null) {
-        return List.generate(res.length, (i) { return res[i][Data.rumbleTeamName]; }).length;
+        return List.generate(res.length, (i) {
+          return res[i][Data.rumbleTeamName];
+        }).length;
       } else {
         return 0;
       }
@@ -179,7 +187,8 @@ class RumbleTeamQueries {
     }
   }
 
-  static List<RumbleTeam> generateRumbleTeamList(List<Map<String, dynamic>> res) {
+  static List<RumbleTeam> generateRumbleTeamList(
+      List<Map<String, dynamic>> res) {
     return List.generate(res.length, (i) {
       return RumbleTeam(
           name: res[i][Data.rumbleTeamName],

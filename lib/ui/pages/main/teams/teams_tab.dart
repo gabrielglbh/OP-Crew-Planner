@@ -20,13 +20,16 @@ class TeamsTab extends StatefulWidget {
   _TeamsTabState createState() => _TeamsTabState();
 }
 
-class _TeamsTabState extends State<TeamsTab> with AutomaticKeepAliveClientMixin {
+class _TeamsTabState extends State<TeamsTab>
+    with AutomaticKeepAliveClientMixin {
   TextEditingController? _controller;
 
   bool _showMaxed = true;
 
   _addLoadingEvent(BuildContext blocContext) {
-    blocContext.read<TeamListBloc>().add(TeamListEventLoading(showMax: _showMaxed));
+    blocContext
+        .read<TeamListBloc>()
+        .add(TeamListEventLoading(showMax: _showMaxed));
   }
 
   bool _onScrolling(ScrollNotification sn) {
@@ -58,7 +61,8 @@ class _TeamsTabState extends State<TeamsTab> with AutomaticKeepAliveClientMixin 
   Widget build(BuildContext context) {
     super.build(context);
     return BlocProvider<TeamListBloc>(
-      create: (_) => TeamListBloc()..add(TeamListEventLoading(showMax: _showMaxed)),
+      create: (_) =>
+          TeamListBloc()..add(TeamListEventLoading(showMax: _showMaxed)),
       child: BlocBuilder<TeamListBloc, TeamListState>(
         builder: (context, state) {
           return Column(
@@ -70,17 +74,20 @@ class _TeamsTabState extends State<TeamsTab> with AutomaticKeepAliveClientMixin 
                       controller: _controller,
                       hint: "searchHintTeams".tr(),
                       focus: widget.focus,
-                      onQuery: (query, type) => context.read<TeamListBloc>()..add(TeamListEventSearching(query)),
+                      onQuery: (query, type) => context.read<TeamListBloc>()
+                        ..add(TeamListEventSearching(query)),
                       onExitSearch: () => _addLoadingEvent(context),
                       mode: SearchMode.teamTab,
                     ),
                   ),
                   ActionButton(
-                    child: Text("MAX", style: TextStyle(fontWeight: FontWeight.bold,
-                      color: _showMaxed ? Colors.red[700] : null)
-                    ),
+                    child: Text("MAX",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: _showMaxed ? Colors.red[700] : null)),
                     onTap: () async {
-                      await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.teamMaxFilter);
+                      await UpdateQueries.instance.registerAnalyticsEvent(
+                          AnalyticsEvents.teamMaxFilter);
                       setState(() => _showMaxed = !_showMaxed);
                       StorageUtils.saveData(StorageUtils.maxFilter, _showMaxed);
                       _addLoadingEvent(context);
@@ -101,43 +108,46 @@ class _TeamsTabState extends State<TeamsTab> with AutomaticKeepAliveClientMixin 
       return const LoadingWidget();
     } else if (state is TeamListStateLoaded) {
       if (state.teams.isEmpty) {
-        return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.team);
+        return EmptyList(
+            onRefresh: () => _addLoadingEvent(blocContext),
+            type: TypeList.team);
       } else {
         return _teamList(blocContext, state);
       }
     } else {
-      return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.team);
+      return EmptyList(
+          onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.team);
     }
   }
 
   Expanded _teamList(BuildContext blocContext, TeamListStateLoaded state) {
     return Expanded(
-      child: NotificationListener<ScrollNotification>(
-        onNotification: (notification) => _onScrolling(notification),
-        child: RefreshIndicator(
-          onRefresh: () async => _addLoadingEvent(blocContext),
-          color: Colors.orange.shade400,
-          child: ListView.builder(
-            key: const PageStorageKey<String>('teamTab'),
-            itemCount: state.teams.length,
-            itemBuilder: ((context, index) {
-              return TeamElement(
-                team: state.teams[index],
-                index: index,
-                onSelected: () {
-                  _controller?.text = "";
-                  widget.focus?.unfocus();
-                },
-                onDelete: () async {
-                  blocContext.read<TeamListBloc>().add(
-                      TeamListEventDelete(state.teams[index], showMaxed: _showMaxed));
-                  Navigator.pop(context);
-                },
-              );
-            }),
-          ),
+        child: NotificationListener<ScrollNotification>(
+      onNotification: (notification) => _onScrolling(notification),
+      child: RefreshIndicator(
+        onRefresh: () async => _addLoadingEvent(blocContext),
+        color: Colors.orange.shade400,
+        child: ListView.builder(
+          key: const PageStorageKey<String>('teamTab'),
+          itemCount: state.teams.length,
+          itemBuilder: ((context, index) {
+            return TeamElement(
+              team: state.teams[index],
+              index: index,
+              onSelected: () {
+                _controller?.text = "";
+                widget.focus?.unfocus();
+              },
+              onDelete: () async {
+                blocContext.read<TeamListBloc>().add(TeamListEventDelete(
+                    state.teams[index],
+                    showMaxed: _showMaxed));
+                Navigator.pop(context);
+              },
+            );
+          }),
         ),
-      )
-    );
+      ),
+    ));
   }
 }

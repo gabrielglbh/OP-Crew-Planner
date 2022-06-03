@@ -13,9 +13,14 @@ class BackUpQueries {
   /// Singleton instance of [BackUpQueries]
   static BackUpQueries get instance => _instance;
 
-  Future<bool> insertDataFromBackup(List<Unit> units, List<Team> teams,
-      List<RumbleTeam> rumbleTeams, List<Unit> history, List<Unit> backupUnits,
-      List<Team> backupTeams, List<RumbleTeam> backupRumbleTeams,
+  Future<bool> insertDataFromBackup(
+      List<Unit> units,
+      List<Team> teams,
+      List<RumbleTeam> rumbleTeams,
+      List<Unit> history,
+      List<Unit> backupUnits,
+      List<Team> backupTeams,
+      List<RumbleTeam> backupRumbleTeams,
       List<Unit> backupHistory) async {
     try {
       // Remove current units in the to-be-maxed list
@@ -68,7 +73,8 @@ class BackUpQueries {
         for (int x = 0; x < backupTeams[y].units.length; x++) {
           // If the backed unit has the downloaded flag active
           // Contrast it with the same unit on local db
-          Unit u = await UnitQueries.instance.getUnit(backupTeams[y].units[x].id);
+          Unit u =
+              await UnitQueries.instance.getUnit(backupTeams[y].units[x].id);
           // If unit on local db has downloaded flag non-active, change flag on backed unit
           if (u.downloaded == 0) {
             backupTeams[y].units[x].downloaded = 0;
@@ -76,19 +82,24 @@ class BackUpQueries {
             backupTeams[y].units[x].downloaded = 1;
           }
           // Check url
-          if (backupTeams[y].units[x].url == null) backupTeams[y].units[x].url = u.url;
+          if (backupTeams[y].units[x].url == null) {
+            backupTeams[y].units[x].url = u.url;
+          }
           // Due to Bandai removing all images from server
           backupTeams[y].units[x].url = u.getUrlOfUnitImage();
         }
         // idem - supports
         for (int x = 0; x < backupTeams[y].supports.length; x++) {
-          Unit u = await UnitQueries.instance.getUnit(backupTeams[y].supports[x].id);
+          Unit u =
+              await UnitQueries.instance.getUnit(backupTeams[y].supports[x].id);
           if (u.downloaded == 0) {
             backupTeams[y].supports[x].downloaded = 0;
           } else {
             backupTeams[y].supports[x].downloaded = 1;
           }
-          if (backupTeams[y].supports[x].url == null) backupTeams[y].supports[x].url = u.url;
+          if (backupTeams[y].supports[x].url == null) {
+            backupTeams[y].supports[x].url = u.url;
+          }
           // Due to Bandai removing all images from server
           backupTeams[y].supports[x].url = u.getUrlOfUnitImage();
         }
@@ -105,7 +116,8 @@ class BackUpQueries {
         for (int x = 0; x < backupRumbleTeams[y].units.length; x++) {
           // If the backed unit has the downloaded flag active
           // Contrast it with the same unit on local db
-          Unit u = await UnitQueries.instance.getUnit(backupRumbleTeams[y].units[x].id);
+          Unit u = await UnitQueries.instance
+              .getUnit(backupRumbleTeams[y].units[x].id);
           // If unit on local db has downloaded flag non-active, change flag on backed unit
           if (u.downloaded == 0) {
             backupRumbleTeams[y].units[x].downloaded = 0;
@@ -113,14 +125,16 @@ class BackUpQueries {
             backupRumbleTeams[y].units[x].downloaded = 1;
           }
           // Check url
-          if (backupRumbleTeams[y].units[x].url == null) backupRumbleTeams[y].units[x].url = u.url;
+          if (backupRumbleTeams[y].units[x].url == null) {
+            backupRumbleTeams[y].units[x].url = u.url;
+          }
           // Due to Bandai removing all images from server
           backupRumbleTeams[y].units[x].url = u.getUrlOfUnitImage();
         }
         await RumbleTeamQueries.instance.insertRumbleTeam(backupRumbleTeams[y]);
       }
       return true;
-    } catch(err) {
+    } catch (err) {
       print("insertDataFromBackup: ${err.toString()}");
       return false;
     }

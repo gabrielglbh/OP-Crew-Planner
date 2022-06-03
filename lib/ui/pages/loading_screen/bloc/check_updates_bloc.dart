@@ -21,20 +21,22 @@ class CheckUpdatesBloc extends Bloc<CheckUpdatesEvent, CheckUpdatesState> {
       } else {
         /// Check the saved locale
         String loadedLocale = StorageUtils.readData(StorageUtils.language, "");
-        if (loadedLocale != "") OPCrewPlanner.setLocale(event.context, Locale(loadedLocale));
+        if (loadedLocale != "") {
+          OPCrewPlanner.setLocale(event.context, Locale(loadedLocale));
+        }
 
         /// Open the database
         await CustomDatabase.instance.open(onUpdate: (String message) {
-              emit(CheckUpdatesLoadingState(message: message));
-            }).catchError((err) {
+          emit(CheckUpdatesLoadingState(message: message));
+        }).catchError((err) {
           emit(CheckUpdatesFailureState(message: err.toString()));
         });
 
         /// Check if there are any new units, aliases or ships
         await UpdateQueries.instance.getAllUnitsAndAliasesFromFireStore(
             onUpdate: (message, progress) {
-              emit(CheckUpdatesLoadingState(message: message, progress: progress));
-            }).catchError((err) {
+          emit(CheckUpdatesLoadingState(message: message, progress: progress));
+        }).catchError((err) {
           emit(CheckUpdatesFailureState(message: err.toString()));
         });
 
@@ -45,20 +47,22 @@ class CheckUpdatesBloc extends Bloc<CheckUpdatesEvent, CheckUpdatesState> {
     on<CheckUpdatesResumeInstallEvent>((event, emit) async {
       /// Check the saved locale
       String loadedLocale = StorageUtils.readData(StorageUtils.language, "");
-      if (loadedLocale != "") OPCrewPlanner.setLocale(event.context, Locale(loadedLocale));
+      if (loadedLocale != "") {
+        OPCrewPlanner.setLocale(event.context, Locale(loadedLocale));
+      }
 
       /// Open the database
       await CustomDatabase.instance.open(onUpdate: (String message) {
-            emit(CheckUpdatesLoadingState(message: message));
-          }).catchError((err) {
+        emit(CheckUpdatesLoadingState(message: message));
+      }).catchError((err) {
         emit(CheckUpdatesFailureState(message: err.toString()));
       });
 
       /// Check if there are any new units, aliases or ships
       await UpdateQueries.instance.getAllUnitsAndAliasesFromFireStore(
           onUpdate: (message, progress) {
-            emit(CheckUpdatesLoadingState(message: message, progress: progress));
-          }).catchError((err) {
+        emit(CheckUpdatesLoadingState(message: message, progress: progress));
+      }).catchError((err) {
         emit(CheckUpdatesFailureState(message: err.toString()));
       });
 

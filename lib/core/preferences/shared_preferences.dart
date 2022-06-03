@@ -38,14 +38,21 @@ class StorageUtils {
       } catch (err) {
         print(err);
       }
-      return _preferences?.getKeys().where((key) =>
-        key != darkMode && key != maxFilter && key != rumbleMode &&
-        key != availableFilter && key != unitListFilter &&
-        key != connectionStatus && key != downloadedLegends &&
-        key != language && key != lastAddedUnitsLength &&
-        // Key from the easy_localization package
-        key != "locale"
-      ).toList(growable: false);
+      return _preferences
+          ?.getKeys()
+          .where((key) =>
+              key != darkMode &&
+              key != maxFilter &&
+              key != rumbleMode &&
+              key != availableFilter &&
+              key != unitListFilter &&
+              key != connectionStatus &&
+              key != downloadedLegends &&
+              key != language &&
+              key != lastAddedUnitsLength &&
+              // Key from the easy_localization package
+              key != "locale")
+          .toList(growable: false);
     } else {
       return [];
     }

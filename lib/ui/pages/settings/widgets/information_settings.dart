@@ -28,46 +28,54 @@ class _InformationSettingsState extends State<InformationSettings> {
     super.initState();
   }
 
-  Future<void> _getPackageInfo() async => _packageInfo = await PackageInfo.fromPlatform();
+  Future<void> _getPackageInfo() async =>
+      _packageInfo = await PackageInfo.fromPlatform();
 
   _disclaimerInformationDialog(InformationLabel mode) {
     switch (mode) {
       case InformationLabel.copyright:
-        ChoiceBottomSheet.callModalSheet(context, mode.label, const CopyrightTile(), height: 3);
+        ChoiceBottomSheet.callModalSheet(
+            context, mode.label, const CopyrightTile(),
+            height: 3);
         break;
       case InformationLabel.developers:
-        ChoiceBottomSheet.callModalSheet(context, mode.label, const DeveloperTile(), height: 3);
+        ChoiceBottomSheet.callModalSheet(
+            context, mode.label, const DeveloperTile(),
+            height: 3);
         break;
       case InformationLabel.contributors:
-        ChoiceBottomSheet.callModalSheet(context, mode.label, const ContributorsTile(), height: 3);
+        ChoiceBottomSheet.callModalSheet(
+            context, mode.label, const ContributorsTile(),
+            height: 3);
         break;
       case InformationLabel.licenses:
         BuildContext dialogContext;
         showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (context) {
-            dialogContext = context;
-            return UIAlert(
-              title: (_packageInfo?.appName ?? "--"),
-              content: Text((_packageInfo?.version ?? "--")),
-              acceptButton: "showLicensesButton".tr(),
-              dialogContext: dialogContext,
-              cancel: false,
-              onAccepted: () {
-                Navigator.of(context).push(
-                  CupertinoPageRoute(builder: (context) {
-                    return LicensePage(
-                      applicationName: "",
-                      applicationVersion: _packageInfo?.version,
-                      applicationIcon: SizedBox(width: 150, height: 150, child: Image.asset("res/icons/license_icon.png")),
+            context: context,
+            barrierDismissible: true,
+            builder: (context) {
+              dialogContext = context;
+              return UIAlert(
+                  title: (_packageInfo?.appName ?? "--"),
+                  content: Text((_packageInfo?.version ?? "--")),
+                  acceptButton: "showLicensesButton".tr(),
+                  dialogContext: dialogContext,
+                  cancel: false,
+                  onAccepted: () {
+                    Navigator.of(context).push(
+                      CupertinoPageRoute(builder: (context) {
+                        return LicensePage(
+                          applicationName: "",
+                          applicationVersion: _packageInfo?.version,
+                          applicationIcon: SizedBox(
+                              width: 150,
+                              height: 150,
+                              child: Image.asset("res/icons/license_icon.png")),
+                        );
+                      }),
                     );
-                  }),
-                );
-              }
-            );
-          }
-        );
+                  });
+            });
         break;
       case InformationLabel.privacy:
         break;
@@ -79,28 +87,40 @@ class _InformationSettingsState extends State<InformationSettings> {
     return Column(
       children: [
         SettingHeader(title: "infoTab".tr()),
-        SettingTile(title: Text(InformationLabel.copyright.label),
+        SettingTile(
+            title: Text(InformationLabel.copyright.label),
             icon: InformationLabel.copyright.icon,
-            onTap: () => _disclaimerInformationDialog(InformationLabel.copyright)),
-        SettingTile(title: Text(InformationLabel.developers.label),
-            icon: InformationLabel.developers.icon, onTap: () async {
-              await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.developerDialog);
+            onTap: () =>
+                _disclaimerInformationDialog(InformationLabel.copyright)),
+        SettingTile(
+            title: Text(InformationLabel.developers.label),
+            icon: InformationLabel.developers.icon,
+            onTap: () async {
+              await UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.developerDialog);
               _disclaimerInformationDialog(InformationLabel.developers);
             }),
-        SettingTile(title: Text(InformationLabel.contributors.label),
-            icon: InformationLabel.contributors.icon, onTap: () async {
-              await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.ackDialog);
+        SettingTile(
+            title: Text(InformationLabel.contributors.label),
+            icon: InformationLabel.contributors.icon,
+            onTap: () async {
+              await UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.ackDialog);
               _disclaimerInformationDialog(InformationLabel.contributors);
             }),
-        SettingTile(title: Text(InformationLabel.licenses.label),
+        SettingTile(
+            title: Text(InformationLabel.licenses.label),
             icon: InformationLabel.licenses.icon,
-            onTap: () => _disclaimerInformationDialog(InformationLabel.licenses)),
-        SettingTile(title: Text(InformationLabel.privacy.label),
-            icon: InformationLabel.privacy.icon, onTap: () async {
+            onTap: () =>
+                _disclaimerInformationDialog(InformationLabel.licenses)),
+        SettingTile(
+            title: Text(InformationLabel.privacy.label),
+            icon: InformationLabel.privacy.icon,
+            onTap: () async {
               if (await canLaunch("https://optc-teams-96a76.web.app")) {
                 await launch("https://optc-teams-96a76.web.app");
               }
-        }),
+            }),
       ],
     );
   }

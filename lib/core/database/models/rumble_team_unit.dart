@@ -12,6 +12,7 @@ class RumbleTeamUnit {
 
   RumbleTeamUnit({required this.teamId, required this.unitId});
 
-  factory RumbleTeamUnit.fromJson(Map<String, dynamic> json) => _$RumbleTeamUnitFromJson(json);
+  factory RumbleTeamUnit.fromJson(Map<String, dynamic> json) =>
+      _$RumbleTeamUnitFromJson(json);
   Map<String, dynamic> toJson() => _$RumbleTeamUnitToJson(this);
 }

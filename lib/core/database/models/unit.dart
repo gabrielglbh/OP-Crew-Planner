@@ -45,24 +45,55 @@ class Unit {
   @JsonKey(name: Data.unitDataDownloaded)
   int? downloaded;
 
-  Unit({required this.id, required this.name, required this.type, this.url, this.taps = 0,
-    this.maxLevel = 0, this.skills = 0, this.specialLevel = 0, this.cottonCandy = 0,
-    this.supportLevel = 0, this.potentialAbility = 0, this.evolution = 0, this.limitBreak = 0,
-    this.available = 0, this.rumbleSpecial = 0, this.rumbleAbility = 0, this.lastCheckedData = 0,
-    this.downloaded = 0, this.maxLevelLimitBreak = 0
-  });
+  Unit(
+      {required this.id,
+      required this.name,
+      required this.type,
+      this.url,
+      this.taps = 0,
+      this.maxLevel = 0,
+      this.skills = 0,
+      this.specialLevel = 0,
+      this.cottonCandy = 0,
+      this.supportLevel = 0,
+      this.potentialAbility = 0,
+      this.evolution = 0,
+      this.limitBreak = 0,
+      this.available = 0,
+      this.rumbleSpecial = 0,
+      this.rumbleAbility = 0,
+      this.lastCheckedData = 0,
+      this.downloaded = 0,
+      this.maxLevelLimitBreak = 0});
 
-  factory Unit.empty() => Unit(id: "noimage", name: "", type: "", url: "res/units/noimage.png");
+  factory Unit.empty() =>
+      Unit(id: "noimage", name: "", type: "", url: "res/units/noimage.png");
   factory Unit.fromJson(Map<String, dynamic> json) => _$UnitFromJson(json);
   Map<String, dynamic> toJson() => _$UnitToJson(this);
 
   /// Unit helper methods
 
-  void setTaps(int taps) { this.taps = taps; }
-  void setLastCheckedData(int lastCheckedData) { this.lastCheckedData = lastCheckedData; }
-  void setAttributes(int maxLevel, int skills, int specialLevel,
-      int cottonCandy, int supportLevel, int potentialAbility, int evolution, int limitBreak,
-      int available, int rumbleSpecial, int rumbleAbility, int maxLevelLimitBreak) {
+  void setTaps(int taps) {
+    this.taps = taps;
+  }
+
+  void setLastCheckedData(int lastCheckedData) {
+    this.lastCheckedData = lastCheckedData;
+  }
+
+  void setAttributes(
+      int maxLevel,
+      int skills,
+      int specialLevel,
+      int cottonCandy,
+      int supportLevel,
+      int potentialAbility,
+      int evolution,
+      int limitBreak,
+      int available,
+      int rumbleSpecial,
+      int rumbleAbility,
+      int maxLevelLimitBreak) {
     this.maxLevel = maxLevel;
     this.maxLevelLimitBreak = maxLevelLimitBreak;
     this.skills = skills;
@@ -114,12 +145,18 @@ class Unit {
   String getUrlOfUnitImage() {
     const String res = "res/units/";
     switch (id) {
-      case 'noimage': return res + 'noimage.png';
-      case 'str_none': return res + 'str_none.png';
-      case 'dex_none': return res + 'dex_none.png';
-      case 'qck_none': return res + 'qck_none.png';
-      case 'psy_none': return res + 'psy_none.png';
-      case 'int_none': return res + 'int_none.png';
+      case 'noimage':
+        return res + 'noimage.png';
+      case 'str_none':
+        return res + 'str_none.png';
+      case 'dex_none':
+        return res + 'dex_none.png';
+      case 'qck_none':
+        return res + 'qck_none.png';
+      case 'psy_none':
+        return res + 'psy_none.png';
+      case 'int_none':
+        return res + 'int_none.png';
       default:
         return UI.getThumbnail(id);
     }

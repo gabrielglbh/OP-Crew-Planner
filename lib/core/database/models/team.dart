@@ -25,9 +25,15 @@ class Team {
   @JsonKey(name: Data.teamUpdated)
   String? updated;
 
-  Team({required this.name, required this.description, this.units = const [],
-    this.supports = const [], this.ship = Ship.empty, this.skills = Skills.empty,
-    this.maxed, this.updated});
+  Team(
+      {required this.name,
+      required this.description,
+      this.units = const [],
+      this.supports = const [],
+      this.ship = Ship.empty,
+      this.skills = Skills.empty,
+      this.maxed,
+      this.updated});
 
   /// Team Json methods
 
@@ -37,8 +43,13 @@ class Team {
 
   /// Team helper methods
 
-  void setMaxed(int isMaxed) { maxed = isMaxed; }
-  void setUpdated(String updated) { this.updated = updated; }
+  void setMaxed(int isMaxed) {
+    maxed = isMaxed;
+  }
+
+  void setUpdated(String updated) {
+    this.updated = updated;
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -59,7 +70,7 @@ class Team {
     if (skills.compare(b.skills)) result++;
 
     for (int v = 0; v < this.units.length; v++) {
-      if (this.units[v].compare(b.units[v],true)) units++;
+      if (this.units[v].compare(b.units[v], true)) units++;
       if (supports[v].compare(b.supports[v], true)) units++;
     }
 

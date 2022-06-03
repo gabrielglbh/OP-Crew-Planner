@@ -12,7 +12,8 @@ class UnitListEventLoading extends UnitListEvent {
   final UnitFilter filter;
   final bool showOnlyAvailable;
 
-  const UnitListEventLoading({required this.filter, required this.showOnlyAvailable});
+  const UnitListEventLoading(
+      {required this.filter, required this.showOnlyAvailable});
 
   @override
   List<Object> get props => [filter, showOnlyAvailable];
@@ -29,11 +30,13 @@ class UnitListEventSearching extends UnitListEvent {
 
 class UnitListEventDelete extends UnitListEvent {
   final Unit unit;
+
   /// Maintains the filter applied by the user for loading new lists
   final UnitFilter filter;
   final bool showOnlyAvailable;
 
-  const UnitListEventDelete(this.unit, {required this.filter, required this.showOnlyAvailable});
+  const UnitListEventDelete(this.unit,
+      {required this.filter, required this.showOnlyAvailable});
 
   @override
   List<Object> get props => [unit, filter, showOnlyAvailable];

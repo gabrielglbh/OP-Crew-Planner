@@ -23,13 +23,18 @@ import 'package:optcteams/ui/widgets/custom_alert.dart';
 class BuildRumbleTeamPage extends StatefulWidget {
   final RumbleTeam toBeUpdatedTeam;
   final bool update;
-  const BuildRumbleTeamPage({Key? key, required this.toBeUpdatedTeam, required this.update}) : super(key: key);
+  const BuildRumbleTeamPage({
+    Key? key,
+    required this.toBeUpdatedTeam,
+    required this.update,
+  }) : super(key: key);
 
   @override
   _BuildRumbleTeamPageState createState() => _BuildRumbleTeamPageState();
 }
 
-class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTickerProviderStateMixin {
+class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage>
+    with SingleTickerProviderStateMixin {
   TextEditingController? _searchController;
   FocusNode? _focus;
   TextEditingController? _nameController;
@@ -72,13 +77,31 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
       _descController?.text = widget.toBeUpdatedTeam.description;
       _nameController?.text = widget.toBeUpdatedTeam.name;
       _mode = widget.toBeUpdatedTeam.mode == 0 ? true : false;
+    } else {
+      _units = [
+        _emptyUnit,
+        _emptyUnit,
+        _emptyUnit,
+        _emptyUnit,
+        _emptyUnit,
+        _emptyUnit,
+        _emptyUnit,
+        _emptyUnit
+      ];
     }
-    else {
-      _units = [_emptyUnit, _emptyUnit, _emptyUnit, _emptyUnit, _emptyUnit, _emptyUnit, _emptyUnit, _emptyUnit];
-    }
-    _emptyUnits = [_emptyUnit, _emptyUnit, _emptyUnit, _emptyUnit, _emptyUnit, _emptyUnit, _emptyUnit, _emptyUnit];
+    _emptyUnits = [
+      _emptyUnit,
+      _emptyUnit,
+      _emptyUnit,
+      _emptyUnit,
+      _emptyUnit,
+      _emptyUnit,
+      _emptyUnit,
+      _emptyUnit
+    ];
 
-    AdManager.createBanner(onLoaded: _onBannerLoaded, onFailed: _onBannerFailedOrExit);
+    AdManager.createBanner(
+        onLoaded: _onBannerLoaded, onFailed: _onBannerFailedOrExit);
     _banner = AdManager.showBanner();
 
     _getMostUsedUnits();
@@ -103,34 +126,37 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
 
   Future<bool> _onWillPop({bool fromLeading = false}) async {
     bool? _isFocused = ((_focus?.hasFocus ?? false) ||
-        (_nameFocus?.hasFocus ?? false) || (_descFocus?.hasFocus ?? false));
+        (_nameFocus?.hasFocus ?? false) ||
+        (_descFocus?.hasFocus ?? false));
     if (_isFocused) {
       _focus?.unfocus();
       _nameFocus?.unfocus();
       _descFocus?.unfocus();
       return false;
     } else {
-      RumbleTeam currentTeam = RumbleTeam(name: (_nameController?.text ?? ""), description: (_descController?.text ?? ""),
-        units: _units, mode: _mode ? 0 : 1);
+      RumbleTeam currentTeam = RumbleTeam(
+          name: (_nameController?.text ?? ""),
+          description: (_descController?.text ?? ""),
+          units: _units,
+          mode: _mode ? 0 : 1);
       // If everything is the exact same, nothing changed OR the entire team is empty, just pop: else show alert
       if (widget.update) {
         bool a = widget.toBeUpdatedTeam.compare(currentTeam);
         if (a) {
           if (fromLeading) Navigator.pop(context);
           return true;
-        }
-        else {
+        } else {
           UI.showDialogOnExit(context);
           return true;
         }
       } else {
-        RumbleTeam emptyTeam = RumbleTeam(name: "", description: "", units: _emptyUnits, mode: 0);
+        RumbleTeam emptyTeam =
+            RumbleTeam(name: "", description: "", units: _emptyUnits, mode: 0);
         bool a = (currentTeam.compare(emptyTeam));
         if (a) {
           if (fromLeading) Navigator.pop(context);
           return true;
-        }
-        else {
+        } else {
           UI.showDialogOnExit(context);
           return true;
         }
@@ -140,26 +166,26 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
 
   AppBar _appBar() {
     return AppBar(
-      title: Text(widget.update ? "titleUpdateRumblePage".tr() : "titleRumblePage".tr()),
+      title: Text(widget.update
+          ? "titleUpdateRumblePage".tr()
+          : "titleRumblePage".tr()),
       automaticallyImplyLeading: false,
       leading: BackIcon(onTap: () => _onWillPop(fromLeading: true)),
       actions: <Widget>[
         FaviconIcon(
-          onTap: () {
-            _nameFocus?.unfocus();
-            _descFocus?.requestFocus();
-            _trash();
-          },
-          icon: FontAwesomeIcons.trashCan
-        ),
+            onTap: () {
+              _nameFocus?.unfocus();
+              _descFocus?.requestFocus();
+              _trash();
+            },
+            icon: FontAwesomeIcons.trashCan),
         FaviconIcon(
-          onTap: () {
-            _nameFocus?.unfocus();
-            _descFocus?.unfocus();
-            _validateAndInsertTeam();
-          },
-          icon: FontAwesomeIcons.check
-        ),
+            onTap: () {
+              _nameFocus?.unfocus();
+              _descFocus?.unfocus();
+              _validateAndInsertTeam();
+            },
+            icon: FontAwesomeIcons.check),
       ],
     );
   }
@@ -169,48 +195,46 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        appBar: _appBar(),
-        body: BlocProvider<BuildBloc>(
-          create: (_) => BuildBloc()..add(BuildEventIdle()),
-          child: BlocBuilder<BuildBloc, BuildState>(
-            builder: (context, state) {
+          appBar: _appBar(),
+          body: BlocProvider<BuildBloc>(
+            create: (_) => BuildBloc()..add(BuildEventIdle()),
+            child:
+                BlocBuilder<BuildBloc, BuildState>(builder: (context, state) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Visibility(visible: _bannerIsLoaded, child: _banner),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: SizedBox(
-                          /// Banner size (68)
-                          height:  MediaQuery.of(context).size.height - _appBar().preferredSize.height -
-                              (_bannerIsLoaded ? (32 + 68) : 32),
-                          child: Column(
-                            children: [
-                              CustomSearchBar(
-                                controller: _searchController,
-                                hint: "searchHintUnits".tr(),
-                                focus: _focus,
-                                mode: SearchMode.regularUnitSearch,
-                                onExitSearch: ()
-                                => context.read<BuildBloc>()..add(BuildEventIdle()),
-                                onQuery: (query, type)
-                                => context.read<BuildBloc>()..add(BuildEventSearching(false, query, type)),
-                              ),
-                              _setWidgetOnState(context, state)
-                            ],
-                          ),
+                child:
+                    Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
+                  Visibility(visible: _bannerIsLoaded, child: _banner),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: SizedBox(
+                        /// Banner size (68)
+                        height: MediaQuery.of(context).size.height -
+                            _appBar().preferredSize.height -
+                            (_bannerIsLoaded ? (32 + 68) : 32),
+                        child: Column(
+                          children: [
+                            CustomSearchBar(
+                              controller: _searchController,
+                              hint: "searchHintUnits".tr(),
+                              focus: _focus,
+                              mode: SearchMode.regularUnitSearch,
+                              onExitSearch: () => context.read<BuildBloc>()
+                                ..add(BuildEventIdle()),
+                              onQuery: (query, type) => context
+                                  .read<BuildBloc>()
+                                ..add(BuildEventSearching(false, query, type)),
+                            ),
+                            _setWidgetOnState(context, state)
+                          ],
                         ),
                       ),
-                    )
-                  ]
-                ),
+                    ),
+                  )
+                ]),
               );
-            }
-          ),
-        )
-      ),
+            }),
+          )),
     );
   }
 
@@ -239,15 +263,16 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(bottom: 4, top: 2),
-            child: _recentList()
-          ),
-          Divider(color: StorageUtils.readData(StorageUtils.darkMode, false)
-            ? Colors.grey : Colors.black, thickness: 1),
+              padding: const EdgeInsets.only(bottom: 4, top: 2),
+              child: _recentList()),
+          Divider(
+              color: StorageUtils.readData(StorageUtils.darkMode, false)
+                  ? Colors.grey
+                  : Colors.black,
+              thickness: 1),
           Padding(
-            padding: const EdgeInsets.only(bottom: 4, top: 4),
-            child: _modeAndTitleUI()
-          ),
+              padding: const EdgeInsets.only(bottom: 4, top: 4),
+              child: _modeAndTitleUI()),
           TabBar(
             controller: _tabController,
             tabs: [
@@ -273,9 +298,11 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
     return Container(
       height: 40,
       alignment: Alignment.center,
-      child: Text(tab, style: TextStyle(
-        color: StorageUtils.readData(StorageUtils.darkMode, false) ? Colors.white : Colors.black87)
-      ),
+      child: Text(tab,
+          style: TextStyle(
+              color: StorageUtils.readData(StorageUtils.darkMode, false)
+                  ? Colors.white
+                  : Colors.black87)),
     );
   }
 
@@ -283,10 +310,9 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
     return <Widget>[
       Padding(
         padding: EdgeInsets.only(
-          top: 32,
-          left: MediaQuery.of(context).size.width / 12,
-          right: MediaQuery.of(context).size.width / 12
-        ),
+            top: 32,
+            left: MediaQuery.of(context).size.width / 12,
+            right: MediaQuery.of(context).size.width / 12),
         child: MediaQuery.removePadding(
           context: context,
           removeTop: false,
@@ -304,85 +330,84 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("mostUsedUnits".tr(), style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text("mostUsedUnits".tr(),
+                style: const TextStyle(fontWeight: FontWeight.bold)),
             GestureDetector(
-              onTap: () {
-                setState(() => _showMostUsedUnits = !_showMostUsedUnits);
-              },
-              child: Icon(_showMostUsedUnits
-                  ? Icons.keyboard_arrow_up_rounded : Icons.keyboard_arrow_down_rounded)
-            )
+                onTap: () {
+                  setState(() => _showMostUsedUnits = !_showMostUsedUnits);
+                },
+                child: Icon(_showMostUsedUnits
+                    ? Icons.keyboard_arrow_up_rounded
+                    : Icons.keyboard_arrow_down_rounded))
           ],
         ),
         AnimatedContainer(
           height: _showMostUsedUnits ? 60 : 0,
           duration: const Duration(milliseconds: 300),
           child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: _recent.length,
-            itemBuilder: (context, index) {
-              return _recentUnit(index);
-            }
-          ),
+              scrollDirection: Axis.horizontal,
+              itemCount: _recent.length,
+              itemBuilder: (context, index) {
+                return _recentUnit(index);
+              }),
         )
       ],
     );
   }
 
   Row _modeAndTitleUI() {
-    return Row(children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(right: 18),
-        child: InkWell(
-          borderRadius: const BorderRadius.all(Radius.circular(50.0)),
-          onTap: () {
-            _loseFocusOnFields();
-            setState(() {
-              _mode = !_mode;
-            });
-          },
-          child: SizedBox(
-            width: 70,
-            height: 70,
-            child: Image.asset(
-              _mode ? "res/icons/atk.png" : "res/icons/def.png",
-              scale: 2,
-            )
+    return Row(
+      children: <Widget>[
+        Padding(
+            padding: const EdgeInsets.only(right: 18),
+            child: InkWell(
+              borderRadius: const BorderRadius.all(Radius.circular(50.0)),
+              onTap: () {
+                _loseFocusOnFields();
+                setState(() {
+                  _mode = !_mode;
+                });
+              },
+              child: SizedBox(
+                  width: 70,
+                  height: 70,
+                  child: Image.asset(
+                    _mode ? "res/icons/atk.png" : "res/icons/def.png",
+                    scale: 2,
+                  )),
+            )),
+        Expanded(
+          child: TextField(
+            controller: _nameController,
+            focusNode: _nameFocus,
+            textCapitalization: TextCapitalization.sentences,
+            textInputAction: TextInputAction.done,
+            maxLength: 30,
+            maxLines: null,
+            decoration: InputDecoration(
+              hintText: "teamName".tr(),
+              counterText: "",
+            ),
+            onEditingComplete: () {
+              _nameFocus?.unfocus();
+              _descFocus?.requestFocus();
+            },
           ),
         )
-      ),
-      Expanded(
-        child: TextField(
-          controller: _nameController,
-          focusNode: _nameFocus,
-          textCapitalization: TextCapitalization.sentences,
-          textInputAction: TextInputAction.done,
-          maxLength: 30,
-          maxLines: null,
-          decoration: InputDecoration(
-            hintText: "teamName".tr(),
-            counterText: "",
-          ),
-          onEditingComplete: () {
-            _nameFocus?.unfocus();
-            _descFocus?.requestFocus();
-          },
-        ),
-      )
-    ],
+      ],
     );
   }
 
   GridView _team() {
     return GridView.builder(
-      shrinkWrap: true,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
-      physics: const ScrollPhysics(),
-      itemCount: _units.length,
-      itemBuilder: (context, index) {
-        return _teamUnit(index);
-      }
-    );
+        shrinkWrap: true,
+        gridDelegate:
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
+        physics: const ScrollPhysics(),
+        itemCount: _units.length,
+        itemBuilder: (context, index) {
+          return _teamUnit(index);
+        });
   }
 
   TextField _descriptionBox() {
@@ -412,23 +437,29 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
             onTap: () async {
               if (unit.id != "noimage") {
                 await UnitQueries.instance.updateHistoryUnit(unit);
-                await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.openUnitDataFromUnitOnRumbleTeam);
+                await UpdateQueries.instance.registerAnalyticsEvent(
+                    AnalyticsEvents.openUnitDataFromUnitOnRumbleTeam);
                 await AdditionalUnitInfo.callModalSheet(context, unit.id);
               }
             },
             onLongPress: () async {
               if (unit.id != "noimage") {
                 _removeUnitFromTeam(index);
-                await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.removeUnitFromRumbleTeam);
+                await UpdateQueries.instance.registerAnalyticsEvent(
+                    AnalyticsEvents.removeUnitFromRumbleTeam);
               }
             },
             child: Container(
-              width: _imgSize, height: _imgSize,
+              width: _imgSize,
+              height: _imgSize,
               padding: index > 4 ? null : const EdgeInsets.all(2),
               decoration: BoxDecoration(
-                border: index > 4 ? Border.all(color: Colors.blue[700]!, width: 3) : null,
+                border: index > 4
+                    ? Border.all(color: Colors.blue[700]!, width: 3)
+                    : null,
               ),
-              child: FittedBox(child: UI.placeholderImageWhileLoadingUnit(unit)),
+              child:
+                  FittedBox(child: UI.placeholderImageWhileLoadingUnit(unit)),
             ),
           ),
           feedback: FittedBox(child: UI.placeholderImageWhileLoading(img)),
@@ -436,7 +467,9 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
           data: index,
         );
       },
-      onAccept: (int? data) { _onAcceptedDrag(index, data); },
+      onAccept: (int? data) {
+        _onAcceptedDrag(index, data);
+      },
       onWillAccept: (data) {
         setState(() {
           _focus?.unfocus();
@@ -450,15 +483,13 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
   InkWell _recentUnit(int index) {
     Unit unit = _recent[index];
     return InkWell(
-      onTap: () {
-        _loseFocusOnFields();
-        _onSelectedTeammate(unit.id, _units, fromRecent: true);
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(2),
-        child: UI.placeholderImageWhileLoadingUnit(unit, little: true)
-      )
-    );
+        onTap: () {
+          _loseFocusOnFields();
+          _onSelectedTeammate(unit.id, _units, fromRecent: true);
+        },
+        child: Padding(
+            padding: const EdgeInsets.all(2),
+            child: UI.placeholderImageWhileLoadingUnit(unit, little: true)));
   }
 
   /// HELP FUNCTIONS
@@ -481,12 +512,12 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
                   _units.insert(x, _emptyUnit);
                 }
               });
-              await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.resetRumbleTeam);
+              await UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.resetRumbleTeam);
               Navigator.of(dialogContext).pop();
             },
           );
-        }
-    );
+        });
   }
 
   _validateAndInsertTeam() {
@@ -494,11 +525,17 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
     String name = (_nameController?.text ?? "");
     String description = (_descController?.text ?? "");
     DateTime parser = DateTime.parse(DateTime.now().toString());
-    String minute = parser.minute < 10 ? "0${parser.minute}" : parser.minute.toString();
+    String minute =
+        parser.minute < 10 ? "0${parser.minute}" : parser.minute.toString();
     String hour = parser.hour < 10 ? "0${parser.hour}" : parser.hour.toString();
-    String date = "$hour:$minute - ${parser.day}/${parser.month}/${parser.year}";
-    RumbleTeam newTeam = RumbleTeam(name: name, description: description, units: _units,
-      mode: _mode ? 0 : 1, updated: date.toString());
+    String date =
+        "$hour:$minute - ${parser.day}/${parser.month}/${parser.year}";
+    RumbleTeam newTeam = RumbleTeam(
+        name: name,
+        description: description,
+        units: _units,
+        mode: _mode ? 0 : 1,
+        updated: date.toString());
 
     if (widget.update) {
       // If name is not empty and valid
@@ -512,13 +549,17 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
             UI.showSnackBar(context, "errEmptyPvP".tr());
           } else {
             // Check if team's name has changed only if its updating
-            if (widget.toBeUpdatedTeam.name != name) lastName = widget.toBeUpdatedTeam.name;
-            RumbleTeamQueries.instance.updateRumbleTeam(newTeam, lastName).then((isSuccessful) async {
+            if (widget.toBeUpdatedTeam.name != name) {
+              lastName = widget.toBeUpdatedTeam.name;
+            }
+            RumbleTeamQueries.instance
+                .updateRumbleTeam(newTeam, lastName)
+                .then((isSuccessful) async {
               if (isSuccessful) {
-                await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.updatedRumbleTeam);
+                await UpdateQueries.instance
+                    .registerAnalyticsEvent(AnalyticsEvents.updatedRumbleTeam);
                 Navigator.of(context).pop();
-              }
-              else {
+              } else {
                 UI.showSnackBar(context, "errDupTeam".tr());
               }
             });
@@ -534,12 +575,14 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
         if (_compareUnitsWithEmpty()) {
           UI.showSnackBar(context, "errEmptyPvP".tr());
         } else {
-          RumbleTeamQueries.instance.insertRumbleTeam(newTeam).then((isSuccessful) async {
+          RumbleTeamQueries.instance
+              .insertRumbleTeam(newTeam)
+              .then((isSuccessful) async {
             if (isSuccessful) {
-              await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.createdRumbleTeam);
+              await UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.createdRumbleTeam);
               Navigator.of(context).pop();
-            }
-            else {
+            } else {
               UI.showSnackBar(context, "errDupTeam".tr());
             }
           });
@@ -569,8 +612,7 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
               Navigator.of(dialogContext).pop();
             },
           );
-        }
-    );
+        });
   }
 
   _onAcceptedDrag(int index, int? data) {
@@ -587,7 +629,8 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
     }
   }
 
-  _onSelectedTeammate(String id, List<Unit> units, {bool fromRecent = false}) async {
+  _onSelectedTeammate(String id, List<Unit> units,
+      {bool fromRecent = false}) async {
     int emptyIndex = -1;
     for (int x = 0; x < units.length; x++) {
       if (units[x].id == "noimage") {
@@ -610,16 +653,17 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage> with SingleTi
       UnitQueries.instance.updateUnit(newUnit);
 
       _getMostUsedUnits();
-    }
-    else {
+    } else {
       UI.showSnackBar(context, "errOnExtraUnit".tr());
     }
   }
 
   _getMostUsedUnits() {
     UnitQueries.instance.getMostUsedUnits().then((recent) => {
-      setState(() { _recent = recent; })
-    });
+          setState(() {
+            _recent = recent;
+          })
+        });
   }
 
   _showKeyboard() {

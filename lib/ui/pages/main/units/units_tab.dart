@@ -24,7 +24,8 @@ class UnitsTab extends StatefulWidget {
   _UnitsTabState createState() => _UnitsTabState();
 }
 
-class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin {
+class _UnitsTabState extends State<UnitsTab>
+    with AutomaticKeepAliveClientMixin {
   TextEditingController? _controller;
 
   bool _showOnlyAvailable = true;
@@ -40,10 +41,12 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
   @override
   void initState() {
     _controller = TextEditingController();
-    final int index = StorageUtils.readData(StorageUtils.unitListFilter, UnitFilter.all.index);
+    final int index = StorageUtils.readData(
+        StorageUtils.unitListFilter, UnitFilter.all.index);
     _currentAppliedFilter = UnitFilter.values[index];
     setState(() {
-      _showOnlyAvailable = StorageUtils.readData(StorageUtils.availableFilter, false);
+      _showOnlyAvailable =
+          StorageUtils.readData(StorageUtils.availableFilter, false);
     });
     super.initState();
   }
@@ -55,18 +58,21 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
   }
 
   _addLoadingEvent(BuildContext blocContext) {
-    blocContext.read<UnitListBloc>().add(UnitListEventLoading(filter: _currentAppliedFilter,
-        showOnlyAvailable: _showOnlyAvailable));
+    blocContext.read<UnitListBloc>().add(UnitListEventLoading(
+        filter: _currentAppliedFilter, showOnlyAvailable: _showOnlyAvailable));
   }
 
   Future<void> _onFilterSelected(BuildContext blocContext, int index) async {
-    await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.changedFiltersOnUnits);
+    await UpdateQueries.instance
+        .registerAnalyticsEvent(AnalyticsEvents.changedFiltersOnUnits);
     setState(() {
       _currentAppliedFilter = UnitFilter.values[index];
     });
+
     /// Adds the loading event to the bloc builder to load the new lists
     _addLoadingEvent(blocContext);
-    StorageUtils.saveData(StorageUtils.unitListFilter, _currentAppliedFilter.index);
+    StorageUtils.saveData(
+        StorageUtils.unitListFilter, _currentAppliedFilter.index);
   }
 
   bool _onScrolling(ScrollNotification sn) {
@@ -80,8 +86,10 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
   Widget build(BuildContext context) {
     super.build(context);
     return BlocProvider<UnitListBloc>(
-      create: (_) => UnitListBloc()..add(UnitListEventLoading(filter: _currentAppliedFilter,
-          showOnlyAvailable: _showOnlyAvailable)),
+      create: (_) => UnitListBloc()
+        ..add(UnitListEventLoading(
+            filter: _currentAppliedFilter,
+            showOnlyAvailable: _showOnlyAvailable)),
       child: BlocBuilder<UnitListBloc, UnitListState>(
         builder: (context, state) {
           return Column(
@@ -93,19 +101,24 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
                       controller: _controller,
                       hint: "searchHintUnits".tr(),
                       focus: widget.focus,
-                      onQuery: (query, type) => context.read<UnitListBloc>()..add(UnitListEventSearching(query)),
+                      onQuery: (query, type) => context.read<UnitListBloc>()
+                        ..add(UnitListEventSearching(query)),
                       onExitSearch: () => _addLoadingEvent(context),
                       mode: SearchMode.unitTab,
                     ),
                   ),
                   ActionButton(
-                    child: Text("RDY", style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: _showOnlyAvailable ? Colors.red[700] : null)),
+                    child: Text("RDY",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color:
+                                _showOnlyAvailable ? Colors.red[700] : null)),
                     onTap: () async {
-                      await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.unitReadyFilter);
+                      await UpdateQueries.instance.registerAnalyticsEvent(
+                          AnalyticsEvents.unitReadyFilter);
                       setState(() => _showOnlyAvailable = !_showOnlyAvailable);
-                      StorageUtils.saveData(StorageUtils.availableFilter, _showOnlyAvailable);
+                      StorageUtils.saveData(
+                          StorageUtils.availableFilter, _showOnlyAvailable);
                       _addLoadingEvent(context);
                     },
                   )
@@ -125,85 +138,93 @@ class _UnitsTabState extends State<UnitsTab> with AutomaticKeepAliveClientMixin 
       return const LoadingWidget();
     } else if (state is UnitListStateLoaded) {
       if (state.units.isEmpty) {
-        return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.unit);
+        return EmptyList(
+            onRefresh: () => _addLoadingEvent(blocContext),
+            type: TypeList.unit);
       } else {
         return _unitList(blocContext, state);
       }
-    }
-    else {
-      return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.unit);
+    } else {
+      return EmptyList(
+          onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.unit);
     }
   }
 
   Container _filterChips(BuildContext blocContext) {
     return Container(
-      height: 58,
-      color: Colors.transparent,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      margin: const EdgeInsets.only(bottom: 8),
-      child: ListView.builder(
-        itemCount: UnitFilter.values.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 2),
-            child: ChoiceChip(
-              label: Text(UnitFilter.values[index].label),
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              avatar: index == UnitFilter.all.index
-                  ? const Icon(Icons.filter_list, color: Colors.white)
-                  : Image.asset(UnitFilter.values[index].asset),
-              onSelected: (bool selected) async => await _onFilterSelected(blocContext, index),
-              selected: _currentAppliedFilter.index == index,
-            ),
-          );
-        }
-      )
-    );
+        height: 58,
+        color: Colors.transparent,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        margin: const EdgeInsets.only(bottom: 8),
+        child: ListView.builder(
+            itemCount: UnitFilter.values.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: ChoiceChip(
+                  label: Text(UnitFilter.values[index].label),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  avatar: index == UnitFilter.all.index
+                      ? const Icon(Icons.filter_list, color: Colors.white)
+                      : Image.asset(UnitFilter.values[index].asset),
+                  onSelected: (bool selected) async =>
+                      await _onFilterSelected(blocContext, index),
+                  selected: _currentAppliedFilter.index == index,
+                ),
+              );
+            }));
   }
 
   Expanded _unitList(BuildContext blocContext, UnitListStateLoaded state) {
     return Expanded(
-      child: NotificationListener<ScrollNotification>(
-        onNotification: (notification) => _onScrolling(notification),
-        child: RefreshIndicator(
-          onRefresh: () async => _addLoadingEvent(blocContext),
-          color: Colors.orange.shade400,
-          child: ListView.builder(
-            key: const PageStorageKey<String>('unitTab'),
-            itemCount: state.units.length,
-            itemBuilder: ((context, index) {
-              Unit unit = state.units[index];
-              return MaxedUnitElement(
-                unit: unit,
-                toBeMaxed: [
-                  unit.maxLevel == 1, unit.skills == 1, unit.specialLevel == 1,
-                  unit.cottonCandy == 1, unit.supportLevel == 1, unit.potentialAbility == 1,
-                  unit.evolution == 1, unit.limitBreak == 1, unit.rumbleSpecial == 1,
-                  unit.rumbleAbility == 1, unit.maxLevelLimitBreak == 1
-                ],
-                onTappedImage: () async {
-                  _controller?.text = "";
-                  widget.focus?.unfocus();
-                  await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.openUnitDataFromUnitList);
-                  await UnitQueries.instance.updateHistoryUnit(unit);
-                  await AdditionalUnitInfo.callModalSheet(context, unit.id, onClose: () {
-                    _addLoadingEvent(blocContext);
-                  });
-                },
-                onSelected: () => widget.focus?.unfocus(),
-                onDelete: () {
-                  blocContext.read<UnitListBloc>().add(UnitListEventDelete(
-                    unit, filter: _currentAppliedFilter,
-                    showOnlyAvailable: _showOnlyAvailable
-                  ));
-                  Navigator.pop(context);
-                },
-              );
-            }),
-          ),
+        child: NotificationListener<ScrollNotification>(
+      onNotification: (notification) => _onScrolling(notification),
+      child: RefreshIndicator(
+        onRefresh: () async => _addLoadingEvent(blocContext),
+        color: Colors.orange.shade400,
+        child: ListView.builder(
+          key: const PageStorageKey<String>('unitTab'),
+          itemCount: state.units.length,
+          itemBuilder: ((context, index) {
+            Unit unit = state.units[index];
+            return MaxedUnitElement(
+              unit: unit,
+              toBeMaxed: [
+                unit.maxLevel == 1,
+                unit.skills == 1,
+                unit.specialLevel == 1,
+                unit.cottonCandy == 1,
+                unit.supportLevel == 1,
+                unit.potentialAbility == 1,
+                unit.evolution == 1,
+                unit.limitBreak == 1,
+                unit.rumbleSpecial == 1,
+                unit.rumbleAbility == 1,
+                unit.maxLevelLimitBreak == 1
+              ],
+              onTappedImage: () async {
+                _controller?.text = "";
+                widget.focus?.unfocus();
+                await UpdateQueries.instance.registerAnalyticsEvent(
+                    AnalyticsEvents.openUnitDataFromUnitList);
+                await UnitQueries.instance.updateHistoryUnit(unit);
+                await AdditionalUnitInfo.callModalSheet(context, unit.id,
+                    onClose: () {
+                  _addLoadingEvent(blocContext);
+                });
+              },
+              onSelected: () => widget.focus?.unfocus(),
+              onDelete: () {
+                blocContext.read<UnitListBloc>().add(UnitListEventDelete(unit,
+                    filter: _currentAppliedFilter,
+                    showOnlyAvailable: _showOnlyAvailable));
+                Navigator.pop(context);
+              },
+            );
+          }),
         ),
-      )
-    );
+      ),
+    ));
   }
 }

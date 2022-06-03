@@ -31,30 +31,48 @@ class BackUpRecords {
   /// Singleton instance of [BackUpRecords]
   static BackUpRecords get instance => _instance;
 
-  Future<void> uploadToFireStore(BuildContext context, Function(String) updateUI) async {
+  Future<void> uploadToFireStore(
+      BuildContext context, Function(String) updateUI) async {
     User? _user = _auth?.currentUser;
     await _user?.reload();
     if (_user != null) {
       if (_user.emailVerified) {
         DateTime parser = DateTime.parse(DateTime.now().toString());
-        String minute = parser.minute < 10 ? "0${parser.minute}" : parser.minute.toString();
-        String hour = parser.hour < 10 ? "0${parser.hour}" : parser.hour.toString();
-        String date = "$hour:$minute - ${parser.day}/${parser.month}/${parser.year}";
+        String minute =
+            parser.minute < 10 ? "0${parser.minute}" : parser.minute.toString();
+        String hour =
+            parser.hour < 10 ? "0${parser.hour}" : parser.hour.toString();
+        String date =
+            "$hour:$minute - ${parser.day}/${parser.month}/${parser.year}";
 
         List<Team> teams = await TeamQueries.instance.getAllTeams();
-        List<RumbleTeam> rumble = await RumbleTeamQueries.instance.getAllRumbleTeams();
-        List<Unit> units = await UnitQueries.instance.getUnitsToBeMaxedOut(UnitFilter.all);
-        List<Unit> history = await UnitQueries.instance.getMostRecentSearchedUnits();
+        List<RumbleTeam> rumble =
+            await RumbleTeamQueries.instance.getAllRumbleTeams();
+        List<Unit> units =
+            await UnitQueries.instance.getUnitsToBeMaxedOut(UnitFilter.all);
+        List<Unit> history =
+            await UnitQueries.instance.getMostRecentSearchedUnits();
 
-        if (teams.isEmpty && rumble.isEmpty && units.isEmpty && history.isEmpty) {
+        if (teams.isEmpty &&
+            rumble.isEmpty &&
+            units.isEmpty &&
+            history.isEmpty) {
           UI.showSnackBar(context, "errDataEmpty".tr());
         } else {
-          Objectify obj = Objectify(teams: teams, rumbleTeams: rumble,
-            units: units, history: history, lastUpdated: date.toString());
+          Objectify obj = Objectify(
+              teams: teams,
+              rumbleTeams: rumble,
+              units: units,
+              history: history,
+              lastUpdated: date.toString());
 
           try {
-            await _ref?.collection(_collection).doc(_user.uid).set(obj.toJson());
-            await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.createdBackUp);
+            await _ref
+                ?.collection(_collection)
+                .doc(_user.uid)
+                .set(obj.toJson());
+            await UpdateQueries.instance
+                .registerAnalyticsEvent(AnalyticsEvents.createdBackUp);
             updateUI(date);
             UI.showSnackBar(context, "dataCreated".tr());
           } catch (e) {
@@ -72,12 +90,19 @@ class BackUpRecords {
     if (_user != null) {
       if (_user.emailVerified) {
         List<Team> teams = await TeamQueries.instance.getAllTeams();
-        List<RumbleTeam> rumbleTeams = await RumbleTeamQueries.instance.getAllRumbleTeams();
-        List<Unit> units = await UnitQueries.instance.getUnitsToBeMaxedOut(UnitFilter.all);
-        List<Unit> history = await UnitQueries.instance.getMostRecentSearchedUnits();
+        List<RumbleTeam> rumbleTeams =
+            await RumbleTeamQueries.instance.getAllRumbleTeams();
+        List<Unit> units =
+            await UnitQueries.instance.getUnitsToBeMaxedOut(UnitFilter.all);
+        List<Unit> history =
+            await UnitQueries.instance.getMostRecentSearchedUnits();
 
         try {
-          await _ref?.collection(_collection).doc(_user.uid).get().then((snapshot) async {
+          await _ref
+              ?.collection(_collection)
+              .doc(_user.uid)
+              .get()
+              .then((snapshot) async {
             Map<String, dynamic>? backup = snapshot.data();
             if (backup != null) {
               Objectify obj = Objectify();
@@ -90,7 +115,8 @@ class BackUpRecords {
                 backupRumbleTeams = obj.fromJsonRumbleTeams(backup);
               } catch (err) {
                 print("getFromFireStore 1: ${err.toString()}");
-                print("No rumble teams on backup, creating empty rumble teams array");
+                print(
+                    "No rumble teams on backup, creating empty rumble teams array");
               }
               // Update 3.0.0: Generating empty downloaded and lastCheckedData fields
               try {
@@ -105,10 +131,20 @@ class BackUpRecords {
                 unit.downloaded = unit.downloaded ?? 0;
               }
 
-              await BackUpQueries.instance.insertDataFromBackup(units, teams, rumbleTeams, history,
-                  backupUnits, backupTeams, backupRumbleTeams, backupHistory).then((successful) async {
+              await BackUpQueries.instance
+                  .insertDataFromBackup(
+                      units,
+                      teams,
+                      rumbleTeams,
+                      history,
+                      backupUnits,
+                      backupTeams,
+                      backupRumbleTeams,
+                      backupHistory)
+                  .then((successful) async {
                 if (successful) {
-                  await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.downloadedBackUp);
+                  await UpdateQueries.instance
+                      .registerAnalyticsEvent(AnalyticsEvents.downloadedBackUp);
                   UI.showSnackBar(context, "dataDownloaded".tr());
                 } else {
                   UI.showSnackBar(context, "errGeneral".tr());
@@ -133,7 +169,8 @@ class BackUpRecords {
       if (_user.emailVerified) {
         try {
           await _ref?.collection(_collection).doc(_user.uid).delete();
-          await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.deletedBackUp);
+          await UpdateQueries.instance
+              .registerAnalyticsEvent(AnalyticsEvents.deletedBackUp);
           UI.showSnackBar(context, "dataDeleted".tr());
         } catch (e) {
           UI.showSnackBar(context, "errGeneral".tr());
@@ -160,7 +197,9 @@ class BackUpRecords {
     UnitInfo? info;
     try {
       await _ref?.collection("details").doc(uid).get().then((snapshot) async {
-        if (snapshot.exists && snapshot.data() != null) info = UnitInfo.fromJson(snapshot.data()!);
+        if (snapshot.exists && snapshot.data() != null) {
+          info = UnitInfo.fromJson(snapshot.data()!);
+        }
       });
       return info;
     } catch (err) {

@@ -23,8 +23,7 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     case OPCrewPlannerPages.buildTeamPageName:
       final TeamBuild args = settings.arguments as TeamBuild;
       return CupertinoPageRoute(builder: (context) {
-        return BuildTeamPage(
-            toBeUpdatedTeam: args.team, update: args.update);
+        return BuildTeamPage(toBeUpdatedTeam: args.team, update: args.update);
       });
     case OPCrewPlannerPages.buildMaxedUnitPageName:
       final UnitBuild args = settings.arguments as UnitBuild;
@@ -43,7 +42,8 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
         return const SettingsPage();
       });
     case OPCrewPlannerPages.userManagementPage:
-      final ArgumentsManageAccount args = settings.arguments as ArgumentsManageAccount;
+      final ArgumentsManageAccount args =
+          settings.arguments as ArgumentsManageAccount;
       return CupertinoPageRoute(builder: (context) {
         return UserManagementPage(mode: args.mode, deleteAccount: args.delete);
       });

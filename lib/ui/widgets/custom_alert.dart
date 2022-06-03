@@ -9,9 +9,16 @@ class UIAlert extends StatefulWidget {
   final BuildContext dialogContext;
   final Function onAccepted;
   final bool cancel;
-  const UIAlert({Key? key, required this.title, this.textSize = 18, this.content,
-    required this.acceptButton, required this.dialogContext,
-    required this.onAccepted, this.cancel = true}) : super(key: key);
+  const UIAlert(
+      {Key? key,
+      required this.title,
+      this.textSize = 18,
+      this.content,
+      required this.acceptButton,
+      required this.dialogContext,
+      required this.onAccepted,
+      this.cancel = true})
+      : super(key: key);
 
   @override
   _UIAlertState createState() => _UIAlertState();
@@ -24,9 +31,8 @@ class _UIAlertState extends State<UIAlert> {
         title: Text(widget.title, style: TextStyle(fontSize: widget.textSize)),
         content: widget.content,
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0))
-        ),
-        actions: <Widget> [
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        actions: <Widget>[
           Visibility(
             visible: widget.cancel,
             child: TextButton(
@@ -37,12 +43,12 @@ class _UIAlertState extends State<UIAlert> {
             ),
           ),
           TextButton(
-            child: Text(widget.acceptButton, style: const TextStyle(color: Colors.red)),
+            child: Text(widget.acceptButton,
+                style: const TextStyle(color: Colors.red)),
             onPressed: () {
               widget.onAccepted();
             },
           )
-        ]
-    );
+        ]);
   }
 }

@@ -15,17 +15,19 @@ class TeamElement extends StatefulWidget {
   // Only for lose focus when click while searching
   final Function onSelected;
   final Function onDelete;
-  const TeamElement({
-    Key? key,
-    required this.team, required this.index, required this.onSelected, required this.onDelete
-  }) : super(key: key);
+  const TeamElement(
+      {Key? key,
+      required this.team,
+      required this.index,
+      required this.onSelected,
+      required this.onDelete})
+      : super(key: key);
 
   @override
   _TeamElementState createState() => _TeamElementState();
 }
 
 class _TeamElementState extends State<TeamElement> {
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -35,87 +37,104 @@ class _TeamElementState extends State<TeamElement> {
             child: InkWell(
               onTap: () {
                 widget.onSelected();
-                Navigator.of(context).pushNamed(OPCrewPlannerPages.buildTeamPageName,
+                Navigator.of(context).pushNamed(
+                    OPCrewPlannerPages.buildTeamPageName,
                     arguments: TeamBuild(team: widget.team, update: true));
               },
-              onLongPress: () { _showDeleteDialog(); },
-              child: Column(children: <Widget>[
-                Expanded(
-                  child: Stack(children: [
-                    Container (
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                          children: [
-                            Checkbox(
-                              value: widget.team.maxed == 0 ? true : false,
-                              onChanged: (bool? v) {
-                                setState(() {
-                                  widget.team.setMaxed((v ?? false) ? 0 : 1);
-                                });
-                                TeamQueries.instance.updateIsMaxed(widget.team);
-                              },
+              onLongPress: () {
+                _showDeleteDialog();
+              },
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                  value: widget.team.maxed == 0 ? true : false,
+                                  onChanged: (bool? v) {
+                                    setState(() {
+                                      widget.team
+                                          .setMaxed((v ?? false) ? 0 : 1);
+                                    });
+                                    TeamQueries.instance
+                                        .updateIsMaxed(widget.team);
+                                  },
+                                ),
+                                SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width - 115,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width -
+                                                165,
+                                            child: Text(widget.team.name,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18)),
+                                          ),
+                                        )
+                                      ],
+                                    ))
+                              ],
                             ),
-                            SizedBox(
-                                width: MediaQuery.of(context).size.width - 115,
-                                child: Row(children: [
-                                  Expanded(
-                                    child: SizedBox(
-                                      width: MediaQuery.of(context).size.width - 165,
-                                      child: Text(widget.team.name,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)
-                                      ),
-                                    ),
-                                  )
-                                ],
-                                )
-                            )
-                          ],
+                          ),
                         ),
-                      ),
+                        Positioned(
+                          right: 0,
+                          top: 0,
+                          bottom: 0,
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: UI.placeholderImageWhileLoading(
+                                widget.team.ship.url),
+                          ),
+                        )
+                      ],
                     ),
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      bottom: 0,
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: UI.placeholderImageWhileLoading(widget.team.ship.url),
-                      ),
-                    )
-                  ],
                   ),
-                ),
-                MediaQuery.removePadding(
-                  context: context,
-                  removeTop: true,
-                  removeBottom: true,
-                  child: GridView.builder(
-                      shrinkWrap: true,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6),
-                      physics: const ScrollPhysics(),
-                      itemCount: 6,
-                      itemBuilder: (context, unitIndex) {
-                        return unitImage(widget.index, unitIndex);
-                      }
+                  MediaQuery.removePadding(
+                    context: context,
+                    removeTop: true,
+                    removeBottom: true,
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 6),
+                        physics: const ScrollPhysics(),
+                        itemCount: 6,
+                        itemBuilder: (context, unitIndex) {
+                          return unitImage(widget.index, unitIndex);
+                        }),
                   ),
-                ),
-                Expanded(
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.only(left: 16),
-                    child: Text("lastUpdated".tr() + (widget.team.updated ?? "")),
-                  ),
-                )
-              ],
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Text(
+                          "lastUpdated".tr() + (widget.team.updated ?? "")),
+                    ),
+                  )
+                ],
               ),
-            )
-        ),
-        Divider(thickness: 0.1, color: StorageUtils.readData(StorageUtils.darkMode, false)
-            ? Colors.grey[350] : Colors.grey[800])
+            )),
+        Divider(
+            thickness: 0.1,
+            color: StorageUtils.readData(StorageUtils.darkMode, false)
+                ? Colors.grey[350]
+                : Colors.grey[800])
       ],
     );
   }
@@ -143,7 +162,6 @@ class _TeamElementState extends State<TeamElement> {
               widget.onDelete();
             },
           );
-        }
-    );
+        });
   }
 }

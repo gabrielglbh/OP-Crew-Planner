@@ -42,24 +42,24 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
     super.dispose();
   }
 
-  _addLoadingEvent(BuildContext blocContext) => blocContext.read<DataListBloc>()..add(const DataListEventLoading());
+  _addLoadingEvent(BuildContext blocContext) =>
+      blocContext.read<DataListBloc>()..add(const DataListEventLoading());
 
   _showRemoveDownloadedDialog(BuildContext blocContext, Unit unit) {
     showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return UIAlert(
-          title: "onDeleteSpecificData".tr(),
-          acceptButton: "deleteLabel".tr(),
-          dialogContext: context,
-          onAccepted: () async {
-            blocContext.read<DataListBloc>().add(DataListEventDelete(unit));
-            Navigator.pop(context);
-          },
-        );
-      }
-    );
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return UIAlert(
+            title: "onDeleteSpecificData".tr(),
+            acceptButton: "deleteLabel".tr(),
+            dialogContext: context,
+            onAccepted: () async {
+              blocContext.read<DataListBloc>().add(DataListEventDelete(unit));
+              Navigator.pop(context);
+            },
+          );
+        });
   }
 
   bool _onScrolling(ScrollNotification sn) {
@@ -95,7 +95,8 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
                       controller: _controller,
                       hint: "searchHintUnits".tr(),
                       focus: widget.focus,
-                      onQuery: (query, type) => context.read<DataListBloc>()..add(DataListEventSearching(query, type)),
+                      onQuery: (query, type) => context.read<DataListBloc>()
+                        ..add(DataListEventSearching(query, type)),
                       onExitSearch: () => _addLoadingEvent(context),
                       mode: SearchMode.dataTab,
                     ),
@@ -106,8 +107,7 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
                       widget.focus?.unfocus();
                       MainUtils.instance.showDialogForMenuManage(context,
                           clearHistory: () => _clearHistory(context),
-                          removeData: () => _removeData(context)
-                      );
+                          removeData: () => _removeData(context));
                     },
                   )
                 ],
@@ -127,26 +127,29 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
       return const LoadingWidget();
     } else if (state is DataListStateLoaded) {
       if (state.units.isEmpty) {
-        return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.data);
+        return EmptyList(
+            onRefresh: () => _addLoadingEvent(blocContext),
+            type: TypeList.data);
       } else {
         return _dataList(blocContext, state);
       }
-    }
-    else {
-      return EmptyList(onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.data);
+    } else {
+      return EmptyList(
+          onRefresh: () => _addLoadingEvent(blocContext), type: TypeList.data);
     }
   }
 
   Expanded _dataList(BuildContext blocContext, DataListStateLoaded state) {
     return Expanded(
-      child: NotificationListener<ScrollNotification>(
-        onNotification: (notification) => _onScrolling(notification),
-        child: RefreshIndicator(
-          onRefresh: () async => _addLoadingEvent(blocContext),
-          color: Colors.orange.shade400,
-          child: GridView.builder(
+        child: NotificationListener<ScrollNotification>(
+      onNotification: (notification) => _onScrolling(notification),
+      child: RefreshIndicator(
+        onRefresh: () async => _addLoadingEvent(blocContext),
+        color: Colors.orange.shade400,
+        child: GridView.builder(
             key: const PageStorageKey<String>('dataTab'),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4),
             itemCount: state.units.length,
             itemBuilder: (context, index) {
               Unit unit = state.units[index];
@@ -154,21 +157,23 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
                 child: UI.placeholderImageWhileLoadingUnit(unit),
                 onTap: () async {
                   _controller?.text = "";
-                  await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.openUnitDataFromHistory);
+                  await UpdateQueries.instance.registerAnalyticsEvent(
+                      AnalyticsEvents.openUnitDataFromHistory);
                   await UnitQueries.instance.updateHistoryUnit(unit);
-                  await AdditionalUnitInfo.callModalSheet(context, unit.id, onClose: () {
+                  await AdditionalUnitInfo.callModalSheet(context, unit.id,
+                      onClose: () {
                     _addLoadingEvent(blocContext);
                     widget.focus?.unfocus();
                   });
                 },
                 onLongPress: () {
-                  if (unit.downloaded == 1) _showRemoveDownloadedDialog(context, unit);
+                  if (unit.downloaded == 1) {
+                    _showRemoveDownloadedDialog(context, unit);
+                  }
                 },
               );
-            }
-          ),
-        ),
-      )
-    );
+            }),
+      ),
+    ));
   }
 }

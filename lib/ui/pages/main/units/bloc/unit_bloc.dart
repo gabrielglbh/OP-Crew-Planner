@@ -15,7 +15,8 @@ class UnitListBloc extends Bloc<UnitListEvent, UnitListState> {
         emit(UnitListStateLoading());
         List<Unit> units = [];
         if (event.showOnlyAvailable) {
-          units = await UnitQueries.instance.getUnitsToBeMaxedOutAvailable(event.filter);
+          units = await UnitQueries.instance
+              .getUnitsToBeMaxedOutAvailable(event.filter);
         } else {
           units = await UnitQueries.instance.getUnitsToBeMaxedOut(event.filter);
         }
@@ -28,7 +29,8 @@ class UnitListBloc extends Bloc<UnitListEvent, UnitListState> {
     on<UnitListEventSearching>((event, emit) async {
       try {
         emit(UnitListStateLoading());
-        final units = await UnitQueries.instance.getUnitsCurrentlyMaxing(event.query);
+        final units =
+            await UnitQueries.instance.getUnitsCurrentlyMaxing(event.query);
         emit(UnitListStateLoaded(units: units));
       } on Exception {
         emit(UnitListStateFailure());
@@ -39,15 +41,18 @@ class UnitListBloc extends Bloc<UnitListEvent, UnitListState> {
       if (state is UnitListStateLoaded) {
         try {
           emit(UnitListStateLoading());
-          await UpdateQueries.instance.registerAnalyticsEvent(AnalyticsEvents.deleteUnit);
+          await UpdateQueries.instance
+              .registerAnalyticsEvent(AnalyticsEvents.deleteUnit);
           event.unit.setAttributes(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
           await UnitQueries.instance.updateUnit(event.unit);
 
           List<Unit> units = [];
           if (event.showOnlyAvailable) {
-            units = await UnitQueries.instance.getUnitsToBeMaxedOutAvailable(event.filter);
+            units = await UnitQueries.instance
+                .getUnitsToBeMaxedOutAvailable(event.filter);
           } else {
-            units = await UnitQueries.instance.getUnitsToBeMaxedOut(event.filter);
+            units =
+                await UnitQueries.instance.getUnitsToBeMaxedOut(event.filter);
           }
           emit(UnitListStateLoaded(units: units));
         } on Exception {
