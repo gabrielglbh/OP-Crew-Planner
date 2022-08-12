@@ -22,6 +22,10 @@ class MessagingHandler {
       print(token);
     });
 
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      print(event.sentTime);
+    });
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
