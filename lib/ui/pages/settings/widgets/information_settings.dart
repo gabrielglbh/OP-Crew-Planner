@@ -16,7 +16,7 @@ class InformationSettings extends StatefulWidget {
   const InformationSettings({Key? key}) : super(key: key);
 
   @override
-  _InformationSettingsState createState() => _InformationSettingsState();
+  State<InformationSettings> createState() => _InformationSettingsState();
 }
 
 class _InformationSettingsState extends State<InformationSettings> {
@@ -117,8 +117,9 @@ class _InformationSettingsState extends State<InformationSettings> {
             title: Text(InformationLabel.privacy.label),
             icon: InformationLabel.privacy.icon,
             onTap: () async {
-              if (await canLaunch("https://optc-teams-96a76.web.app")) {
-                await launch("https://optc-teams-96a76.web.app");
+              if (await canLaunchUrl(
+                  Uri.parse("https://optc-teams-96a76.web.app"))) {
+                await launchUrl(Uri.parse("https://optc-teams-96a76.web.app"));
               }
             }),
       ],

@@ -21,7 +21,7 @@ class UserManagementPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _UserManagementPageState createState() => _UserManagementPageState();
+  State<UserManagementPage> createState() => _UserManagementPageState();
 }
 
 class _UserManagementPageState extends State<UserManagementPage> {
@@ -54,9 +54,9 @@ class _UserManagementPageState extends State<UserManagementPage> {
   }
 
   Future<bool> _onWillPop({bool fromLeading = false}) async {
-    bool _hasFocus = ((_firstFieldFocus?.hasFocus ?? false) ||
+    bool hasFocus = ((_firstFieldFocus?.hasFocus ?? false) ||
         (_secondFieldFocus?.hasFocus ?? false));
-    if (_hasFocus || _currentlyLoading) {
+    if (hasFocus || _currentlyLoading) {
       _firstFieldFocus?.unfocus();
       _secondFieldFocus?.unfocus();
       return false;

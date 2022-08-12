@@ -13,7 +13,7 @@ class LoadingScreenPage extends StatefulWidget {
   const LoadingScreenPage({Key? key}) : super(key: key);
 
   @override
-  _LoadingScreenPageState createState() => _LoadingScreenPageState();
+  State<LoadingScreenPage> createState() => _LoadingScreenPageState();
 }
 
 class _LoadingScreenPageState extends State<LoadingScreenPage> {
@@ -23,7 +23,7 @@ class _LoadingScreenPageState extends State<LoadingScreenPage> {
     String versionNotes = "";
     if (notes.isNotEmpty) {
       for (var note in notes) {
-        versionNotes = versionNotes + "$note\n";
+        versionNotes = "$versionNotes$note\n";
       }
       child = Text(versionNotes);
     }
@@ -40,7 +40,9 @@ class _LoadingScreenPageState extends State<LoadingScreenPage> {
           acceptButton: "goToStore".tr(),
           cancel: false,
           onAccepted: () async {
-            if (await canLaunch(Data.storeLink)) await launch(Data.storeLink);
+            if (await canLaunchUrl(Uri.parse(Data.storeLink))) {
+              await launchUrl(Uri.parse(Data.storeLink));
+            }
           },
         );
       },

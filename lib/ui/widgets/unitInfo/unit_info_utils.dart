@@ -11,17 +11,17 @@ class UnitInfoUtils {
   Future<void> onTappedOnExternalLink(bool optcdb, {String? uid}) async {
     if (optcdb) {
       String url = "https://optc-db.github.io/characters/#/view/$uid";
-      if (await canLaunch(url)) {
+      if (await canLaunchUrl(Uri.parse(url))) {
         await UpdateQueries.instance
             .registerAnalyticsEvent(AnalyticsEvents.redirectToOPTCDB);
-        await launch(url);
+        await launchUrl(Uri.parse(url));
       }
     } else {
       String url = "https://thepiebandit.github.io/optc-pirate-rumble-db/";
-      if (await canLaunch(url)) {
+      if (await canLaunchUrl(Uri.parse(url))) {
         await UpdateQueries.instance
             .registerAnalyticsEvent(AnalyticsEvents.redirectToPRDB);
-        await launch(url);
+        await launchUrl(Uri.parse(url));
       }
     }
   }

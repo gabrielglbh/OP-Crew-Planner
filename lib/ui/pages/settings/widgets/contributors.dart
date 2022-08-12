@@ -29,7 +29,7 @@ class ContributorsTile extends StatelessWidget {
               "and".tr(), _nakamaLink, _nakamaUrl),
           _richText("contributorsIcons".tr(), "u/ShokugekiNoZeff", "",
               "contributorsDrive".tr(), _graphicsLink, _graphicsUrl),
-          Text("translators".tr() + "@LenweGLoc, u/EnishiY\n",
+          Text("${"translators".tr()}@LenweGLoc, u/EnishiY\n",
               style: const TextStyle(fontSize: 14)),
           _richText("contributorsFlaticon".tr(), _freepikLink, _freepikUrl,
               "from".tr(), _flaticonLink, _flaticonUrl),
@@ -62,7 +62,7 @@ class ContributorsTile extends StatelessWidget {
                 fontSize: 14),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                if (firstUrl != "") launch(firstUrl);
+                if (firstUrl != "") launchUrl(Uri.parse(firstUrl));
               },
           ),
           TextSpan(
@@ -80,7 +80,7 @@ class ContributorsTile extends StatelessWidget {
                 fontSize: 14),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                launch(secondUrl);
+                launchUrl(Uri.parse(secondUrl));
               },
           ),
         ],

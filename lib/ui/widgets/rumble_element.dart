@@ -23,7 +23,7 @@ class RumbleElement extends StatefulWidget {
       : super(key: key);
 
   @override
-  _RumbleElementState createState() => _RumbleElementState();
+  State<RumbleElement> createState() => _RumbleElementState();
 }
 
 class _RumbleElementState extends State<RumbleElement> {
@@ -112,7 +112,7 @@ class _RumbleElementState extends State<RumbleElement> {
         builder: (context) {
           dialogContext = context;
           return UIAlert(
-            title: "onDeleteTeam".tr() + widget.team.name + "?",
+            title: "${"onDeleteTeam".tr()}${widget.team.name}?",
             acceptButton: "deleteLabel".tr(),
             dialogContext: dialogContext,
             onAccepted: () {

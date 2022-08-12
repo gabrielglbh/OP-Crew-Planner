@@ -17,7 +17,7 @@ class RumbleTab extends StatefulWidget {
   const RumbleTab({Key? key, required this.focus}) : super(key: key);
 
   @override
-  _RumbleTabState createState() => _RumbleTabState();
+  State<RumbleTab> createState() => _RumbleTabState();
 }
 
 class _RumbleTabState extends State<RumbleTab>
@@ -95,6 +95,7 @@ class _RumbleTabState extends State<RumbleTab>
                         setState(() => _showATKRumble = !_showATKRumble);
                         StorageUtils.saveData(
                             StorageUtils.rumbleMode, _showATKRumble);
+                        if (!mounted) return;
                         _addLoadingEvent(context);
                       })
                 ],

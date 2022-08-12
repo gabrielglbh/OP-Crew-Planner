@@ -22,7 +22,7 @@ class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  State<SettingsPage> createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
@@ -90,10 +90,11 @@ class _SettingsPageState extends State<SettingsPage> {
         .registerAnalyticsEvent(AnalyticsEvents.openVersionNotes);
     List<String> n = await UpdateQueries.instance.getVersionNotes(context);
     if (n.isNotEmpty) {
-      List<Text> content = List.generate(n.length, (c) => Text(n[c] + "\n"));
+      List<Text> content = List.generate(n.length, (c) => Text("${n[c]}\n"));
       Scrollbar child = Scrollbar(
           child: ListView(
               padding: const EdgeInsets.only(top: 8), children: content));
+      if (!mounted) return;
       ChoiceBottomSheet.callModalSheet(context, "versionNotes".tr(), child,
           height: 2);
     }
@@ -176,10 +177,10 @@ class _SettingsPageState extends State<SettingsPage> {
                     : "res/icons/googlePlay.png",
                 scale: 20),
             onTap: () async {
-              if (await canLaunch(Data.storeLink)) {
+              if (await canLaunchUrl(Uri.parse(Data.storeLink))) {
                 await UpdateQueries.instance
                     .registerAnalyticsEvent(AnalyticsEvents.writeReview);
-                await launch(Data.storeLink);
+                await launchUrl(Uri.parse(Data.storeLink));
               }
             }),
         SettingTile(
@@ -187,8 +188,8 @@ class _SettingsPageState extends State<SettingsPage> {
             icon: Image.asset("res/icons/github.png", scale: 20),
             onTap: () async {
               const url = "https://github.com/gabrielglbh/op-crew-planner";
-              if (await canLaunch(url)) {
-                await launch(url);
+              if (await canLaunchUrl(Uri.parse(url))) {
+                await launchUrl(Uri.parse(url));
               }
             }),
 

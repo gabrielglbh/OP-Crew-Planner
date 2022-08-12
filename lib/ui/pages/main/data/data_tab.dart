@@ -21,7 +21,7 @@ class DataTab extends StatefulWidget {
   const DataTab({Key? key, required this.focus}) : super(key: key);
 
   @override
-  _DataTabState createState() => _DataTabState();
+  State<DataTab> createState() => _DataTabState();
 }
 
 class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
@@ -160,6 +160,7 @@ class _DataTabState extends State<DataTab> with AutomaticKeepAliveClientMixin {
                   await UpdateQueries.instance.registerAnalyticsEvent(
                       AnalyticsEvents.openUnitDataFromHistory);
                   await UnitQueries.instance.updateHistoryUnit(unit);
+                  if (!mounted) return;
                   await AdditionalUnitInfo.callModalSheet(context, unit.id,
                       onClose: () {
                     _addLoadingEvent(blocContext);

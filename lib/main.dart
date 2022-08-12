@@ -46,7 +46,7 @@ class OPCrewPlanner extends StatefulWidget {
   const OPCrewPlanner({Key? key}) : super(key: key);
 
   @override
-  _OPCrewPlannerState createState() => _OPCrewPlannerState();
+  State<OPCrewPlanner> createState() => _OPCrewPlannerState();
 
   static void setLocale(BuildContext context, Locale newLocale) async {
     context.setLocale(newLocale);

@@ -21,7 +21,7 @@ class UnitsTab extends StatefulWidget {
   const UnitsTab({Key? key, required this.focus}) : super(key: key);
 
   @override
-  _UnitsTabState createState() => _UnitsTabState();
+  State<UnitsTab> createState() => _UnitsTabState();
 }
 
 class _UnitsTabState extends State<UnitsTab>
@@ -70,6 +70,7 @@ class _UnitsTabState extends State<UnitsTab>
     });
 
     /// Adds the loading event to the bloc builder to load the new lists
+    if (!mounted) return;
     _addLoadingEvent(blocContext);
     StorageUtils.saveData(
         StorageUtils.unitListFilter, _currentAppliedFilter.index);
@@ -119,6 +120,7 @@ class _UnitsTabState extends State<UnitsTab>
                       setState(() => _showOnlyAvailable = !_showOnlyAvailable);
                       StorageUtils.saveData(
                           StorageUtils.availableFilter, _showOnlyAvailable);
+                      if (!mounted) return;
                       _addLoadingEvent(context);
                     },
                   )
@@ -209,6 +211,7 @@ class _UnitsTabState extends State<UnitsTab>
                 await UpdateQueries.instance.registerAnalyticsEvent(
                     AnalyticsEvents.openUnitDataFromUnitList);
                 await UnitQueries.instance.updateHistoryUnit(unit);
+                if (!mounted) return;
                 await AdditionalUnitInfo.callModalSheet(context, unit.id,
                     onClose: () {
                   _addLoadingEvent(blocContext);

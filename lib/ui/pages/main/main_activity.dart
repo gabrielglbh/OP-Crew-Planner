@@ -24,7 +24,7 @@ class NavigationPage extends StatefulWidget {
   const NavigationPage({Key? key}) : super(key: key);
 
   @override
-  _NavigationPageState createState() => _NavigationPageState();
+  State<NavigationPage> createState() => _NavigationPageState();
 }
 
 class _NavigationPageState extends State<NavigationPage>
@@ -63,7 +63,7 @@ class _NavigationPageState extends State<NavigationPage>
     AdManager.createBanner(
         onLoaded: _onBannerLoaded, onFailed: _onBannerFailedOrExit);
     _banner = AdManager.showBanner();
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       _recentUnitsLength = await _getRecentUnits();
     });
     super.initState();
@@ -301,6 +301,7 @@ class _NavigationPageState extends State<NavigationPage>
           await UpdateQueries.instance.registerAnalyticsEvent(
               AnalyticsEvents.openUnitDataFromRecentList);
           await UnitQueries.instance.updateHistoryUnit(_recentUnits[index]);
+          // ignore: use_build_context_synchronously
           await AdditionalUnitInfo.callModalSheet(
               context, _recentUnits[index].id,
               onClose: () {});

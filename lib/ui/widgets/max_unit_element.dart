@@ -25,7 +25,7 @@ class MaxedUnitElement extends StatefulWidget {
       : super(key: key);
 
   @override
-  _MaxedUnitElementState createState() => _MaxedUnitElementState();
+  State<MaxedUnitElement> createState() => _MaxedUnitElementState();
 }
 
 class _MaxedUnitElementState extends State<MaxedUnitElement> {
