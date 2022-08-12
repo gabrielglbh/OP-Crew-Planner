@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:optcteams/core/database/queries/team_queries.dart';
 import 'package:optcteams/core/routing/page_names.dart';
 import 'package:optcteams/ui/widgets/custom_alert.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/routing/arguments.dart';
 import 'package:optcteams/core/database/models/team.dart';
@@ -24,7 +23,7 @@ class TeamElement extends StatefulWidget {
       : super(key: key);
 
   @override
-  _TeamElementState createState() => _TeamElementState();
+  State<TeamElement> createState() => _TeamElementState();
 }
 
 class _TeamElementState extends State<TeamElement> {
@@ -132,9 +131,8 @@ class _TeamElementState extends State<TeamElement> {
             )),
         Divider(
             thickness: 0.1,
-            color: StorageUtils.readData(StorageUtils.darkMode, false)
-                ? Colors.grey[350]
-                : Colors.grey[800])
+            color:
+                UI.isDarkTheme(context) ? Colors.grey[350] : Colors.grey[800])
       ],
     );
   }
@@ -155,7 +153,7 @@ class _TeamElementState extends State<TeamElement> {
         builder: (context) {
           dialogContext = context;
           return UIAlert(
-            title: "onDeleteTeam".tr() + widget.team.name + "?",
+            title: "${"onDeleteTeam".tr()}${widget.team.name}?",
             acceptButton: "deleteLabel".tr(),
             dialogContext: dialogContext,
             onAccepted: () {

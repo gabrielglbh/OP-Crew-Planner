@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:optcteams/core/database/models/unit.dart';
+import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/widgets/custom_alert.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -25,6 +26,20 @@ class UI {
     } else {
       return -1;
     }
+  }
+
+  static bool isDarkTheme(BuildContext context) {
+    final theme = StorageUtils.readData(
+      StorageUtils.themeMode,
+      ThemeMode.light.name,
+    );
+    if (theme == ThemeMode.light.name) return false;
+    if (theme == ThemeMode.dark.name) return true;
+    if (theme == ThemeMode.system) {
+      if (Theme.of(context).brightness == Brightness.light) return false;
+      if (Theme.of(context).brightness == Brightness.dark) return true;
+    }
+    return false;
   }
 
   static void showDialogOnExit(BuildContext c) {
@@ -134,8 +149,8 @@ class UI {
     const String fbUrlArt =
         'https://firebasestorage.googleapis.com/v0/b/optc-teams-96a76.appspot.com/o/art';
 
-    final String? firstFolder = id?.substring(0, 1) ?? "0";
-    final String? secondFolder = "${id?.substring(1, 2) ?? "0"}00";
+    final String firstFolder = id?.substring(0, 1) ?? "0";
+    final String secondFolder = "${id?.substring(1, 2) ?? "0"}00";
 
     return art
         ? "$fbUrlArt$slash$firstFolder$slash$secondFolder$slash$id$png?alt=media"

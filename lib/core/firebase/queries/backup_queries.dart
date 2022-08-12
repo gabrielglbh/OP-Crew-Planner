@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +35,10 @@ class BackUpRecords {
 
   Future<void> uploadToFireStore(
       BuildContext context, Function(String) updateUI) async {
-    User? _user = _auth?.currentUser;
-    await _user?.reload();
-    if (_user != null) {
-      if (_user.emailVerified) {
+    User? user = _auth?.currentUser;
+    await user?.reload();
+    if (user != null) {
+      if (user.emailVerified) {
         DateTime parser = DateTime.parse(DateTime.now().toString());
         String minute =
             parser.minute < 10 ? "0${parser.minute}" : parser.minute.toString();
@@ -67,10 +69,7 @@ class BackUpRecords {
               lastUpdated: date.toString());
 
           try {
-            await _ref
-                ?.collection(_collection)
-                .doc(_user.uid)
-                .set(obj.toJson());
+            await _ref?.collection(_collection).doc(user.uid).set(obj.toJson());
             await UpdateQueries.instance
                 .registerAnalyticsEvent(AnalyticsEvents.createdBackUp);
             updateUI(date);
@@ -86,9 +85,9 @@ class BackUpRecords {
   }
 
   Future<void> getFromFireStore(BuildContext context) async {
-    User? _user = _auth?.currentUser;
-    if (_user != null) {
-      if (_user.emailVerified) {
+    User? user = _auth?.currentUser;
+    if (user != null) {
+      if (user.emailVerified) {
         List<Team> teams = await TeamQueries.instance.getAllTeams();
         List<RumbleTeam> rumbleTeams =
             await RumbleTeamQueries.instance.getAllRumbleTeams();
@@ -100,7 +99,7 @@ class BackUpRecords {
         try {
           await _ref
               ?.collection(_collection)
-              .doc(_user.uid)
+              .doc(user.uid)
               .get()
               .then((snapshot) async {
             Map<String, dynamic>? backup = snapshot.data();
@@ -164,11 +163,11 @@ class BackUpRecords {
   }
 
   Future<void> deleteBackUp(BuildContext context) async {
-    User? _user = _auth?.currentUser;
-    if (_user != null) {
-      if (_user.emailVerified) {
+    User? user = _auth?.currentUser;
+    if (user != null) {
+      if (user.emailVerified) {
         try {
-          await _ref?.collection(_collection).doc(_user.uid).delete();
+          await _ref?.collection(_collection).doc(user.uid).delete();
           await UpdateQueries.instance
               .registerAnalyticsEvent(AnalyticsEvents.deletedBackUp);
           UI.showSnackBar(context, "dataDeleted".tr());
@@ -182,9 +181,9 @@ class BackUpRecords {
   }
 
   Future<void> getLastBackupTime(Function(String) updateUI) async {
-    User? _user = _auth?.currentUser;
-    if (_user != null) {
-      await _ref?.collection(_collection).doc(_user.uid).get().then((snapshot) {
+    User? user = _auth?.currentUser;
+    if (user != null) {
+      await _ref?.collection(_collection).doc(user.uid).get().then((snapshot) {
         Map<String, dynamic>? backup = snapshot.data();
         Objectify obj = Objectify();
         String date = obj.fromJsonUpdated(backup);

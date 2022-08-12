@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageUtils {
-  static const String darkMode = "THEME";
+  static const String themeMode = "THEME";
   static const String maxFilter = "MAXED";
   static const String rumbleMode = "RUMBLEMODE";
   static const String availableFilter = "AVAILABLE";
@@ -41,7 +41,7 @@ class StorageUtils {
       return _preferences
           ?.getKeys()
           .where((key) =>
-              key != darkMode &&
+              key != themeMode &&
               key != maxFilter &&
               key != rumbleMode &&
               key != availableFilter &&

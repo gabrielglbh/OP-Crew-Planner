@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,22 @@ void main() async {
   }
   await StorageUtils.getInstance();
   await EasyLocalization.ensureInitialized();
+  await FlutterLocalNotificationsPlugin().initialize(
+    const InitializationSettings(
+      android: AndroidInitializationSettings('splashscreen'),
+    ),
+  );
+
+  /// Breaking change with 4.2.0: if themeMode in shared preferences is bool
+  /// then change it to the actual name of [ThemeMode], as [ThemeMode.system]
+  /// is introduced
+  var theme =
+      StorageUtils.readData(StorageUtils.themeMode, ThemeMode.light.name);
+  if (theme is bool) {
+    StorageUtils.saveData(StorageUtils.themeMode,
+        theme ? ThemeMode.dark.name : ThemeMode.light.name);
+  }
+
   runApp(const SetUpApp());
 }
 
@@ -46,7 +63,7 @@ class OPCrewPlanner extends StatefulWidget {
   const OPCrewPlanner({Key? key}) : super(key: key);
 
   @override
-  _OPCrewPlannerState createState() => _OPCrewPlannerState();
+  State<OPCrewPlanner> createState() => _OPCrewPlannerState();
 
   static void setLocale(BuildContext context, Locale newLocale) async {
     context.setLocale(newLocale);

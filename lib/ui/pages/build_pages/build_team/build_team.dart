@@ -9,7 +9,6 @@ import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:optcteams/core/firebase/ads.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/ui/utils.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/core/database/models/ship.dart';
 import 'package:optcteams/core/database/models/skills.dart';
 import 'package:optcteams/core/database/models/team.dart';
@@ -34,7 +33,7 @@ class BuildTeamPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BuildTeamPageState createState() => _BuildTeamPageState();
+  State<BuildTeamPage> createState() => _BuildTeamPageState();
 }
 
 class _BuildTeamPageState extends State<BuildTeamPage>
@@ -154,10 +153,10 @@ class _BuildTeamPageState extends State<BuildTeamPage>
   _onBannerFailedOrExit() => setState(() => _bannerIsLoaded = false);
 
   Future<bool> _onWillPop({bool fromLeading = false}) async {
-    bool? _isFocused = ((_focus?.hasFocus ?? false) ||
+    bool? isFocused = ((_focus?.hasFocus ?? false) ||
         (_nameFocus?.hasFocus ?? false) ||
         (_descFocus?.hasFocus ?? false));
-    if (_isFocused) {
+    if (isFocused) {
       _focus?.unfocus();
       _nameFocus?.unfocus();
       _descFocus?.unfocus();
@@ -309,9 +308,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
               padding: const EdgeInsets.only(bottom: 4, top: 2),
               child: _recentList()),
           Divider(
-              color: StorageUtils.readData(StorageUtils.darkMode, false)
-                  ? Colors.grey
-                  : Colors.black,
+              color: UI.isDarkTheme(context) ? Colors.grey : Colors.black,
               thickness: 1),
           Padding(
               padding: const EdgeInsets.only(bottom: 4, top: 4),
@@ -344,9 +341,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
       alignment: Alignment.center,
       child: Text(tab,
           style: TextStyle(
-              color: StorageUtils.readData(StorageUtils.darkMode, false)
-                  ? Colors.white
-                  : Colors.black87)),
+              color: UI.isDarkTheme(context) ? Colors.white : Colors.black87)),
     );
   }
 
@@ -462,12 +457,11 @@ class _BuildTeamPageState extends State<BuildTeamPage>
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(8.0)),
             border: Border.all(
-                color: StorageUtils.readData(StorageUtils.darkMode, false)
-                    ? Colors.white
-                    : Colors.grey[800]!),
+                color:
+                    UI.isDarkTheme(context) ? Colors.white : Colors.grey[800]!),
             color: _showSupports
                 ? Colors.green
-                : StorageUtils.readData(StorageUtils.darkMode, false)
+                : UI.isDarkTheme(context)
                     ? Colors.grey[800]
                     : Colors.white,
           ),
@@ -479,7 +473,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
                   style: TextStyle(
                       color: _showSupports
                           ? Colors.white
-                          : StorageUtils.readData(StorageUtils.darkMode, false)
+                          : UI.isDarkTheme(context)
                               ? Colors.white
                               : Colors.black87)),
             ),
@@ -554,12 +548,16 @@ class _BuildTeamPageState extends State<BuildTeamPage>
     return DragTarget(
       builder: (context, List<int?> data, b) {
         return Draggable(
+          feedback: FittedBox(child: UI.placeholderImageWhileLoading(img)),
+          childWhenDragging: Container(),
+          data: index,
           child: GestureDetector(
               onTap: () async {
                 if (unit.id != "noimage") {
                   await UnitQueries.instance.updateHistoryUnit(unit);
                   await UpdateQueries.instance.registerAnalyticsEvent(
                       AnalyticsEvents.openUnitDataFromUnitOnTeam);
+                  if (!mounted) return;
                   await AdditionalUnitInfo.callModalSheet(context, unit.id);
                 }
               },
@@ -596,9 +594,6 @@ class _BuildTeamPageState extends State<BuildTeamPage>
                   )
                 ],
               )),
-          feedback: FittedBox(child: UI.placeholderImageWhileLoading(img)),
-          childWhenDragging: Container(),
-          data: index,
         );
       },
       onAccept: (int? data) {
@@ -662,7 +657,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: Container(
-              width: _widthSkillProgress,
+              width: _widthSkillProgress < 0 ? 0 : _widthSkillProgress,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                 border: Border.all(color: Colors.grey[600]!, width: 1),
@@ -759,6 +754,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
                   _supports.insert(x, _emptyUnit);
                 }
               });
+              if (!mounted) return;
               Navigator.of(dialogContext).pop();
             },
           );
@@ -806,6 +802,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
               if (isSuccessful) {
                 await UpdateQueries.instance
                     .registerAnalyticsEvent(AnalyticsEvents.updatedTeam);
+                if (!mounted) return;
                 Navigator.of(context).pop();
               } else {
                 UI.showSnackBar(context, "errDupTeam".tr());
@@ -827,6 +824,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
             if (isSuccessful) {
               await UpdateQueries.instance
                   .registerAnalyticsEvent(AnalyticsEvents.createdTeam);
+              if (!mounted) return;
               Navigator.of(context).pop();
             } else {
               UI.showSnackBar(context, "errDupTeam".tr());
@@ -863,6 +861,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
               });
               await UpdateQueries.instance
                   .registerAnalyticsEvent(AnalyticsEvents.removeUnitFromTeam);
+              if (!mounted) return;
               Navigator.of(dialogContext).pop();
             },
           );
@@ -960,7 +959,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
     String units = "";
     for (var x = 0; x < 6; x++) {
       if (!_units[x].id.contains("noimage")) {
-        units += _units[x].id + ':99';
+        units += '${_units[x].id}:99';
       } else {
         units += '!';
       }
@@ -968,13 +967,13 @@ class _BuildTeamPageState extends State<BuildTeamPage>
         units += ',';
       }
     }
-    String ship = 'C' + _ship.id + ',10';
+    String ship = 'C${_ship.id},10';
     String postfix = 'B0D0E0Q0L0G0R0S100H';
     String url = baseUrl + units + ship + postfix;
-    if (await canLaunch(url)) {
+    if (await canLaunchUrl(Uri.parse(url))) {
       await UpdateQueries.instance
           .registerAnalyticsEvent(AnalyticsEvents.redirectToOPTCCalc);
-      await launch(url);
+      await launchUrl(Uri.parse(url));
     } else {
       UI.showSnackBar(context, "errOnLaunch".tr());
     }

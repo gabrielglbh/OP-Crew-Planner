@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final ThemeData lightTheme = ThemeData(
+final ThemeData light = ThemeData(
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: AppBarTheme(
@@ -52,7 +52,7 @@ final ThemeData lightTheme = ThemeData(
               color: Colors.orange[400]!, width: 2, style: BorderStyle.solid)),
     )));
 
-final ThemeData darkTheme = ThemeData(
+final ThemeData dark = ThemeData(
     brightness: Brightness.dark,
     scaffoldBackgroundColor:
         Colors.grey[800], // Color that appear when reaching top of list

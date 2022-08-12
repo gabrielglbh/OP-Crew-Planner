@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:optcteams/core/database/models/rumble.dart';
 import 'package:optcteams/core/routing/arguments.dart';
 import 'package:optcteams/core/routing/page_names.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -23,7 +22,7 @@ class RumbleElement extends StatefulWidget {
       : super(key: key);
 
   @override
-  _RumbleElementState createState() => _RumbleElementState();
+  State<RumbleElement> createState() => _RumbleElementState();
 }
 
 class _RumbleElementState extends State<RumbleElement> {
@@ -85,9 +84,8 @@ class _RumbleElementState extends State<RumbleElement> {
             )),
         Divider(
             thickness: 0.1,
-            color: StorageUtils.readData(StorageUtils.darkMode, false)
-                ? Colors.grey[350]
-                : Colors.grey[800])
+            color:
+                UI.isDarkTheme(context) ? Colors.grey[350] : Colors.grey[800])
       ],
     );
   }
@@ -112,7 +110,7 @@ class _RumbleElementState extends State<RumbleElement> {
         builder: (context) {
           dialogContext = context;
           return UIAlert(
-            title: "onDeleteTeam".tr() + widget.team.name + "?",
+            title: "${"onDeleteTeam".tr()}${widget.team.name}?",
             acceptButton: "deleteLabel".tr(),
             dialogContext: dialogContext,
             onAccepted: () {

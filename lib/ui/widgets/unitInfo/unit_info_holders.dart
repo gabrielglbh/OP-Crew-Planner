@@ -13,7 +13,7 @@ class CaptainAbility extends StatelessWidget {
     return Visibility(
         visible: (info.captain != null && info.captain != "") || hasLLB,
         child: UnitInfoUtils.instance.simpleSection(
-            "res/info/captain.png", "captain".tr(), info.captain,
+            context, "res/info/captain.png", "captain".tr(), info.captain,
             needsSubsection: hasLLB,
             isLLB: hasLLB,
             subsectionText: info.llbCaptain));
@@ -33,7 +33,7 @@ class SpecialAbility extends StatelessWidget {
                 info.specialName != "" &&
                 info.special != "") ||
             hasLLB,
-        child: UnitInfoUtils.instance.simpleSection(
+        child: UnitInfoUtils.instance.simpleSection(context,
             "res/maxed/specialLevel.png", info.specialName, info.special,
             italic: true,
             isLLB: hasLLB,
@@ -50,8 +50,8 @@ class SwapAbility extends StatelessWidget {
   Widget build(BuildContext context) {
     return Visibility(
         visible: info.swap != null && info.swap != "",
-        child: UnitInfoUtils.instance
-            .simpleSection("res/info/swap.png", "swap".tr(), info.swap));
+        child: UnitInfoUtils.instance.simpleSection(
+            context, "res/info/swap.png", "swap".tr(), info.swap));
   }
 }
 
@@ -70,8 +70,9 @@ class VersusAbility extends StatelessWidget {
           UnitInfoUtils.instance
               .headerOfSection("res/info/versus.png", "Versus"),
           UnitInfoUtils.instance
-              .richText3Ways("stCriteria".tr(), info.vsCondition),
-          UnitInfoUtils.instance.richText3Ways("special".tr(), info.vsSpecial),
+              .richText3Ways(context, "stCriteria".tr(), info.vsCondition),
+          UnitInfoUtils.instance
+              .richText3Ways(context, "special".tr(), info.vsSpecial),
           UnitInfoUtils.instance.divider()
         ]));
   }
@@ -91,10 +92,10 @@ class SuperTypeAbility extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           UnitInfoUtils.instance
               .headerOfSection("res/info/supertype.png", "superType".tr()),
+          UnitInfoUtils.instance.richText3Ways(
+              context, "stCriteria".tr(), info.superSpecialCriteria),
           UnitInfoUtils.instance
-              .richText3Ways("stCriteria".tr(), info.superSpecialCriteria),
-          UnitInfoUtils.instance
-              .richText3Ways("special".tr(), info.superSpecial),
+              .richText3Ways(context, "special".tr(), info.superSpecial),
           UnitInfoUtils.instance.divider()
         ]));
   }
@@ -112,8 +113,11 @@ class SupportAbility extends StatelessWidget {
           info.support?.keys.contains(UnitInfo.fSupDescription) == true &&
           info.support?[UnitInfo.fSupChars] != "" &&
           info.support?[UnitInfo.fSupDescription] != "",
-      child: UnitInfoUtils.instance.simpleSection("res/maxed/support.png",
-          "supportAbility".tr(), "For ${info.support?[UnitInfo.fSupChars]}",
+      child: UnitInfoUtils.instance.simpleSection(
+          context,
+          "res/maxed/support.png",
+          "supportAbility".tr(),
+          "For ${info.support?[UnitInfo.fSupChars]}",
           needsSubsection: true,
           subsectionText: info.support?[UnitInfo.fSupDescription]),
     );
@@ -135,9 +139,9 @@ class LastTapAbility extends StatelessWidget {
           UnitInfoUtils.instance
               .headerOfSection("res/info/lastTap.png", "lastTap".tr()),
           UnitInfoUtils.instance
-              .richText3Ways("stCriteria".tr(), info.lastTapCondition),
+              .richText3Ways(context, "stCriteria".tr(), info.lastTapCondition),
           UnitInfoUtils.instance
-              .richText3Ways("special".tr(), info.lastTapDescription),
+              .richText3Ways(context, "special".tr(), info.lastTapDescription),
           UnitInfoUtils.instance.divider()
         ]));
   }
@@ -157,10 +161,10 @@ class SuperTNDAbility extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           UnitInfoUtils.instance
               .headerOfSection("res/info/superTND.png", "superTND".tr()),
-          UnitInfoUtils.instance
-              .richText3Ways("stCriteria".tr(), info.superTandemCondition),
-          UnitInfoUtils.instance
-              .richText3Ways("special".tr(), info.superTandemDescription),
+          UnitInfoUtils.instance.richText3Ways(
+              context, "stCriteria".tr(), info.superTandemCondition),
+          UnitInfoUtils.instance.richText3Ways(
+              context, "special".tr(), info.superTandemDescription),
           UnitInfoUtils.instance.divider()
         ]));
   }
@@ -175,7 +179,7 @@ class RumbleAbility extends StatelessWidget {
     bool hasLLB = info.llbFestAbility != null && info.llbFestAbility != "";
     return Visibility(
         visible: (info.festAbility != null && info.festAbility != "") || hasLLB,
-        child: UnitInfoUtils.instance.simpleSection(
+        child: UnitInfoUtils.instance.simpleSection(context,
             "res/maxed/rumble_ability.png", "fAbility".tr(), info.festAbility,
             needsSubsection: hasLLB,
             isLLB: hasLLB,
@@ -192,7 +196,7 @@ class RumbleSpecial extends StatelessWidget {
     bool hasLLB = info.llbFestSpecial != null && info.llbFestSpecial != "";
     return Visibility(
         visible: (info.festSpecial != null && info.festSpecial != "") || hasLLB,
-        child: UnitInfoUtils.instance.simpleSection(
+        child: UnitInfoUtils.instance.simpleSection(context,
             "res/maxed/rumble_special.png", "fSpecial".tr(), info.festSpecial,
             needsSubsection: hasLLB,
             isLLB: hasLLB,
@@ -211,7 +215,7 @@ class RumbleResistance extends StatelessWidget {
     return Visibility(
         visible: (info.festResistance != null && info.festResistance != "") ||
             hasLLB,
-        child: UnitInfoUtils.instance.simpleSection(
+        child: UnitInfoUtils.instance.simpleSection(context,
             "res/info/resistance.png", "fResistance".tr(), info.festResistance,
             needsSubsection: hasLLB,
             isLLB: hasLLB,
@@ -279,7 +283,7 @@ class PotentialAbility extends StatelessWidget {
               textAlign: TextAlign.center,
               text: TextSpan(
                   children: UnitInfoUtils.instance.generateColorKeysForTextSpan(
-                      ability,
+                      context, ability,
                       parsePotential: true)),
             )
           ]));
@@ -343,46 +347,46 @@ class SailorAbility extends StatelessWidget {
           visible: info.sailor?.keys.contains(UnitInfo.fSailorBase) == true &&
               info.sailor?[UnitInfo.fSailorBase] != "None" &&
               info.sailor?[UnitInfo.fSailorBase] != "",
-          child: UnitInfoUtils.instance
-              .richText3Ways("base".tr(), info.sailor?[UnitInfo.fSailorBase]),
+          child: UnitInfoUtils.instance.richText3Ways(
+              context, "base".tr(), info.sailor?[UnitInfo.fSailorBase]),
         ),
         Visibility(
           visible: info.sailor?.keys.contains(UnitInfo.fSailorLevel1) == true &&
               info.sailor?[UnitInfo.fSailorLevel1] != "",
-          child: UnitInfoUtils.instance
-              .richText3Ways("l1".tr(), info.sailor?[UnitInfo.fSailorLevel1]),
+          child: UnitInfoUtils.instance.richText3Ways(
+              context, "l1".tr(), info.sailor?[UnitInfo.fSailorLevel1]),
         ),
         Visibility(
           visible: info.sailor?.keys.contains(UnitInfo.fSailorLevel2) == true &&
               info.sailor?[UnitInfo.fSailorLevel2] != "",
-          child: UnitInfoUtils.instance
-              .richText3Ways("l2".tr(), info.sailor?[UnitInfo.fSailorLevel2]),
+          child: UnitInfoUtils.instance.richText3Ways(
+              context, "l2".tr(), info.sailor?[UnitInfo.fSailorLevel2]),
         ),
         Visibility(
           visible:
               info.sailor?.keys.contains(UnitInfo.fSailorCombined) == true &&
                   info.sailor?[UnitInfo.fSailorCombined] != "",
           child: UnitInfoUtils.instance.richText3Ways(
-              "combined".tr(), info.sailor?[UnitInfo.fSailorCombined]),
+              context, "combined".tr(), info.sailor?[UnitInfo.fSailorCombined]),
         ),
         Visibility(
           visible: info.sailor?.keys.contains(UnitInfo.fSailorChar1) == true &&
               info.sailor?[UnitInfo.fSailorChar1] != "",
-          child: UnitInfoUtils.instance
-              .richText3Ways("c1".tr(), info.sailor?[UnitInfo.fSailorChar1]),
+          child: UnitInfoUtils.instance.richText3Ways(
+              context, "c1".tr(), info.sailor?[UnitInfo.fSailorChar1]),
         ),
         Visibility(
           visible: info.sailor?.keys.contains(UnitInfo.fSailorChar2) == true &&
               info.sailor?[UnitInfo.fSailorChar2] != "",
-          child: UnitInfoUtils.instance
-              .richText3Ways("c2".tr(), info.sailor?[UnitInfo.fSailorChar2]),
+          child: UnitInfoUtils.instance.richText3Ways(
+              context, "c2".tr(), info.sailor?[UnitInfo.fSailorChar2]),
         ),
         Visibility(
           visible:
               info.sailor?.keys.contains(UnitInfo.fLLBSailorBase) == true &&
                   info.sailor?[UnitInfo.fLLBSailorBase] != "",
           child: UnitInfoUtils.instance.richText3Ways(
-              "base".tr(), info.sailor?[UnitInfo.fLLBSailorBase],
+              context, "base".tr(), info.sailor?[UnitInfo.fLLBSailorBase],
               isLLB: true),
         ),
         Visibility(
@@ -390,7 +394,7 @@ class SailorAbility extends StatelessWidget {
               info.sailor?.keys.contains(UnitInfo.fLLBSailorLevel1) == true &&
                   info.sailor?[UnitInfo.fLLBSailorLevel1] != "",
           child: UnitInfoUtils.instance.richText3Ways(
-              "l1".tr(), info.sailor?[UnitInfo.fLLBSailorLevel1],
+              context, "l1".tr(), info.sailor?[UnitInfo.fLLBSailorLevel1],
               isLLB: true),
         ),
         Visibility(
@@ -398,15 +402,15 @@ class SailorAbility extends StatelessWidget {
               info.sailor?.keys.contains(UnitInfo.fLLBSailorLevel2) == true &&
                   info.sailor?[UnitInfo.fLLBSailorLevel2] != "",
           child: UnitInfoUtils.instance.richText3Ways(
-              "l2".tr(), info.sailor?[UnitInfo.fLLBSailorLevel2],
+              context, "l2".tr(), info.sailor?[UnitInfo.fLLBSailorLevel2],
               isLLB: true),
         ),
         Visibility(
           visible:
               info.sailor?.keys.contains(UnitInfo.fLLBSailorCombined) == true &&
                   info.sailor?[UnitInfo.fLLBSailorCombined] != "",
-          child: UnitInfoUtils.instance.richText3Ways(
-              "combined".tr(), info.sailor?[UnitInfo.fLLBSailorCombined],
+          child: UnitInfoUtils.instance.richText3Ways(context, "combined".tr(),
+              info.sailor?[UnitInfo.fLLBSailorCombined],
               isLLB: true),
         ),
         Visibility(
@@ -414,7 +418,7 @@ class SailorAbility extends StatelessWidget {
                   true &&
               info.sailor?[UnitInfo.fLLBSailorCharacter1] != "",
           child: UnitInfoUtils.instance.richText3Ways(
-              "c1".tr(), info.sailor?[UnitInfo.fLLBSailorCharacter1],
+              context, "c1".tr(), info.sailor?[UnitInfo.fLLBSailorCharacter1],
               isLLB: true),
         ),
         Visibility(
@@ -422,7 +426,7 @@ class SailorAbility extends StatelessWidget {
                   true &&
               info.sailor?[UnitInfo.fLLBSailorCharacter2] != "",
           child: UnitInfoUtils.instance.richText3Ways(
-              "c2".tr(), info.sailor?[UnitInfo.fLLBSailorCharacter2],
+              context, "c2".tr(), info.sailor?[UnitInfo.fLLBSailorCharacter2],
               isLLB: true),
         ),
         UnitInfoUtils.instance.divider()

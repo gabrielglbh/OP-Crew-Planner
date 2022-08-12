@@ -22,6 +22,7 @@ class CheckUpdatesBloc extends Bloc<CheckUpdatesEvent, CheckUpdatesState> {
         /// Check the saved locale
         String loadedLocale = StorageUtils.readData(StorageUtils.language, "");
         if (loadedLocale != "") {
+          // ignore: use_build_context_synchronously
           OPCrewPlanner.setLocale(event.context, Locale(loadedLocale));
         }
 

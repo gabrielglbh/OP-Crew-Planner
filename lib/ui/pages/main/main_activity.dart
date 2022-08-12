@@ -4,6 +4,7 @@ import 'package:optcteams/core/database/models/rumble.dart';
 import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:optcteams/core/database/queries/util_queries.dart';
 import 'package:optcteams/core/firebase/ads.dart';
+import 'package:optcteams/core/firebase/messaging.dart';
 import 'package:optcteams/core/firebase/queries/authentication.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/routing/page_names.dart';
@@ -24,7 +25,7 @@ class NavigationPage extends StatefulWidget {
   const NavigationPage({Key? key}) : super(key: key);
 
   @override
-  _NavigationPageState createState() => _NavigationPageState();
+  State<NavigationPage> createState() => _NavigationPageState();
 }
 
 class _NavigationPageState extends State<NavigationPage>
@@ -63,7 +64,8 @@ class _NavigationPageState extends State<NavigationPage>
     AdManager.createBanner(
         onLoaded: _onBannerLoaded, onFailed: _onBannerFailedOrExit);
     _banner = AdManager.showBanner();
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await MessagingHandler.handler(context);
       _recentUnitsLength = await _getRecentUnits();
     });
     super.initState();
@@ -301,6 +303,7 @@ class _NavigationPageState extends State<NavigationPage>
           await UpdateQueries.instance.registerAnalyticsEvent(
               AnalyticsEvents.openUnitDataFromRecentList);
           await UnitQueries.instance.updateHistoryUnit(_recentUnits[index]);
+          // ignore: use_build_context_synchronously
           await AdditionalUnitInfo.callModalSheet(
               context, _recentUnits[index].id,
               onClose: () {});

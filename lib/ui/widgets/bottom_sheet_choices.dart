@@ -12,7 +12,7 @@ class ChoiceBottomSheet extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ChoiceBottomSheetState createState() => _ChoiceBottomSheetState();
+  State<ChoiceBottomSheet> createState() => _ChoiceBottomSheetState();
 
   static Future<void> callModalSheet(
       BuildContext context, String title, Widget child,
@@ -23,7 +23,7 @@ class ChoiceBottomSheet extends StatefulWidget {
         backgroundColor: Colors.transparent,
         isDismissible: true,
         builder: (context) =>
-            ChoiceBottomSheet(title: title, child: child, height: height));
+            ChoiceBottomSheet(title: title, height: height, child: child));
   }
 }
 

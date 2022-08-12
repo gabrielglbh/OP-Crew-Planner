@@ -1,9 +1,9 @@
 name: optcteams
 description: A Flutter application for storing teams and how-to's for OPTC.
-version: 4.1.2+34
+version: 4.2.0+35
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -12,31 +12,34 @@ dependencies:
     sdk: flutter
   provider: ^6.0.2
   cupertino_icons: ^1.0.2
-  sqflite: ^2.0.2
-  path: ^1.8.0
-  url_launcher: ^6.0.20
+  sqflite: ^2.0.3
+  path: ^1.8.1
+  url_launcher: ^6.1.5
   font_awesome_flutter: ^10.1.0
   flutter_launcher_icons: ^0.9.2 # To change: flutter pub run flutter_launcher_icons:main
-  shared_preferences: ^2.0.13
-  firebase_core: ^1.13.1
+  shared_preferences: ^2.0.15
+  firebase_core: ^1.20.1
   cloud_firestore: ^3.1.10
-  firebase_auth: ^3.3.11
-  firebase_analytics: ^9.1.2
-  google_mobile_ads: ^1.1.0
-  email_validator: ^2.0.1
+  firebase_auth: ^3.6.3
+  firebase_analytics: ^9.3.1
+  firebase_messaging: ^12.0.2
+  flutter_local_notifications: ^9.7.0
+  google_mobile_ads: ^2.0.0
+  email_validator: ^2.1.17
   intl: ^0.17.0
-  google_sign_in: ^5.2.4
+  google_sign_in: ^5.4.1
   package_info_plus: ^1.4.0
-  cached_network_image: ^3.2.0
-  easy_localization: ^3.0.0
-  json_annotation: ^4.3.0
+  cached_network_image: ^3.2.1
+  easy_localization: ^3.0.1
+  json_annotation: ^4.6.0
   flutter_bloc: ^8.0.1
   equatable: ^2.0.3
+  app_settings: ^4.1.8
 
 dev_dependencies:
-  build_runner: ^2.1.8 # flutter pub run build_runner build
-  json_serializable: ^6.1.5
-  flutter_lints: ^1.0.0
+  build_runner: ^2.2.0 # flutter pub run build_runner build
+  json_serializable: ^6.3.1
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
 

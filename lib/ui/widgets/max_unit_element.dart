@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:optcteams/core/routing/page_names.dart';
 import 'package:optcteams/core/types/unit_attributes.dart';
 import 'package:optcteams/ui/widgets/custom_alert.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/routing/arguments.dart';
 import 'package:optcteams/core/database/models/unit.dart';
@@ -25,7 +24,7 @@ class MaxedUnitElement extends StatefulWidget {
       : super(key: key);
 
   @override
-  _MaxedUnitElementState createState() => _MaxedUnitElementState();
+  State<MaxedUnitElement> createState() => _MaxedUnitElementState();
 }
 
 class _MaxedUnitElementState extends State<MaxedUnitElement> {
@@ -112,7 +111,7 @@ class _MaxedUnitElementState extends State<MaxedUnitElement> {
                 )),
             Divider(
                 thickness: 0.1,
-                color: StorageUtils.readData(StorageUtils.darkMode, false)
+                color: UI.isDarkTheme(context)
                     ? Colors.grey[350]
                     : Colors.grey[800])
           ],

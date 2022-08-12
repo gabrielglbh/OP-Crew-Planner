@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -11,33 +10,34 @@ class UnitInfoUtils {
   Future<void> onTappedOnExternalLink(bool optcdb, {String? uid}) async {
     if (optcdb) {
       String url = "https://optc-db.github.io/characters/#/view/$uid";
-      if (await canLaunch(url)) {
+      if (await canLaunchUrl(Uri.parse(url))) {
         await UpdateQueries.instance
             .registerAnalyticsEvent(AnalyticsEvents.redirectToOPTCDB);
-        await launch(url);
+        await launchUrl(Uri.parse(url));
       }
     } else {
       String url = "https://thepiebandit.github.io/optc-pirate-rumble-db/";
-      if (await canLaunch(url)) {
+      if (await canLaunchUrl(Uri.parse(url))) {
         await UpdateQueries.instance
             .registerAnalyticsEvent(AnalyticsEvents.redirectToPRDB);
-        await launch(url);
+        await launchUrl(Uri.parse(url));
       }
     }
   }
 
   Divider divider() => const Divider(thickness: 2);
 
-  List<TextSpan> generateColorKeysForTextSpan(String? primalContent,
-      {String? underlined,
-      bool simple = true,
-      bool parsePotential = false,
-      bool isLLB = false}) {
+  List<TextSpan> generateColorKeysForTextSpan(
+    BuildContext context,
+    String? primalContent, {
+    String? underlined,
+    bool simple = true,
+    bool parsePotential = false,
+    bool isLLB = false,
+  }) {
     List<String> parted = [];
     List<TextSpan> texts = [];
-    Color? color = (!StorageUtils.readData(StorageUtils.darkMode, false)
-        ? Colors.black87
-        : null);
+    Color? color = (!UI.isDarkTheme(context) ? Colors.black87 : null);
     Color tColor = Colors.white;
 
     final llb = TextSpan(
@@ -209,21 +209,30 @@ class UnitInfoUtils {
     return texts;
   }
 
-  RichText richText3Ways(String? underlined, String? content,
-      {bool isLLB = false}) {
+  RichText richText3Ways(
+    BuildContext context,
+    String? underlined,
+    String? content, {
+    bool isLLB = false,
+  }) {
     return RichText(
       textAlign: TextAlign.start,
       text: TextSpan(
-          children: generateColorKeysForTextSpan(content,
+          children: generateColorKeysForTextSpan(context, content,
               underlined: underlined, simple: false, isLLB: isLLB)),
     );
   }
 
-  Column simpleSection(String asset, String? title, String? information,
-      {bool italic = false,
-      bool isLLB = false,
-      bool needsSubsection = false,
-      String? subsectionText}) {
+  Column simpleSection(
+    BuildContext context,
+    String asset,
+    String? title,
+    String? information, {
+    bool italic = false,
+    bool isLLB = false,
+    bool needsSubsection = false,
+    String? subsectionText,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -233,7 +242,7 @@ class UnitInfoUtils {
           text: TextSpan(
             children: information?.isEmpty == true
                 ? []
-                : generateColorKeysForTextSpan(information),
+                : generateColorKeysForTextSpan(context, information),
           ),
         ),
         Visibility(
@@ -241,8 +250,8 @@ class UnitInfoUtils {
           child: RichText(
             textAlign: TextAlign.start,
             text: TextSpan(
-              children:
-                  generateColorKeysForTextSpan(subsectionText, isLLB: isLLB),
+              children: generateColorKeysForTextSpan(context, subsectionText,
+                  isLLB: isLLB),
             ),
           ),
         ),

@@ -1,12 +1,13 @@
 import 'dart:io';
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:optcteams/core/firebase/ads.dart';
 import 'package:optcteams/core/firebase/queries/authentication.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
-import 'package:optcteams/ui/theme/theme_manager.dart';
+import 'package:optcteams/main.dart';
+import 'package:optcteams/ui/pages/settings/widgets/change_theme.dart';
 import 'package:optcteams/ui/pages/settings/widgets/account_settings.dart';
 import 'package:optcteams/ui/pages/settings/widgets/back_up_settings.dart';
 import 'package:optcteams/ui/pages/settings/widgets/information_settings.dart';
@@ -22,19 +23,12 @@ class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  State<SettingsPage> createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
   String? _uid;
   bool _currentlyLoading = false;
-  ThemeMode _mode = ThemeMode.light;
-
-  @override
-  void initState() {
-    _mode = ThemeManager.instance.themeMode;
-    super.initState();
-  }
 
   @override
   void didChangeDependencies() {
@@ -46,11 +40,6 @@ class _SettingsPageState extends State<SettingsPage> {
   void dispose() {
     AdManager.disposeInterstitial();
     super.dispose();
-  }
-
-  _onThemeChanged() async {
-    _mode = ThemeManager.instance.themeMode;
-    ThemeManager.instance.switchMode(_mode == ThemeMode.light);
   }
 
   _getUid() {
@@ -90,13 +79,69 @@ class _SettingsPageState extends State<SettingsPage> {
         .registerAnalyticsEvent(AnalyticsEvents.openVersionNotes);
     List<String> n = await UpdateQueries.instance.getVersionNotes(context);
     if (n.isNotEmpty) {
-      List<Text> content = List.generate(n.length, (c) => Text(n[c] + "\n"));
+      List<Text> content = List.generate(n.length, (c) => Text("${n[c]}\n"));
       Scrollbar child = Scrollbar(
           child: ListView(
               padding: const EdgeInsets.only(top: 8), children: content));
+      if (!mounted) return;
       ChoiceBottomSheet.callModalSheet(context, "versionNotes".tr(), child,
           height: 2);
     }
+  }
+
+  _openBSForChangingLanguages() {
+    Scrollbar child = Scrollbar(
+        child: ListView(
+      children: [
+        ListTile(
+            title: const Text("English"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('en'));
+              StorageUtils.saveData(StorageUtils.language, 'en');
+              Navigator.of(context).pop();
+            }),
+        ListTile(
+            title: const Text("Español"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('es'));
+              StorageUtils.saveData(StorageUtils.language, 'es');
+              Navigator.of(context).pop();
+            }),
+        ListTile(
+            title: const Text("Français"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('fr'));
+              StorageUtils.saveData(StorageUtils.language, 'fr');
+              Navigator.of(context).pop();
+            }),
+        ListTile(
+            title: const Text("Português"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('pt'));
+              StorageUtils.saveData(StorageUtils.language, 'pt');
+              Navigator.of(context).pop();
+            }),
+        ListTile(
+            title: const Text("Deutsch"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('de'));
+              StorageUtils.saveData(StorageUtils.language, 'de');
+              Navigator.of(context).pop();
+            }),
+      ],
+    ));
+    ChoiceBottomSheet.callModalSheet(context, "changeLanguages".tr(), child,
+        height: 2.5);
   }
 
   @override
@@ -123,16 +168,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       _disclaimerInfoOnBackup();
                     },
                   ),
-                  FaviconIcon(
-                    icon: StorageUtils.readData(StorageUtils.darkMode, false)
-                        ? Icons.wb_sunny
-                        : FontAwesomeIcons.moon,
-                    onTap: () async {
-                      await UpdateQueries.instance
-                          .registerAnalyticsEvent(AnalyticsEvents.changedTheme);
-                      _onThemeChanged();
-                    },
-                  ),
                 ],
               ),
               body: SizedBox(
@@ -154,19 +189,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SettingHeader(title: "versionNotes".tr()),
-        SettingTile(
-            title: Text("newThingsAdded".tr()),
-            icon: const Icon(Icons.star, size: 20, color: Colors.green),
-            onTap: () => _openBSForVersionNotes()),
-
-        /// BackUp Settings
-        BackUpSettings(
-          uid: _uid,
-          loading: (loading) => setState(() => _currentlyLoading = loading),
-        ),
-
-        /// Donate
+        /// SUpport
         SettingHeader(title: "support".tr(), subtitle: "donateCheers".tr()),
         SettingTile(
             title: Text("reviewLabel".tr()),
@@ -176,10 +199,10 @@ class _SettingsPageState extends State<SettingsPage> {
                     : "res/icons/googlePlay.png",
                 scale: 20),
             onTap: () async {
-              if (await canLaunch(Data.storeLink)) {
+              if (await canLaunchUrl(Uri.parse(Data.storeLink))) {
                 await UpdateQueries.instance
                     .registerAnalyticsEvent(AnalyticsEvents.writeReview);
-                await launch(Data.storeLink);
+                await launchUrl(Uri.parse(Data.storeLink));
               }
             }),
         SettingTile(
@@ -187,10 +210,42 @@ class _SettingsPageState extends State<SettingsPage> {
             icon: Image.asset("res/icons/github.png", scale: 20),
             onTap: () async {
               const url = "https://github.com/gabrielglbh/op-crew-planner";
-              if (await canLaunch(url)) {
-                await launch(url);
+              if (await canLaunchUrl(Uri.parse(url))) {
+                await launchUrl(Uri.parse(url));
               }
             }),
+
+        SettingHeader(title: "settings_misc".tr()),
+        SettingTile(
+            title: Text("newThingsAdded".tr()),
+            icon: const Icon(Icons.star, size: 20, color: Colors.green),
+            onTap: () => _openBSForVersionNotes()),
+        SettingTile(
+          title: Text("settings_toggle_theme".tr()),
+          icon: const Icon(Icons.lightbulb, color: Colors.blue),
+          onTap: () {
+            ChoiceBottomSheet.callModalSheet(
+                context, "settings_toggle_theme".tr(), const ChangeAppTheme(),
+                height: 3.5);
+          },
+        ),
+        SettingTile(
+            title: Text("changeLanguages".tr()),
+            icon: const Icon(Icons.translate, size: 20),
+            onTap: () => _openBSForChangingLanguages()),
+        SettingTile(
+          title: Text("settings_notifications_label".tr()),
+          icon: const Icon(Icons.notifications_active_rounded),
+          onTap: () {
+            AppSettings.openNotificationSettings();
+          },
+        ),
+
+        /// BackUp Settings
+        BackUpSettings(
+          uid: _uid,
+          loading: (loading) => setState(() => _currentlyLoading = loading),
+        ),
 
         /// Account Settings
         AccountSettings(uid: _uid),

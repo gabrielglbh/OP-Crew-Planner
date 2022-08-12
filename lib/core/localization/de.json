@@ -9,7 +9,7 @@
   "filterDialogTitle": "Wählen Sie einen Filter aus",
   "onDeleteMaxedUnit": "Sind Sie sicher, dass Sie diese Einheit löschen möchten?",
   "readyBubble": "Bereit",
-  "onDeleteTeam": "Sind Sie sicher, dass Sie löschen möchten",
+  "onDeleteTeam": "Sind Sie sicher, dass Sie löschen möchten ",
   "lastUpdated": "Letzte Aktualisierung: ",
   "emptyTeamList": "Sie haben keine Teams gespeichert",
   "emptyUnitList": "Sie haben keine Einheiten gespeichert",
@@ -100,7 +100,7 @@
 
   "titleSettings": "Einstellungen",
   "infoOnBackUp": "Alle Teams und alle Einheiten, die Sie speichern, werden auf dem Gerät gespeichert. Wenn also etwas mit der Anwendung passiert, wie Deinstallation oder Datenverlust, werden die Daten, die Sie gespeichert haben, stehen später möglicherweise nicht mehr zur Verfügung.\n\nHierfür können Sie ein Konto erstellen um eine Sicherungsdatei mit allen Ihren Teams und Einheiten in der Cloud zu erstellen. Damit sind alle Ihre Daten immer verfügbar, wenn Sie sich an einem anderen Gerät anmelden.",
-  "backUpTab": "Sicherung & Sprachen",
+  "backUpTab": "Sicherung",
   "lastBackup": "Letzte: ",
   "createBackup": "Sicherung erstellen",
   "downloadBackup": "Daten von der Sicherung herunterladen",
@@ -203,5 +203,13 @@
   "lostUpdates": "Internetverbindung nur für Updates *erforderlich*\n Wenn etwas schief läuft, starten Sie die App neu",
 
   "loadingLegends": "Herunterladen von Legenden... Das könnte eine Weile dauern.",
-  "tryAgain": "Erneut versuchen"
+  "tryAgain": "Erneut versuchen",
+
+  "settings_toggle_theme": "Thema ändern",
+  "settings_theme_system": "System",
+  "settings_theme_light": "Licht",
+  "settings_theme_dark": "Dunkelheit",
+  "settings_misc": "Verschiedenes",
+
+  "settings_notifications_label": "Aktivieren/Deaktivieren von Benachrichtigungen"
 }

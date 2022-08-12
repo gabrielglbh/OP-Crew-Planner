@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
+import 'package:optcteams/ui/utils.dart';
 
 class SettingHeader extends StatelessWidget {
   final String title;
@@ -43,9 +43,8 @@ class SettingHeader extends StatelessWidget {
             ),
           ),
           Divider(
-            color: StorageUtils.readData(StorageUtils.darkMode, false)
-                ? Colors.grey[350]
-                : Colors.grey[800],
+            color:
+                UI.isDarkTheme(context) ? Colors.grey[350] : Colors.grey[800],
             thickness: 0.2,
           )
         ],

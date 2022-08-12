@@ -100,7 +100,7 @@
 
   "titleSettings": "Paramètres",
   "infoOnBackUp": "Tous les équipes et unités qui sont sauvegardés sont stockés dans l'appareil. Par conséquent, si quelque chose arrive à l'application, comme la désinstallation ou la perte de données, les données que vous avez enregistrées peuvent ne pas être disponibles plus tard.\n\nPour ce faire, vous pouvez créer un compte afin de pouvoir créer une sauvegarde avec tous vos ordinateurs et lecteurs dans le nuage. Ainsi, toutes vos données seront toujours disponibles lorsque vous vous connecterez à un autre appareil.",
-  "backUpTab": "Sauvegarde & Langues",
+  "backUpTab": "Sauvegarde",
   "lastBackup": "Dernier: ",
   "createBackup": "Créer une sauvegarde",
   "downloadBackup": "Charger les données de la sauvegarde",
@@ -203,5 +203,13 @@
   "lostUpdates": "Connexion Internet *requise* uniquement pour les mises à jour.\nEn cas de problème, relancez l'application",
 
   "loadingLegends": "Téléchargement des légendes... Cela pourrait prendre un certain temps.",
-  "tryAgain": "Essayez à nouveau"
+  "tryAgain": "Essayez à nouveau",
+
+  "settings_toggle_theme" : "Changer de Thème",
+  "settings_theme_system" : "Système",
+  "settings_theme_light" : "Clair",
+  "settings_theme_dark" : "Sombre",
+  "settings_misc": "Divers",
+
+  "settings_notifications_label" : "Activer/Désactiver les notifications"
 }
