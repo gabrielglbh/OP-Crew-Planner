@@ -1,12 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:optcteams/core/firebase/ads.dart';
 import 'package:optcteams/core/firebase/queries/authentication.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/database/data.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
-import 'package:optcteams/ui/theme/theme_manager.dart';
+import 'package:optcteams/ui/pages/settings/widgets/change_theme.dart';
 import 'package:optcteams/ui/pages/settings/widgets/account_settings.dart';
 import 'package:optcteams/ui/pages/settings/widgets/back_up_settings.dart';
 import 'package:optcteams/ui/pages/settings/widgets/information_settings.dart';
@@ -28,13 +26,6 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   String? _uid;
   bool _currentlyLoading = false;
-  ThemeMode _mode = ThemeMode.light;
-
-  @override
-  void initState() {
-    _mode = ThemeManager.instance.themeMode;
-    super.initState();
-  }
 
   @override
   void didChangeDependencies() {
@@ -46,11 +37,6 @@ class _SettingsPageState extends State<SettingsPage> {
   void dispose() {
     AdManager.disposeInterstitial();
     super.dispose();
-  }
-
-  _onThemeChanged() async {
-    _mode = ThemeManager.instance.themeMode;
-    ThemeManager.instance.switchMode(_mode == ThemeMode.light);
   }
 
   _getUid() {
@@ -124,16 +110,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       _disclaimerInfoOnBackup();
                     },
                   ),
-                  FaviconIcon(
-                    icon: StorageUtils.readData(StorageUtils.darkMode, false)
-                        ? Icons.wb_sunny
-                        : FontAwesomeIcons.moon,
-                    onTap: () async {
-                      await UpdateQueries.instance
-                          .registerAnalyticsEvent(AnalyticsEvents.changedTheme);
-                      _onThemeChanged();
-                    },
-                  ),
                 ],
               ),
               body: SizedBox(
@@ -155,11 +131,20 @@ class _SettingsPageState extends State<SettingsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SettingHeader(title: "versionNotes".tr()),
+        SettingHeader(title: "settings_misc".tr()),
         SettingTile(
             title: Text("newThingsAdded".tr()),
             icon: const Icon(Icons.star, size: 20, color: Colors.green),
             onTap: () => _openBSForVersionNotes()),
+        SettingTile(
+          title: Text("settings_toggle_theme".tr()),
+          icon: const Icon(Icons.lightbulb, color: Colors.blue),
+          onTap: () {
+            ChoiceBottomSheet.callModalSheet(
+                context, "settings_toggle_theme".tr(), const ChangeAppTheme(),
+                height: 3.5);
+          },
+        ),
 
         /// BackUp Settings
         BackUpSettings(

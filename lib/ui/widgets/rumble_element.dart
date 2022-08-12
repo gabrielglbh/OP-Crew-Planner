@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:optcteams/core/database/models/rumble.dart';
 import 'package:optcteams/core/routing/arguments.dart';
 import 'package:optcteams/core/routing/page_names.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -85,9 +84,8 @@ class _RumbleElementState extends State<RumbleElement> {
             )),
         Divider(
             thickness: 0.1,
-            color: StorageUtils.readData(StorageUtils.darkMode, false)
-                ? Colors.grey[350]
-                : Colors.grey[800])
+            color:
+                UI.isDarkTheme(context) ? Colors.grey[350] : Colors.grey[800])
       ],
     );
   }

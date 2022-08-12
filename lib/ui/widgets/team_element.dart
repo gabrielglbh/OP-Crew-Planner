@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:optcteams/core/database/queries/team_queries.dart';
 import 'package:optcteams/core/routing/page_names.dart';
 import 'package:optcteams/ui/widgets/custom_alert.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/routing/arguments.dart';
 import 'package:optcteams/core/database/models/team.dart';
@@ -132,9 +131,8 @@ class _TeamElementState extends State<TeamElement> {
             )),
         Divider(
             thickness: 0.1,
-            color: StorageUtils.readData(StorageUtils.darkMode, false)
-                ? Colors.grey[350]
-                : Colors.grey[800])
+            color:
+                UI.isDarkTheme(context) ? Colors.grey[350] : Colors.grey[800])
       ],
     );
   }

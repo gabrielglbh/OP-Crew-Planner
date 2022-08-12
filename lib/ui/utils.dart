@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:optcteams/core/database/models/unit.dart';
+import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/widgets/custom_alert.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -25,6 +26,20 @@ class UI {
     } else {
       return -1;
     }
+  }
+
+  static bool isDarkTheme(BuildContext context) {
+    final theme = StorageUtils.readData(
+      StorageUtils.themeMode,
+      ThemeMode.light.name,
+    );
+    if (theme == ThemeMode.light.name) return false;
+    if (theme == ThemeMode.dark.name) return true;
+    if (theme == ThemeMode.system) {
+      if (Theme.of(context).brightness == Brightness.light) return false;
+      if (Theme.of(context).brightness == Brightness.dark) return true;
+    }
+    return false;
   }
 
   static void showDialogOnExit(BuildContext c) {

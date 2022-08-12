@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/database/models/unit.dart';
@@ -111,9 +110,8 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
             hintText: widget.hint,
             contentPadding: const EdgeInsets.all(15.0),
             prefixIcon: Icon(Icons.search,
-                color: StorageUtils.readData(StorageUtils.darkMode, false)
-                    ? Colors.grey[800]
-                    : Colors.white),
+                color:
+                    UI.isDarkTheme(context) ? Colors.grey[800] : Colors.white),
           ),
           onTap: () {
             setState(() {
@@ -191,10 +189,9 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                 gradient: gradient,
                 border: _type == type
                     ? Border.all(
-                        color:
-                            StorageUtils.readData(StorageUtils.darkMode, false)
-                                ? Colors.white
-                                : Colors.black,
+                        color: UI.isDarkTheme(context)
+                            ? Colors.white
+                            : Colors.black,
                         width: 2)
                     : null),
             child: Text(type, style: const TextStyle(color: Colors.white)),

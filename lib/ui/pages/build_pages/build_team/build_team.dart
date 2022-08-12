@@ -9,7 +9,6 @@ import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:optcteams/core/firebase/ads.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/ui/utils.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/core/database/models/ship.dart';
 import 'package:optcteams/core/database/models/skills.dart';
 import 'package:optcteams/core/database/models/team.dart';
@@ -309,9 +308,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
               padding: const EdgeInsets.only(bottom: 4, top: 2),
               child: _recentList()),
           Divider(
-              color: StorageUtils.readData(StorageUtils.darkMode, false)
-                  ? Colors.grey
-                  : Colors.black,
+              color: UI.isDarkTheme(context) ? Colors.grey : Colors.black,
               thickness: 1),
           Padding(
               padding: const EdgeInsets.only(bottom: 4, top: 4),
@@ -344,9 +341,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
       alignment: Alignment.center,
       child: Text(tab,
           style: TextStyle(
-              color: StorageUtils.readData(StorageUtils.darkMode, false)
-                  ? Colors.white
-                  : Colors.black87)),
+              color: UI.isDarkTheme(context) ? Colors.white : Colors.black87)),
     );
   }
 
@@ -462,12 +457,11 @@ class _BuildTeamPageState extends State<BuildTeamPage>
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(8.0)),
             border: Border.all(
-                color: StorageUtils.readData(StorageUtils.darkMode, false)
-                    ? Colors.white
-                    : Colors.grey[800]!),
+                color:
+                    UI.isDarkTheme(context) ? Colors.white : Colors.grey[800]!),
             color: _showSupports
                 ? Colors.green
-                : StorageUtils.readData(StorageUtils.darkMode, false)
+                : UI.isDarkTheme(context)
                     ? Colors.grey[800]
                     : Colors.white,
           ),
@@ -479,7 +473,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
                   style: TextStyle(
                       color: _showSupports
                           ? Colors.white
-                          : StorageUtils.readData(StorageUtils.darkMode, false)
+                          : UI.isDarkTheme(context)
                               ? Colors.white
                               : Colors.black87)),
             ),

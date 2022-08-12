@@ -5,7 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:optcteams/core/firebase/ads.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -321,7 +320,7 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
                   onTap: () => setState(() => _available = !_available),
                   color: _available
                       ? Colors.orange[400]
-                      : (StorageUtils.readData(StorageUtils.darkMode, false)
+                      : (UI.isDarkTheme(context)
                           ? Colors.grey[800]
                           : Colors.white),
                 ),
@@ -374,7 +373,7 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
                 },
                 color: _checks[index]
                     ? Colors.orange[400]
-                    : (StorageUtils.readData(StorageUtils.darkMode, false)
+                    : (UI.isDarkTheme(context)
                         ? Colors.grey[800]
                         : Colors.white),
               );

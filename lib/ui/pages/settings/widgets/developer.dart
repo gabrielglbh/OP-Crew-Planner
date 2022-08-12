@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -52,8 +51,7 @@ class DeveloperTile extends StatelessWidget {
                         TextSpan(
                             text: "bugsLabel".tr(),
                             style: TextStyle(
-                                color: (!StorageUtils.readData(
-                                        StorageUtils.darkMode, false)
+                                color: (!UI.isDarkTheme(context)
                                     ? Colors.black87
                                     : null),
                                 fontSize: 14)),

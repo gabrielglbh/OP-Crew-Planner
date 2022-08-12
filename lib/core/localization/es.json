@@ -203,5 +203,11 @@
   "lostUpdates": "Se requiere conexión a Internet solo para las actualizaciones.\nSi algo va mal, reinicia la aplicación.",
 
   "loadingLegends": "Descargando leyendas... Esto puede tardar un rato.",
-  "tryAgain": "Prueba de nuevo"
+  "tryAgain": "Prueba de nuevo",
+
+  "settings_toggle_theme": "Cambiar Tema",
+  "settings_theme_system": "Sistema",
+  "settings_theme_light": "Claro",
+  "settings_theme_dark": "Oscuro",
+  "settings_misc": "Varios"
 }

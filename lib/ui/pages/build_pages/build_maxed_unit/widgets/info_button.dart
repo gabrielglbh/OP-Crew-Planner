@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
+import 'package:optcteams/ui/utils.dart';
 
 class InfoButton extends StatelessWidget {
   final Function() onTap;
@@ -16,9 +16,7 @@ class InfoButton extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(12.0)),
               border: Border.all(color: Colors.grey[600]!, width: 1),
-              color: StorageUtils.readData(StorageUtils.darkMode, false)
-                  ? Colors.grey[800]
-                  : Colors.white),
+              color: UI.isDarkTheme(context) ? Colors.grey[800] : Colors.white),
           child: Align(
             alignment: Alignment.center,
             child: Text("Info",

@@ -8,7 +8,6 @@ import 'package:optcteams/core/database/queries/rumble_team_queries.dart';
 import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:optcteams/core/firebase/ads.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -266,9 +265,7 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage>
               padding: const EdgeInsets.only(bottom: 4, top: 2),
               child: _recentList()),
           Divider(
-              color: StorageUtils.readData(StorageUtils.darkMode, false)
-                  ? Colors.grey
-                  : Colors.black,
+              color: UI.isDarkTheme(context) ? Colors.grey : Colors.black,
               thickness: 1),
           Padding(
               padding: const EdgeInsets.only(bottom: 4, top: 4),
@@ -300,9 +297,7 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage>
       alignment: Alignment.center,
       child: Text(tab,
           style: TextStyle(
-              color: StorageUtils.readData(StorageUtils.darkMode, false)
-                  ? Colors.white
-                  : Colors.black87)),
+              color: UI.isDarkTheme(context) ? Colors.white : Colors.black87)),
     );
   }
 

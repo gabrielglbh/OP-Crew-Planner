@@ -19,6 +19,17 @@ void main() async {
   }
   await StorageUtils.getInstance();
   await EasyLocalization.ensureInitialized();
+
+  /// Breaking change with 4.2.0: if themeMode in shared preferences is bool
+  /// then change it to the actual name of [ThemeMode], as [ThemeMode.system]
+  /// is introduced
+  var theme =
+      StorageUtils.readData(StorageUtils.themeMode, ThemeMode.light.name);
+  if (theme is bool) {
+    StorageUtils.saveData(StorageUtils.themeMode,
+        theme ? ThemeMode.dark.name : ThemeMode.light.name);
+  }
+
   runApp(const SetUpApp());
 }
 

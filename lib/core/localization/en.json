@@ -203,5 +203,11 @@
   "lostUpdates": "Internet connection *required* for updates only\nIf anything goes wrong relaunch the app",
 
   "loadingLegends": "Downloading legends... This might take a while.",
-  "tryAgain": "Try Again"
+  "tryAgain": "Try Again",
+
+  "settings_toggle_theme": "Change Theme",
+  "settings_theme_system": "System",
+  "settings_theme_light": "Light",
+  "settings_theme_dark": "Dark",
+  "settings_misc": "Miscellaneous"
 }

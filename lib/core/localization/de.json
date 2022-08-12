@@ -203,5 +203,11 @@
   "lostUpdates": "Internetverbindung nur für Updates *erforderlich*\n Wenn etwas schief läuft, starten Sie die App neu",
 
   "loadingLegends": "Herunterladen von Legenden... Das könnte eine Weile dauern.",
-  "tryAgain": "Erneut versuchen"
+  "tryAgain": "Erneut versuchen",
+
+  "settings_toggle_theme": "Thema ändern",
+  "settings_theme_system": "System",
+  "settings_theme_light": "Licht",
+  "settings_theme_dark": "Dunkelheit",
+  "settings_misc": "Verschiedenes"
 }

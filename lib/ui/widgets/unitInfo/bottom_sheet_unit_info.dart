@@ -4,7 +4,6 @@ import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:optcteams/core/firebase/ads.dart';
 import 'package:optcteams/core/firebase/queries/backup_queries.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/core/database/models/unit.dart';
 import 'package:optcteams/core/database/models/unit_info.dart';
@@ -327,9 +326,7 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
           UnitInfoUtils.instance.onTappedOnExternalLink(true, uid: widget.uid);
         }
       },
-      color: StorageUtils.readData(StorageUtils.darkMode, false)
-          ? Colors.grey[800]
-          : Colors.grey[300],
+      color: UI.isDarkTheme(context) ? Colors.grey[800] : Colors.grey[300],
       child: Image.asset("res/info/optcdb.png"),
     );
   }
@@ -347,9 +344,7 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
             UnitInfoUtils.instance.onTappedOnExternalLink(false);
           }
         },
-        color: StorageUtils.readData(StorageUtils.darkMode, false)
-            ? Colors.grey[800]
-            : Colors.grey[300],
+        color: UI.isDarkTheme(context) ? Colors.grey[800] : Colors.grey[300],
         child: Image.asset("res/info/pvpdb.png", scale: 9));
   }
 
@@ -375,7 +370,7 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
         },
         color: _offline
             ? Colors.green
-            : StorageUtils.readData(StorageUtils.darkMode, false)
+            : UI.isDarkTheme(context)
                 ? Colors.grey[800]
                 : Colors.grey[300],
         child: Icon(_offline ? Icons.check : Icons.download_rounded,
@@ -410,9 +405,7 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
                 });
           }
         },
-        color: StorageUtils.readData(StorageUtils.darkMode, false)
-            ? Colors.grey[800]
-            : Colors.grey[300],
+        color: UI.isDarkTheme(context) ? Colors.grey[800] : Colors.grey[300],
         child: const Icon(Icons.image_rounded));
   }
 }

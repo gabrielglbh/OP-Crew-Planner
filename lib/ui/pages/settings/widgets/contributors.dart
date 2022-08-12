@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:optcteams/core/preferences/shared_preferences.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -25,39 +25,35 @@ class ContributorsTile extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.only(top: 8),
         children: [
-          _richText("contributorsInspiration".tr(), _optcDBLink, _optcDBUrl,
-              "and".tr(), _nakamaLink, _nakamaUrl),
-          _richText("contributorsIcons".tr(), "u/ShokugekiNoZeff", "",
+          _richText(context, "contributorsInspiration".tr(), _optcDBLink,
+              _optcDBUrl, "and".tr(), _nakamaLink, _nakamaUrl),
+          _richText(context, "contributorsIcons".tr(), "u/ShokugekiNoZeff", "",
               "contributorsDrive".tr(), _graphicsLink, _graphicsUrl),
           Text("${"translators".tr()}@LenweGLoc, u/EnishiY\n",
               style: const TextStyle(fontSize: 14)),
-          _richText("contributorsFlaticon".tr(), _freepikLink, _freepikUrl,
-              "from".tr(), _flaticonLink, _flaticonUrl),
+          _richText(context, "contributorsFlaticon".tr(), _freepikLink,
+              _freepikUrl, "from".tr(), _flaticonLink, _flaticonUrl),
         ],
       ),
     );
   }
 
-  RichText _richText(String firstText, String firstLink, String firstUrl,
-      String secondText, String secondLink, String secondUrl) {
+  RichText _richText(BuildContext context, String firstText, String firstLink,
+      String firstUrl, String secondText, String secondLink, String secondUrl) {
     return RichText(
       text: TextSpan(
         children: [
           TextSpan(
               text: firstText,
               style: TextStyle(
-                  color: (!StorageUtils.readData(StorageUtils.darkMode, false)
-                      ? Colors.black87
-                      : null),
+                  color: (!UI.isDarkTheme(context) ? Colors.black87 : null),
                   fontSize: 14)),
           TextSpan(
             text: firstLink,
             style: TextStyle(
                 color: firstUrl != ""
                     ? Colors.orange[400]
-                    : (!StorageUtils.readData(StorageUtils.darkMode, false)
-                        ? Colors.black87
-                        : null),
+                    : (!UI.isDarkTheme(context) ? Colors.black87 : null),
                 decoration: firstUrl != "" ? TextDecoration.underline : null,
                 fontSize: 14),
             recognizer: TapGestureRecognizer()
@@ -68,9 +64,7 @@ class ContributorsTile extends StatelessWidget {
           TextSpan(
               text: secondText,
               style: TextStyle(
-                  color: (!StorageUtils.readData(StorageUtils.darkMode, false)
-                      ? Colors.black87
-                      : null),
+                  color: (!UI.isDarkTheme(context) ? Colors.black87 : null),
                   fontSize: 14)),
           TextSpan(
             text: secondLink,
