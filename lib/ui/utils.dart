@@ -35,9 +35,10 @@ class UI {
     );
     if (theme == ThemeMode.light.name) return false;
     if (theme == ThemeMode.dark.name) return true;
-    if (theme == ThemeMode.system) {
-      if (Theme.of(context).brightness == Brightness.light) return false;
-      if (Theme.of(context).brightness == Brightness.dark) return true;
+    if (theme == ThemeMode.system.name) {
+      final brightness = MediaQuery.of(context).platformBrightness;
+      if (brightness == Brightness.light) return false;
+      if (brightness == Brightness.dark) return true;
     }
     return false;
   }
