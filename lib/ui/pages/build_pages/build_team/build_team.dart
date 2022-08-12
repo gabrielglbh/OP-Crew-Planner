@@ -459,11 +459,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
             border: Border.all(
                 color:
                     UI.isDarkTheme(context) ? Colors.white : Colors.grey[800]!),
-            color: _showSupports
-                ? Colors.green
-                : UI.isDarkTheme(context)
-                    ? Colors.grey[800]
-                    : Colors.white,
+            color: _showSupports ? Colors.green : Colors.transparent,
           ),
           child: FittedBox(
             fit: BoxFit.contain,

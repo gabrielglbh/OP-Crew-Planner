@@ -318,11 +318,7 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
               children: [
                 ReadyButton(
                   onTap: () => setState(() => _available = !_available),
-                  color: _available
-                      ? Colors.orange[400]
-                      : (UI.isDarkTheme(context)
-                          ? Colors.grey[800]
-                          : Colors.white),
+                  color: _available ? Colors.orange[400] : Colors.transparent,
                 ),
                 Visibility(
                   visible: _updateUnit.id != "noimage",
@@ -371,11 +367,7 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
                     UI.showSnackBar(context, "errOnChangeAttr".tr());
                   }
                 },
-                color: _checks[index]
-                    ? Colors.orange[400]
-                    : (UI.isDarkTheme(context)
-                        ? Colors.grey[800]
-                        : Colors.white),
+                color: _checks[index] ? Colors.orange[400] : Colors.transparent,
               );
             }));
   }
