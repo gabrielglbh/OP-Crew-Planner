@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,11 @@ void main() async {
   }
   await StorageUtils.getInstance();
   await EasyLocalization.ensureInitialized();
+  await FlutterLocalNotificationsPlugin().initialize(
+    const InitializationSettings(
+      android: AndroidInitializationSettings('splashscreen'),
+    ),
+  );
 
   /// Breaking change with 4.2.0: if themeMode in shared preferences is bool
   /// then change it to the actual name of [ThemeMode], as [ThemeMode.system]

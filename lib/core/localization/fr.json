@@ -100,7 +100,7 @@
 
   "titleSettings": "Paramètres",
   "infoOnBackUp": "Tous les équipes et unités qui sont sauvegardés sont stockés dans l'appareil. Par conséquent, si quelque chose arrive à l'application, comme la désinstallation ou la perte de données, les données que vous avez enregistrées peuvent ne pas être disponibles plus tard.\n\nPour ce faire, vous pouvez créer un compte afin de pouvoir créer une sauvegarde avec tous vos ordinateurs et lecteurs dans le nuage. Ainsi, toutes vos données seront toujours disponibles lorsque vous vous connecterez à un autre appareil.",
-  "backUpTab": "Sauvegarde & Langues",
+  "backUpTab": "Sauvegarde",
   "lastBackup": "Dernier: ",
   "createBackup": "Créer une sauvegarde",
   "downloadBackup": "Charger les données de la sauvegarde",
@@ -209,5 +209,7 @@
   "settings_theme_system" : "Système",
   "settings_theme_light" : "Clair",
   "settings_theme_dark" : "Sombre",
-  "settings_misc": "Divers"
+  "settings_misc": "Divers",
+
+  "settings_notifications_label" : "Activer/Désactiver les notifications"
 }

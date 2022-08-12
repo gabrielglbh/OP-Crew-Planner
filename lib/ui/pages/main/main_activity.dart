@@ -4,6 +4,7 @@ import 'package:optcteams/core/database/models/rumble.dart';
 import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:optcteams/core/database/queries/util_queries.dart';
 import 'package:optcteams/core/firebase/ads.dart';
+import 'package:optcteams/core/firebase/messaging.dart';
 import 'package:optcteams/core/firebase/queries/authentication.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/routing/page_names.dart';
@@ -64,6 +65,7 @@ class _NavigationPageState extends State<NavigationPage>
         onLoaded: _onBannerLoaded, onFailed: _onBannerFailedOrExit);
     _banner = AdManager.showBanner();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await MessagingHandler.handler(context);
       _recentUnitsLength = await _getRecentUnits();
     });
     super.initState();
