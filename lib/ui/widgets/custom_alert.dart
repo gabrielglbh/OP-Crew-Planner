@@ -21,7 +21,7 @@ class UIAlert extends StatefulWidget {
       : super(key: key);
 
   @override
-  _UIAlertState createState() => _UIAlertState();
+  State<UIAlert> createState() => _UIAlertState();
 }
 
 class _UIAlertState extends State<UIAlert> {

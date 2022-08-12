@@ -30,7 +30,7 @@ class BuildRumbleTeamPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BuildRumbleTeamPageState createState() => _BuildRumbleTeamPageState();
+  State<BuildRumbleTeamPage> createState() => _BuildRumbleTeamPageState();
 }
 
 class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage>
@@ -125,10 +125,10 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage>
   _onBannerFailedOrExit() => setState(() => _bannerIsLoaded = false);
 
   Future<bool> _onWillPop({bool fromLeading = false}) async {
-    bool? _isFocused = ((_focus?.hasFocus ?? false) ||
+    bool? isFocused = ((_focus?.hasFocus ?? false) ||
         (_nameFocus?.hasFocus ?? false) ||
         (_descFocus?.hasFocus ?? false));
-    if (_isFocused) {
+    if (isFocused) {
       _focus?.unfocus();
       _nameFocus?.unfocus();
       _descFocus?.unfocus();
@@ -433,12 +433,16 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage>
     return DragTarget(
       builder: (context, List<int?> data, b) {
         return Draggable(
+          feedback: FittedBox(child: UI.placeholderImageWhileLoading(img)),
+          childWhenDragging: Container(),
+          data: index,
           child: GestureDetector(
             onTap: () async {
               if (unit.id != "noimage") {
                 await UnitQueries.instance.updateHistoryUnit(unit);
                 await UpdateQueries.instance.registerAnalyticsEvent(
                     AnalyticsEvents.openUnitDataFromUnitOnRumbleTeam);
+                if (!mounted) return;
                 await AdditionalUnitInfo.callModalSheet(context, unit.id);
               }
             },
@@ -462,9 +466,6 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage>
                   FittedBox(child: UI.placeholderImageWhileLoadingUnit(unit)),
             ),
           ),
-          feedback: FittedBox(child: UI.placeholderImageWhileLoading(img)),
-          childWhenDragging: Container(),
-          data: index,
         );
       },
       onAccept: (int? data) {
@@ -514,6 +515,7 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage>
               });
               await UpdateQueries.instance
                   .registerAnalyticsEvent(AnalyticsEvents.resetRumbleTeam);
+              if (!mounted) return;
               Navigator.of(dialogContext).pop();
             },
           );
@@ -558,6 +560,7 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage>
               if (isSuccessful) {
                 await UpdateQueries.instance
                     .registerAnalyticsEvent(AnalyticsEvents.updatedRumbleTeam);
+                if (!mounted) return;
                 Navigator.of(context).pop();
               } else {
                 UI.showSnackBar(context, "errDupTeam".tr());
@@ -581,6 +584,7 @@ class _BuildRumbleTeamPageState extends State<BuildRumbleTeamPage>
             if (isSuccessful) {
               await UpdateQueries.instance
                   .registerAnalyticsEvent(AnalyticsEvents.createdRumbleTeam);
+              if (!mounted) return;
               Navigator.of(context).pop();
             } else {
               UI.showSnackBar(context, "errDupTeam".tr());

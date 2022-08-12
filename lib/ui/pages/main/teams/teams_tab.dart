@@ -17,7 +17,7 @@ class TeamsTab extends StatefulWidget {
   const TeamsTab({Key? key, required this.focus}) : super(key: key);
 
   @override
-  _TeamsTabState createState() => _TeamsTabState();
+  State<TeamsTab> createState() => _TeamsTabState();
 }
 
 class _TeamsTabState extends State<TeamsTab>
@@ -90,6 +90,7 @@ class _TeamsTabState extends State<TeamsTab>
                           AnalyticsEvents.teamMaxFilter);
                       setState(() => _showMaxed = !_showMaxed);
                       StorageUtils.saveData(StorageUtils.maxFilter, _showMaxed);
+                      if (!mounted) return;
                       _addLoadingEvent(context);
                     },
                   )

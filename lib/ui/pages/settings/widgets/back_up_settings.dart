@@ -22,7 +22,7 @@ class BackUpSettings extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BackUpSettingsState createState() => _BackUpSettingsState();
+  State<BackUpSettings> createState() => _BackUpSettingsState();
 }
 
 class _BackUpSettingsState extends State<BackUpSettings> {

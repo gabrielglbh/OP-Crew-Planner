@@ -65,9 +65,9 @@ class AdManager {
       return Container(
         alignment: Alignment.center,
         margin: const EdgeInsets.only(top: 8, bottom: 8),
-        child: AdWidget(ad: _bannerAd!),
         width: _bannerAd?.size.width.toDouble(),
         height: _bannerAd?.size.height.toDouble(),
+        child: AdWidget(ad: _bannerAd!),
       );
     } else {
       return Container();

@@ -19,7 +19,7 @@ class AdditionalUnitInfo extends StatefulWidget {
   const AdditionalUnitInfo({Key? key, required this.uid}) : super(key: key);
 
   @override
-  _AdditionalUnitInfoState createState() => _AdditionalUnitInfoState();
+  State<AdditionalUnitInfo> createState() => _AdditionalUnitInfoState();
 
   static Future<void> callModalSheet(BuildContext context, String uid,
       {Function? onClose}) async {
@@ -59,7 +59,7 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
 
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       AdManager.createBanner(
           onLoaded: _onBannerLoaded, onFailed: _onBannerFailedOrExit);
       AdManager.createInterstitial(

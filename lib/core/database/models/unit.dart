@@ -146,17 +146,17 @@ class Unit {
     const String res = "res/units/";
     switch (id) {
       case 'noimage':
-        return res + 'noimage.png';
+        return '${res}noimage.png';
       case 'str_none':
-        return res + 'str_none.png';
+        return '${res}str_none.png';
       case 'dex_none':
-        return res + 'dex_none.png';
+        return '${res}dex_none.png';
       case 'qck_none':
-        return res + 'qck_none.png';
+        return '${res}qck_none.png';
       case 'psy_none':
-        return res + 'psy_none.png';
+        return '${res}psy_none.png';
       case 'int_none':
-        return res + 'int_none.png';
+        return '${res}int_none.png';
       default:
         return UI.getThumbnail(id);
     }

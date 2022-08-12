@@ -30,7 +30,7 @@ class BuildMaxedUnitPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BuildMaxedUnitPageState createState() => _BuildMaxedUnitPageState();
+  State<BuildMaxedUnitPage> createState() => _BuildMaxedUnitPageState();
 }
 
 class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
@@ -105,6 +105,7 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
         _checks[9] ? 1 : 0,
         _checks[10] ? 1 : 0);
     UnitQueries.instance.updateUnit(_updateUnit).then((isSuccessful) async {
+      final navigator = Navigator.of(context);
       if (isSuccessful) {
         if (widget.update) {
           await UpdateQueries.instance
@@ -113,7 +114,7 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
           await UpdateQueries.instance
               .registerAnalyticsEvent(AnalyticsEvents.createdUnitToBeMaxed);
         }
-        Navigator.of(context).pop();
+        navigator.pop();
       }
     });
   }
@@ -128,8 +129,8 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
   }
 
   Future<bool> _onWillPop({bool fromLeading = false}) async {
-    bool? _isFocused = _focus?.hasFocus;
-    if (_isFocused != null && _isFocused) {
+    bool? isFocused = _focus?.hasFocus;
+    if (isFocused != null && isFocused) {
       _focus?.unfocus();
       return false;
     } else {
@@ -301,6 +302,7 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
                 if (_updateUnit.id != "noimage") {
                   await UpdateQueries.instance.registerAnalyticsEvent(
                       AnalyticsEvents.openUnitDataFromUnit);
+                  if (!mounted) return;
                   await AdditionalUnitInfo.callModalSheet(context, _id);
                 }
               },
@@ -328,6 +330,7 @@ class _BuildMaxedUnitPageState extends State<BuildMaxedUnitPage> {
                   child: InfoButton(onTap: () async {
                     await UpdateQueries.instance.registerAnalyticsEvent(
                         AnalyticsEvents.openUnitDataFromUnitInfoButton);
+                    if (!mounted) return;
                     await AdditionalUnitInfo.callModalSheet(context, _id);
                   }),
                 )

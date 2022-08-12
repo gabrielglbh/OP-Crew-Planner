@@ -26,7 +26,7 @@ class DeveloperTile extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              launch("https://github.com/gabrielglbh");
+              launchUrl(Uri.parse("https://github.com/gabrielglbh"));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -65,17 +65,17 @@ class DeveloperTile extends StatelessWidget {
                               fontSize: 14),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () async {
-                              final Uri _emailLaunchUri = Uri(
+                              final Uri emailLaunchUri = Uri(
                                   scheme: 'mailto',
                                   path: 'devgglop@gmail.com',
                                   queryParameters: {
                                     'subject': "mailSubject".tr(),
                                   });
-                              String url = _emailLaunchUri
+                              String url = emailLaunchUri
                                   .toString()
                                   .replaceAll("+", "%20");
-                              if (await canLaunch(url)) {
-                                await launch(url);
+                              if (await canLaunchUrl(Uri.parse(url))) {
+                                await launchUrl(Uri.parse(url));
                               } else {
                                 UI.showSnackBar(context, "errOnLaunch".tr());
                               }

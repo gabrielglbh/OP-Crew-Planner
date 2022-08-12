@@ -35,7 +35,7 @@ class CustomSearchBar extends StatefulWidget {
       : super(key: key);
 
   @override
-  _CustomSearchBarState createState() => _CustomSearchBarState();
+  State<CustomSearchBar> createState() => _CustomSearchBarState();
 }
 
 class _CustomSearchBarState extends State<CustomSearchBar> {

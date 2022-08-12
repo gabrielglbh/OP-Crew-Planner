@@ -24,7 +24,7 @@ class TeamElement extends StatefulWidget {
       : super(key: key);
 
   @override
-  _TeamElementState createState() => _TeamElementState();
+  State<TeamElement> createState() => _TeamElementState();
 }
 
 class _TeamElementState extends State<TeamElement> {
@@ -155,7 +155,7 @@ class _TeamElementState extends State<TeamElement> {
         builder: (context) {
           dialogContext = context;
           return UIAlert(
-            title: "onDeleteTeam".tr() + widget.team.name + "?",
+            title: "${"onDeleteTeam".tr()}${widget.team.name}?",
             acceptButton: "deleteLabel".tr(),
             dialogContext: dialogContext,
             onAccepted: () {

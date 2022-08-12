@@ -56,15 +56,15 @@ class AuthQueries {
   }
 
   Future<User?> handleGoogleSignIn(BuildContext context) async {
-    GoogleSignIn _googleSignIn = GoogleSignIn();
+    GoogleSignIn googleSignIn = GoogleSignIn();
     User? user;
 
     try {
-      bool isSignedIn = await _googleSignIn.isSignedIn();
+      bool isSignedIn = await googleSignIn.isSignedIn();
 
-      if (isSignedIn) _googleSignIn.signOut();
+      if (isSignedIn) googleSignIn.signOut();
 
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser != null) {
         final GoogleSignInAuthentication googleAuth =
             await googleUser.authentication;
@@ -78,7 +78,7 @@ class AuthQueries {
         return user;
       }
     } catch (err) {
-      UI.showSnackBar(context, err.toString() + " " + "errTryAgain".tr());
+      UI.showSnackBar(context, "$err ${"errTryAgain".tr()}");
     }
     return null;
   }
@@ -122,8 +122,8 @@ class AuthQueries {
   }
 
   Future<void> closeGoogleSession() async {
-    GoogleSignIn _googleSignIn = GoogleSignIn();
-    await _googleSignIn.signOut();
+    GoogleSignIn googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut();
     await UpdateQueries.instance
         .registerAnalyticsEvent(AnalyticsEvents.closeSessionGoogle);
   }
@@ -150,6 +150,7 @@ class AuthQueries {
               .registerAnalyticsEvent(AnalyticsEvents.changePassword);
           return true;
         } else {
+          // ignore: use_build_context_synchronously
           UI.showSnackBar(context, "errChangePassword".tr());
           return false;
         }
@@ -182,6 +183,7 @@ class AuthQueries {
               .registerAnalyticsEvent(AnalyticsEvents.deleteAccountPwd);
           return true;
         } else {
+          // ignore: use_build_context_synchronously
           UI.showSnackBar(context, "errDeleteAccount".tr());
           return false;
         }
@@ -201,13 +203,13 @@ class AuthQueries {
       // Checks provider ID. If user is logged in with Google, then proceed
       if (user != null && user.providerData[0].providerId == "google.com") {
         // Signs In again before operation
-        GoogleSignIn _googleSignIn = GoogleSignIn();
-        bool isSignedIn = await _googleSignIn.isSignedIn();
+        GoogleSignIn googleSignIn = GoogleSignIn();
+        bool isSignedIn = await googleSignIn.isSignedIn();
 
         if (isSignedIn) {
           // If user is signed in (CURRENT USER == GOOGLE USER):
           // Sign in again and get the credential to validate
-          final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+          final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
           if (googleUser != null) {
             final GoogleSignInAuthentication googleAuth =
                 await googleUser.authentication;
@@ -230,6 +232,7 @@ class AuthQueries {
                   .registerAnalyticsEvent(AnalyticsEvents.deleteAccountGoogle);
               return true;
             } else {
+              // ignore: use_build_context_synchronously
               UI.showSnackBar(context, "errDeleteAccount".tr());
               return false;
             }

@@ -14,7 +14,7 @@ class AccountSettings extends StatefulWidget {
   const AccountSettings({Key? key, required this.uid}) : super(key: key);
 
   @override
-  _AccountSettingsState createState() => _AccountSettingsState();
+  State<AccountSettings> createState() => _AccountSettingsState();
 }
 
 class _AccountSettingsState extends State<AccountSettings> {
