@@ -663,7 +663,7 @@ class _BuildTeamPageState extends State<BuildTeamPage>
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: Container(
-              width: _widthSkillProgress,
+              width: _widthSkillProgress < 0 ? 0 : _widthSkillProgress,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                 border: Border.all(color: Colors.grey[600]!, width: 1),
