@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:optcteams/core/firebase/ads.dart';
 import 'package:optcteams/core/firebase/queries/authentication.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/database/data.dart';
+import 'package:optcteams/core/preferences/shared_preferences.dart';
+import 'package:optcteams/main.dart';
 import 'package:optcteams/ui/pages/settings/widgets/change_theme.dart';
 import 'package:optcteams/ui/pages/settings/widgets/account_settings.dart';
 import 'package:optcteams/ui/pages/settings/widgets/back_up_settings.dart';
@@ -86,6 +89,61 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
+  _openBSForChangingLanguages() {
+    Scrollbar child = Scrollbar(
+        child: ListView(
+      children: [
+        ListTile(
+            title: const Text("English"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('en'));
+              StorageUtils.saveData(StorageUtils.language, 'en');
+              Navigator.of(context).pop();
+            }),
+        ListTile(
+            title: const Text("Español"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('es'));
+              StorageUtils.saveData(StorageUtils.language, 'es');
+              Navigator.of(context).pop();
+            }),
+        ListTile(
+            title: const Text("Français"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('fr'));
+              StorageUtils.saveData(StorageUtils.language, 'fr');
+              Navigator.of(context).pop();
+            }),
+        ListTile(
+            title: const Text("Português"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('pt'));
+              StorageUtils.saveData(StorageUtils.language, 'pt');
+              Navigator.of(context).pop();
+            }),
+        ListTile(
+            title: const Text("Deutsch"),
+            onTap: () {
+              UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.changeLanguage);
+              OPCrewPlanner.setLocale(context, const Locale('de'));
+              StorageUtils.saveData(StorageUtils.language, 'de');
+              Navigator.of(context).pop();
+            }),
+      ],
+    ));
+    ChoiceBottomSheet.callModalSheet(context, "changeLanguages".tr(), child,
+        height: 2.5);
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -131,28 +189,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SettingHeader(title: "settings_misc".tr()),
-        SettingTile(
-            title: Text("newThingsAdded".tr()),
-            icon: const Icon(Icons.star, size: 20, color: Colors.green),
-            onTap: () => _openBSForVersionNotes()),
-        SettingTile(
-          title: Text("settings_toggle_theme".tr()),
-          icon: const Icon(Icons.lightbulb, color: Colors.blue),
-          onTap: () {
-            ChoiceBottomSheet.callModalSheet(
-                context, "settings_toggle_theme".tr(), const ChangeAppTheme(),
-                height: 3.5);
-          },
-        ),
-
-        /// BackUp Settings
-        BackUpSettings(
-          uid: _uid,
-          loading: (loading) => setState(() => _currentlyLoading = loading),
-        ),
-
-        /// Donate
+        /// SUpport
         SettingHeader(title: "support".tr(), subtitle: "donateCheers".tr()),
         SettingTile(
             title: Text("reviewLabel".tr()),
@@ -177,6 +214,38 @@ class _SettingsPageState extends State<SettingsPage> {
                 await launchUrl(Uri.parse(url));
               }
             }),
+
+        SettingHeader(title: "settings_misc".tr()),
+        SettingTile(
+            title: Text("newThingsAdded".tr()),
+            icon: const Icon(Icons.star, size: 20, color: Colors.green),
+            onTap: () => _openBSForVersionNotes()),
+        SettingTile(
+          title: Text("settings_toggle_theme".tr()),
+          icon: const Icon(Icons.lightbulb, color: Colors.blue),
+          onTap: () {
+            ChoiceBottomSheet.callModalSheet(
+                context, "settings_toggle_theme".tr(), const ChangeAppTheme(),
+                height: 3.5);
+          },
+        ),
+        SettingTile(
+            title: Text("changeLanguages".tr()),
+            icon: const Icon(Icons.translate, size: 20),
+            onTap: () => _openBSForChangingLanguages()),
+        SettingTile(
+          title: Text("settings_notifications_label".tr()),
+          icon: const Icon(Icons.notifications_active_rounded),
+          onTap: () {
+            AppSettings.openNotificationSettings();
+          },
+        ),
+
+        /// BackUp Settings
+        BackUpSettings(
+          uid: _uid,
+          loading: (loading) => setState(() => _currentlyLoading = loading),
+        ),
 
         /// Account Settings
         AccountSettings(uid: _uid),

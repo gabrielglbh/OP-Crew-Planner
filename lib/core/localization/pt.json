@@ -100,7 +100,7 @@
 
   "titleSettings": "Configuração",
   "infoOnBackUp": "Todos os times e todas as unidades que você salva são armazenados no dispositivo. Assim, se algo ocorrer ao app, como desinstalação ou perda de dados, os dados que você tem salvo podem não estar disponíveis mais tarde.\n\nPara se prevenir, você pode criar uma conta e criar um arquivo de recuperação para todos os seus times e unidades na nuvem. Com isso, todos os seus dados estarão disponíveis sempre que entrar em outro dispositivo.",
-  "backUpTab": "Ponto recuperação & Idiomas",
+  "backUpTab": "Ponto recuperação",
   "lastBackup": "Último: ",
   "createBackup": "Criar recuperação",
   "downloadBackup": "Baixar dados da recuperação",
@@ -209,5 +209,7 @@
   "settings_theme_system" : "Sitema",
   "settings_theme_light" : "Leve",
   "settings_theme_dark" : "Sombrio",
-  "settings_misc": "Diversos"
+  "settings_misc": "Diversos",
+
+  "settings_notifications_label": "Habilitar/Desabilitar Notificações"
 }

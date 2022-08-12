@@ -100,7 +100,7 @@
 
   "titleSettings": "Ajustes",
   "infoOnBackUp": "Todos los equipos y todas las unidades que se guardan se almacenan en el dispositivo. Por lo tanto, si algo le sucede a la aplicación, como la desinstalación o pérdida de datos, es posible que los datos que hayas guardado no estén disponibles más adelante.\n\nPara ello, puedes crear una cuenta para poder crear una copia de seguridad con todos tus equipos y unidades en la nube. Con esto, todos tus datos estarán disponibles siempre cuando inicies sesión en otro dispositivo.",
-  "backUpTab": "Copia de Seguridad & Idiomas",
+  "backUpTab": "Copia de Seguridad",
   "lastBackup": "Última: ",
   "createBackup": "Crear Copia de Seguridad",
   "downloadBackup": "Descargar Copia de Seguridad",
@@ -209,5 +209,7 @@
   "settings_theme_system": "Sistema",
   "settings_theme_light": "Claro",
   "settings_theme_dark": "Oscuro",
-  "settings_misc": "Varios"
+  "settings_misc": "Varios",
+
+  "settings_notifications_label": "Activar/Desactivar Notificaciones"
 }
