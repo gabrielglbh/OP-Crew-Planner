@@ -2,26 +2,22 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/ui/utils.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class UnitInfoUtils {
   static UnitInfoUtils instance = UnitInfoUtils();
 
-  Future<void> onTappedOnExternalLink(bool optcdb, {String? uid}) async {
+  Future<void> onTappedOnExternalLink(BuildContext context, bool optcdb,
+      {String? uid}) async {
     if (optcdb) {
       String url = "https://optc-db.github.io/characters/#/view/$uid";
-      if (await canLaunchUrl(Uri.parse(url))) {
-        await UpdateQueries.instance
-            .registerAnalyticsEvent(AnalyticsEvents.redirectToOPTCDB);
-        await launchUrl(Uri.parse(url));
-      }
+      UI.launch(context, url);
+      await UpdateQueries.instance
+          .registerAnalyticsEvent(AnalyticsEvents.redirectToOPTCDB);
     } else {
       String url = "https://thepiebandit.github.io/optc-pirate-rumble-db/";
-      if (await canLaunchUrl(Uri.parse(url))) {
-        await UpdateQueries.instance
-            .registerAnalyticsEvent(AnalyticsEvents.redirectToPRDB);
-        await launchUrl(Uri.parse(url));
-      }
+      UI.launch(context, url);
+      await UpdateQueries.instance
+          .registerAnalyticsEvent(AnalyticsEvents.redirectToPRDB);
     }
   }
 

@@ -84,7 +84,7 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
   _onInterstitialFailedOrExit() => setState(() => _isInterstitialReady = false);
   _onInterstitialClosed() {
     _isInterstitialReady = false;
-    UnitInfoUtils.instance.onTappedOnExternalLink(_isTappedOnOptcDb,
+    UnitInfoUtils.instance.onTappedOnExternalLink(context, _isTappedOnOptcDb,
         uid: _isTappedOnOptcDb ? widget.uid : null);
   }
 
@@ -323,7 +323,8 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
               onFailed: _onInterstitialFailedOrExit,
               onClosed: _onInterstitialClosed);
         } else {
-          UnitInfoUtils.instance.onTappedOnExternalLink(true, uid: widget.uid);
+          UnitInfoUtils.instance
+              .onTappedOnExternalLink(context, true, uid: widget.uid);
         }
       },
       color: UI.isDarkTheme(context) ? Colors.grey[800] : Colors.grey[300],
@@ -341,7 +342,7 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
                 onFailed: _onInterstitialFailedOrExit,
                 onClosed: _onInterstitialClosed);
           } else {
-            UnitInfoUtils.instance.onTappedOnExternalLink(false);
+            UnitInfoUtils.instance.onTappedOnExternalLink(context, false);
           }
         },
         color: UI.isDarkTheme(context) ? Colors.grey[800] : Colors.grey[300],

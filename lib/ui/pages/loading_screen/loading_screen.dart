@@ -5,8 +5,8 @@ import 'package:optcteams/core/firebase/queries/update_queries.dart';
 import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/routing/page_names.dart';
 import 'package:optcteams/ui/pages/loading_screen/bloc/check_updates_bloc.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/ui/widgets/custom_alert.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class LoadingScreenPage extends StatefulWidget {
@@ -40,9 +40,7 @@ class _LoadingScreenPageState extends State<LoadingScreenPage> {
           acceptButton: "goToStore".tr(),
           cancel: false,
           onAccepted: () async {
-            if (await canLaunchUrl(Uri.parse(Data.storeLink))) {
-              await launchUrl(Uri.parse(Data.storeLink));
-            }
+            await UI.launch(context, Data.storeLink);
           },
         );
       },

@@ -7,10 +7,10 @@ import 'package:optcteams/ui/pages/settings/widgets/copyright.dart';
 import 'package:optcteams/ui/pages/settings/widgets/developer.dart';
 import 'package:optcteams/ui/pages/settings/widgets/setting_tile.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/ui/widgets/bottom_sheet_choices.dart';
 import 'package:optcteams/ui/widgets/custom_alert.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class InformationSettings extends StatefulWidget {
   const InformationSettings({Key? key}) : super(key: key);
@@ -117,10 +117,7 @@ class _InformationSettingsState extends State<InformationSettings> {
             title: Text(InformationLabel.privacy.label),
             icon: InformationLabel.privacy.icon,
             onTap: () async {
-              if (await canLaunchUrl(
-                  Uri.parse("https://optc-teams-96a76.web.app"))) {
-                await launchUrl(Uri.parse("https://optc-teams-96a76.web.app"));
-              }
+              await UI.launch(context, "https://optc-teams-96a76.web.app");
             }),
       ],
     );

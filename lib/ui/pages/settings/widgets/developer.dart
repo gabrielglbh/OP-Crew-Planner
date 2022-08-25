@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:optcteams/ui/utils.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class DeveloperTile extends StatelessWidget {
@@ -24,8 +23,8 @@ class DeveloperTile extends StatelessWidget {
             ],
           ),
           InkWell(
-            onTap: () {
-              launchUrl(Uri.parse("https://github.com/gabrielglbh"));
+            onTap: () async {
+              await UI.launch(context, "https://github.com/gabrielglbh");
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -72,11 +71,7 @@ class DeveloperTile extends StatelessWidget {
                               String url = emailLaunchUri
                                   .toString()
                                   .replaceAll("+", "%20");
-                              if (await canLaunchUrl(Uri.parse(url))) {
-                                await launchUrl(Uri.parse(url));
-                              } else {
-                                UI.showSnackBar(context, "errOnLaunch".tr());
-                              }
+                              await UI.launch(context, url);
                             },
                         ),
                       ]),
