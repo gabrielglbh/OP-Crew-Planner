@@ -31,7 +31,8 @@ class UI {
 
   static Future<void> launch(BuildContext context, String uri) async {
     if (await canLaunchUrl(Uri.parse(uri))) {
-      await launchUrl(Uri.parse(uri), mode: LaunchMode.externalApplication);
+      await launchUrl(Uri.parse(uri),
+          mode: LaunchMode.externalNonBrowserApplication);
     } else {
       showSnackBar(context, "errOnLaunch".tr());
     }
