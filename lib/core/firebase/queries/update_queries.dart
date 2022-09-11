@@ -123,7 +123,7 @@ class UpdateQueries {
     /// with all fields in order to be updated along with the aliases.
 
     /// UNCOMMENT THIS TO UPLOAD NEW UNITS AND ALIASES
-    ///await uploadNewData();
+    await uploadNewData();
 
     try {
       onUpdate("checkingForUpdates".tr(), 0);

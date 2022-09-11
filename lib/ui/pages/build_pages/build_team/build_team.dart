@@ -20,7 +20,6 @@ import 'package:optcteams/ui/widgets/loading_widget.dart';
 import 'package:optcteams/ui/widgets/unitInfo/bottom_sheet_unit_info.dart';
 import 'package:optcteams/ui/widgets/custom_search_bar.dart';
 import 'package:optcteams/ui/widgets/custom_alert.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class BuildTeamPage extends StatefulWidget {
@@ -966,13 +965,9 @@ class _BuildTeamPageState extends State<BuildTeamPage>
     String ship = 'C${_ship.id},10';
     String postfix = 'B0D0E0Q0L0G0R0S100H';
     String url = baseUrl + units + ship + postfix;
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await UpdateQueries.instance
-          .registerAnalyticsEvent(AnalyticsEvents.redirectToOPTCCalc);
-      await launchUrl(Uri.parse(url));
-    } else {
-      UI.showSnackBar(context, "errOnLaunch".tr());
-    }
+    await UI.launch(context, url);
+    await UpdateQueries.instance
+        .registerAnalyticsEvent(AnalyticsEvents.redirectToOPTCCalc);
   }
 
   _getMostUsedUnits() {

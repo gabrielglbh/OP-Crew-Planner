@@ -4,6 +4,7 @@ import 'package:optcteams/core/database/models/unit.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/ui/widgets/custom_alert.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UI {
   static Color strT = Colors.red;
@@ -25,6 +26,15 @@ class UI {
       return dateTimeFormat.millisecondsSinceEpoch;
     } else {
       return -1;
+    }
+  }
+
+  static Future<void> launch(BuildContext context, String uri) async {
+    if (await canLaunchUrl(Uri.parse(uri))) {
+      await launchUrl(Uri.parse(uri),
+          mode: LaunchMode.externalNonBrowserApplication);
+    } else {
+      showSnackBar(context, "errOnLaunch".tr());
     }
   }
 

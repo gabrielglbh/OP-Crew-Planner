@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:optcteams/ui/utils.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class ContributorsTile extends StatelessWidget {
@@ -58,7 +57,7 @@ class ContributorsTile extends StatelessWidget {
                 fontSize: 14),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                if (firstUrl != "") launchUrl(Uri.parse(firstUrl));
+                if (firstUrl != "") UI.launch(context, firstUrl);
               },
           ),
           TextSpan(
@@ -74,7 +73,7 @@ class ContributorsTile extends StatelessWidget {
                 fontSize: 14),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                launchUrl(Uri.parse(secondUrl));
+                UI.launch(context, secondUrl);
               },
           ),
         ],

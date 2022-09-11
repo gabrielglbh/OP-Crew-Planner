@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/firebase/ads.dart';
 import 'package:optcteams/core/firebase/queries/authentication.dart';
 import 'package:optcteams/core/firebase/queries/update_queries.dart';
-import 'package:optcteams/core/database/data.dart';
 import 'package:optcteams/core/preferences/shared_preferences.dart';
 import 'package:optcteams/main.dart';
 import 'package:optcteams/ui/pages/settings/widgets/change_theme.dart';
@@ -12,11 +12,11 @@ import 'package:optcteams/ui/pages/settings/widgets/account_settings.dart';
 import 'package:optcteams/ui/pages/settings/widgets/back_up_settings.dart';
 import 'package:optcteams/ui/pages/settings/widgets/information_settings.dart';
 import 'package:optcteams/ui/pages/settings/widgets/setting_tile.dart';
+import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/ui/widgets/bottom_sheet_choices.dart';
 import 'package:optcteams/ui/widgets/custom_alert.dart';
 import 'package:optcteams/ui/widgets/custom_icon_buttons.dart';
 import 'package:optcteams/ui/widgets/loading_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -199,20 +199,16 @@ class _SettingsPageState extends State<SettingsPage> {
                     : "res/icons/googlePlay.png",
                 scale: 20),
             onTap: () async {
-              if (await canLaunchUrl(Uri.parse(Data.storeLink))) {
-                await UpdateQueries.instance
-                    .registerAnalyticsEvent(AnalyticsEvents.writeReview);
-                await launchUrl(Uri.parse(Data.storeLink));
-              }
+              await UI.launch(context, Data.storeLink);
+              await UpdateQueries.instance
+                  .registerAnalyticsEvent(AnalyticsEvents.writeReview);
             }),
         SettingTile(
             title: const Text("OP Crew Planner"),
             icon: Image.asset("res/icons/github.png", scale: 20),
             onTap: () async {
-              const url = "https://github.com/gabrielglbh/op-crew-planner";
-              if (await canLaunchUrl(Uri.parse(url))) {
-                await launchUrl(Uri.parse(url));
-              }
+              await UI.launch(
+                  context, "https://github.com/gabrielglbh/op-crew-planner");
             }),
 
         SettingHeader(title: "settings_misc".tr()),
