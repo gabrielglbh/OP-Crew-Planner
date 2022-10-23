@@ -36,7 +36,7 @@ class EmptyList extends StatelessWidget {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.orange[400]!,
+                    backgroundColor: Colors.orange[400]!,
                     elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),

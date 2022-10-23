@@ -24,7 +24,7 @@ class LoginButton extends StatelessWidget {
             fit: BoxFit.contain,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: color,
+                backgroundColor: color,
                 elevation: 4,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),

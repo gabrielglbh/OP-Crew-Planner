@@ -18,7 +18,7 @@ class UnitInfoElevatedButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-          primary: color),
+          backgroundColor: color),
       child: Container(
           height: 40,
           margin: const EdgeInsets.only(top: 2, bottom: 2),

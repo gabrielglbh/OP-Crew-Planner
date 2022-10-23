@@ -167,7 +167,7 @@ class UpdateQueries {
       // Check if there are any storage utils units for updating them
       // Get the keys of units that do not have the url put yet and update the unit on db
       // then remove the key form Shared Preferences
-      List<String>? keys = StorageUtils?.getKeysForUnits();
+      List<String>? keys = StorageUtils.getKeysForUnits();
       if (keys != null) {
         for (int un = 0; un < keys.length; un++) {
           DocumentSnapshot? unit =
@@ -198,7 +198,7 @@ class UpdateQueries {
           for (int unit = 0; unit < un.size; unit++) {
             // If the image is not yet provided, put Shared Preference for keep tracking
             if (un.docs[unit].get(Data.unitUrl) == "") {
-              StorageUtils?.saveData(un.docs[unit].get(Data.unitKey).toString(),
+              StorageUtils.saveData(un.docs[unit].get(Data.unitKey).toString(),
                   un.docs[unit].get(Data.unitId));
             }
             onUpdate(
