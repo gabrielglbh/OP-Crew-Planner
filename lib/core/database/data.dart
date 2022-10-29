@@ -140,6 +140,9 @@ class Data {
   static const String lastTapDescription = "lastTapDescription";
   static const String superTandemCondition = "superTandemCondition";
   static const String superTandemDescription = "superTandemDescription";
+  static const String gpStatsBurst = "gpBurst";
+  static const String gpStatsBurstCondition = "gpBurstCondition";
+  static const String gpStatsLeaderSkill = "gpLeaderSkill";
 
   static const String allType = "ALL";
   static const String strType = "STR";

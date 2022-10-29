@@ -1,6 +1,6 @@
 name: optcteams
 description: A Flutter application for storing teams and how-to's for OPTC.
-version: 4.2.2+37
+version: 4.2.3+38
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
