@@ -199,19 +199,46 @@ class Rumble extends StatelessWidget {
             context,
             "fSpecial".tr(),
             info.festSpecial,
-            isLLB: hasLLBSpecial,
+            isLLB: false,
+          ),
+          Visibility(
+            visible: hasLLBSpecial,
+            child: UnitInfoUtils.instance.richText3Ways(
+              context,
+              "fSpecial".tr(),
+              info.llbFestSpecial,
+              isLLB: true,
+            ),
           ),
           UnitInfoUtils.instance.richText3Ways(
             context,
             "fAbility".tr(),
             info.festAbility,
-            isLLB: hasLLBAbility,
+            isLLB: false,
+          ),
+          Visibility(
+            visible: hasLLBAbility,
+            child: UnitInfoUtils.instance.richText3Ways(
+              context,
+              "fAbility".tr(),
+              info.llbFestAbility,
+              isLLB: true,
+            ),
           ),
           UnitInfoUtils.instance.richText3Ways(
             context,
             "fResistance".tr(),
             info.festResistance,
-            isLLB: hasLLBResistance,
+            isLLB: false,
+          ),
+          Visibility(
+            visible: hasLLBResistance,
+            child: UnitInfoUtils.instance.richText3Ways(
+              context,
+              "fResistance".tr(),
+              info.llbFestResistance,
+              isLLB: true,
+            ),
           )
         ],
       ),
