@@ -238,9 +238,8 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
                           LastTapAbility(info: _information),
                           SuperTNDAbility(info: _information),
                           SupportAbility(info: _information),
-                          RumbleSpecial(info: _information),
-                          RumbleAbility(info: _information),
-                          RumbleResistance(info: _information)
+                          Rumble(info: _information),
+                          GPStats(info: _information),
                         ],
                       ),
                     )),

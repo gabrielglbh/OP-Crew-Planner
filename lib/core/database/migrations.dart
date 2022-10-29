@@ -5,6 +5,20 @@ import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Migrations {
+  // GP STATS EXPANSION
+  static Future<void> version40to41(Database db) async {
+    try {
+      await db.rawQuery(
+          "ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.gpStatsBurst} TEXT");
+      await db.rawQuery(
+          "ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.gpStatsBurstCondition} TEXT");
+      await db.rawQuery(
+          "ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.gpStatsLeaderSkill} TEXT");
+    } catch (err) {
+      print(err);
+    }
+  }
+
   // SUPER TANDEM EXPANSION
   static Future<void> version39to40(Database db) async {
     try {

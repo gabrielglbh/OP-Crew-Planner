@@ -211,5 +211,9 @@
   "settings_theme_dark": "Dunkelheit",
   "settings_misc": "Verschiedenes",
 
-  "settings_notifications_label": "Aktivieren/Deaktivieren von Benachrichtigungen"
+  "settings_notifications_label": "Aktivieren/Deaktivieren von Benachrichtigungen",
+
+  "fGPLeaderSkill": "Anführer-Fähigkeit",
+  "fGPBurstCondition": "Burst-Zustand",
+  "fGPBurst": "Bersten"
 }

@@ -211,5 +211,9 @@
   "settings_theme_dark" : "Sombrio",
   "settings_misc": "Diversos",
 
-  "settings_notifications_label": "Habilitar/Desabilitar Notificações"
+  "settings_notifications_label": "Habilitar/Desabilitar Notificações",
+
+  "fGPLeaderSkill": "Habilidade do Líder",
+  "fGPBurstCondition": "Condição de ruptura",
+  "fGPBurst": "Ruptura"
 }

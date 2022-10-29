@@ -170,56 +170,127 @@ class SuperTNDAbility extends StatelessWidget {
   }
 }
 
-class RumbleAbility extends StatelessWidget {
+class Rumble extends StatelessWidget {
   final UnitInfo info;
-  const RumbleAbility({Key? key, required this.info}) : super(key: key);
+  const Rumble({Key? key, required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    bool hasLLB = info.llbFestAbility != null && info.llbFestAbility != "";
-    return Visibility(
-        visible: (info.festAbility != null && info.festAbility != "") || hasLLB,
-        child: UnitInfoUtils.instance.simpleSection(context,
-            "res/maxed/rumble_ability.png", "fAbility".tr(), info.festAbility,
-            needsSubsection: hasLLB,
-            isLLB: hasLLB,
-            subsectionText: info.llbFestAbility));
-  }
-}
-
-class RumbleSpecial extends StatelessWidget {
-  final UnitInfo info;
-  const RumbleSpecial({Key? key, required this.info}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    bool hasLLB = info.llbFestSpecial != null && info.llbFestSpecial != "";
-    return Visibility(
-        visible: (info.festSpecial != null && info.festSpecial != "") || hasLLB,
-        child: UnitInfoUtils.instance.simpleSection(context,
-            "res/maxed/rumble_special.png", "fSpecial".tr(), info.festSpecial,
-            needsSubsection: hasLLB,
-            isLLB: hasLLB,
-            subsectionText: info.llbFestSpecial));
-  }
-}
-
-class RumbleResistance extends StatelessWidget {
-  final UnitInfo info;
-  const RumbleResistance({Key? key, required this.info}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    bool hasLLB =
+    bool hasLLBAbility =
+        info.llbFestAbility != null && info.llbFestAbility != "";
+    bool hasLLBSpecial =
+        info.llbFestSpecial != null && info.llbFestSpecial != "";
+    bool hasLLBResistance =
         info.llbFestResistance != null && info.llbFestResistance != "";
+
     return Visibility(
-        visible: (info.festResistance != null && info.festResistance != "") ||
-            hasLLB,
-        child: UnitInfoUtils.instance.simpleSection(context,
-            "res/info/resistance.png", "fResistance".tr(), info.festResistance,
-            needsSubsection: hasLLB,
-            isLLB: hasLLB,
-            subsectionText: info.llbFestResistance));
+      visible: (info.festAbility != null && info.festAbility != "") &&
+              (info.festSpecial != null && info.festSpecial != "") &&
+              (info.festResistance != null && info.festResistance != "") ||
+          hasLLBAbility ||
+          hasLLBSpecial ||
+          hasLLBResistance,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          UnitInfoUtils.instance
+              .headerOfSection("res/maxed/rumble_special.png", "PvP".tr()),
+          UnitInfoUtils.instance.richText3Ways(
+            context,
+            "fSpecial".tr(),
+            info.festSpecial,
+            isLLB: false,
+          ),
+          Visibility(
+            visible: hasLLBSpecial,
+            child: UnitInfoUtils.instance.richText3Ways(
+              context,
+              "fSpecial".tr(),
+              info.llbFestSpecial,
+              isLLB: true,
+            ),
+          ),
+          UnitInfoUtils.instance.richText3Ways(
+            context,
+            "fAbility".tr(),
+            info.festAbility,
+            isLLB: false,
+          ),
+          Visibility(
+            visible: hasLLBAbility,
+            child: UnitInfoUtils.instance.richText3Ways(
+              context,
+              "fAbility".tr(),
+              info.llbFestAbility,
+              isLLB: true,
+            ),
+          ),
+          UnitInfoUtils.instance.richText3Ways(
+            context,
+            "fResistance".tr(),
+            info.festResistance,
+            isLLB: false,
+          ),
+          Visibility(
+            visible: hasLLBResistance,
+            child: UnitInfoUtils.instance.richText3Ways(
+              context,
+              "fResistance".tr(),
+              info.llbFestResistance,
+              isLLB: true,
+            ),
+          ),
+          UnitInfoUtils.instance.divider()
+        ],
+      ),
+    );
+  }
+}
+
+class GPStats extends StatelessWidget {
+  final UnitInfo info;
+  const GPStats({Key? key, required this.info}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Visibility(
+      visible: info.gpStats != null &&
+          (info.gpStats?.length ?? 1) >= 1 &&
+          ((info.gpStats?.keys.contains(UnitInfo.fGPStatsBurst) == true &&
+                  info.gpStats?[UnitInfo.fGPStatsBurst] != "") &&
+              (info.gpStats?.keys.contains(UnitInfo.fGPStatsBurstCondition) ==
+                      true &&
+                  info.gpStats?[UnitInfo.fGPStatsBurstCondition] != "") &&
+              (info.gpStats?.keys.contains(UnitInfo.fGPStatsLeaderSkill) ==
+                      true &&
+                  info.gpStats?[UnitInfo.fGPStatsLeaderSkill] != "")),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          UnitInfoUtils.instance
+              .headerOfSection("res/maxed/rumble_ability.png", "GP Stats".tr()),
+          UnitInfoUtils.instance.richText3Ways(
+            context,
+            "fGPLeaderSkill".tr(),
+            info.gpStats?[UnitInfo.fGPStatsLeaderSkill],
+            isLLB: false,
+          ),
+          UnitInfoUtils.instance.richText3Ways(
+            context,
+            "fGPBurstCondition".tr(),
+            info.gpStats?[UnitInfo.fGPStatsBurstCondition],
+            isLLB: false,
+          ),
+          UnitInfoUtils.instance.richText3Ways(
+            context,
+            "fGPBurst".tr(),
+            info.gpStats?[UnitInfo.fGPStatsBurst],
+            isLLB: false,
+          ),
+          UnitInfoUtils.instance.divider()
+        ],
+      ),
+    );
   }
 }
 

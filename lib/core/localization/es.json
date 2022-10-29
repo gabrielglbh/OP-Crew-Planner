@@ -211,5 +211,9 @@
   "settings_theme_dark": "Oscuro",
   "settings_misc": "Varios",
 
-  "settings_notifications_label": "Activar/Desactivar Notificaciones"
+  "settings_notifications_label": "Activar/Desactivar Notificaciones",
+  
+  "fGPLeaderSkill": "Habilidad de Líder",
+  "fGPBurstCondition": "Condición de Ráfaga",
+  "fGPBurst": "Ráfaga"
 }

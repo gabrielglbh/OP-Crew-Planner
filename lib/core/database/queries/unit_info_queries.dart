@@ -85,51 +85,56 @@ class UnitInfoQueries {
           return UnitInfo.empty();
         } else {
           return UnitInfo(
-            sailor: {
-              UnitInfo.fSailorBase: res[0][Data.sailorBase],
-              UnitInfo.fSailorLevel1: res[0][Data.sailorLevel1],
-              UnitInfo.fSailorLevel2: res[0][Data.sailorLevel2],
-              UnitInfo.fSailorCombined: res[0][Data.sailorCombined],
-              UnitInfo.fSailorChar1: res[0][Data.sailorCharacter1],
-              UnitInfo.fSailorChar2: res[0][Data.sailorCharacter2],
-              UnitInfo.fLLBSailorBase: res[0][Data.llbSailorBase],
-              UnitInfo.fLLBSailorLevel1: res[0][Data.llbSailorLevel1],
-              UnitInfo.fLLBSailorLevel2: res[0][Data.llbSailorLevel2],
-              UnitInfo.fLLBSailorCombined: res[0][Data.llbSailorCombined],
-              UnitInfo.fLLBSailorCharacter1: res[0][Data.llbSailorCharacter1],
-              UnitInfo.fLLBSailorCharacter2: res[0][Data.llbSailorCharacter2]
-            },
-            special: res[0][Data.special],
-            specialName: res[0][Data.specialName],
-            captain: res[0][Data.captain],
-            swap: res[0][Data.swap],
-            potential: [
-              res[0][Data.potentialOne],
-              res[0][Data.potentialTwo],
-              res[0][Data.potentialThree]
-            ],
-            festAbility: res[0][Data.festAbility],
-            festResistance: res[0][Data.festResistance],
-            festSpecial: res[0][Data.festSpecial],
-            support: {
-              UnitInfo.fSupChars: res[0][Data.supportCharacters],
-              UnitInfo.fSupDescription: res[0][Data.supportDescription]
-            },
-            superSpecial: res[0][Data.superSpecial],
-            superSpecialCriteria: res[0][Data.superSpecialCriteria],
-            vsCondition: res[0][Data.vsCondition],
-            vsSpecial: res[0][Data.vsSpecial],
-            art: res[0][Data.art],
-            lastTapCondition: res[0][Data.lastTapCondition],
-            lastTapDescription: res[0][Data.lastTapDescription],
-            superTandemCondition: res[0][Data.superTandemCondition],
-            superTandemDescription: res[0][Data.superTandemDescription],
-            llbCaptain: res[0][Data.llbCaptain],
-            llbSpecial: res[0][Data.llbSpecial],
-            llbFestAbility: res[0][Data.llbFestAbility],
-            llbFestResistance: res[0][Data.llbFestResistance],
-            llbFestSpecial: res[0][Data.llbFestSpecial],
-          );
+              sailor: {
+                UnitInfo.fSailorBase: res[0][Data.sailorBase],
+                UnitInfo.fSailorLevel1: res[0][Data.sailorLevel1],
+                UnitInfo.fSailorLevel2: res[0][Data.sailorLevel2],
+                UnitInfo.fSailorCombined: res[0][Data.sailorCombined],
+                UnitInfo.fSailorChar1: res[0][Data.sailorCharacter1],
+                UnitInfo.fSailorChar2: res[0][Data.sailorCharacter2],
+                UnitInfo.fLLBSailorBase: res[0][Data.llbSailorBase],
+                UnitInfo.fLLBSailorLevel1: res[0][Data.llbSailorLevel1],
+                UnitInfo.fLLBSailorLevel2: res[0][Data.llbSailorLevel2],
+                UnitInfo.fLLBSailorCombined: res[0][Data.llbSailorCombined],
+                UnitInfo.fLLBSailorCharacter1: res[0][Data.llbSailorCharacter1],
+                UnitInfo.fLLBSailorCharacter2: res[0][Data.llbSailorCharacter2]
+              },
+              special: res[0][Data.special],
+              specialName: res[0][Data.specialName],
+              captain: res[0][Data.captain],
+              swap: res[0][Data.swap],
+              potential: [
+                res[0][Data.potentialOne],
+                res[0][Data.potentialTwo],
+                res[0][Data.potentialThree]
+              ],
+              festAbility: res[0][Data.festAbility],
+              festResistance: res[0][Data.festResistance],
+              festSpecial: res[0][Data.festSpecial],
+              support: {
+                UnitInfo.fSupChars: res[0][Data.supportCharacters],
+                UnitInfo.fSupDescription: res[0][Data.supportDescription]
+              },
+              superSpecial: res[0][Data.superSpecial],
+              superSpecialCriteria: res[0][Data.superSpecialCriteria],
+              vsCondition: res[0][Data.vsCondition],
+              vsSpecial: res[0][Data.vsSpecial],
+              art: res[0][Data.art],
+              lastTapCondition: res[0][Data.lastTapCondition],
+              lastTapDescription: res[0][Data.lastTapDescription],
+              superTandemCondition: res[0][Data.superTandemCondition],
+              superTandemDescription: res[0][Data.superTandemDescription],
+              llbCaptain: res[0][Data.llbCaptain],
+              llbSpecial: res[0][Data.llbSpecial],
+              llbFestAbility: res[0][Data.llbFestAbility],
+              llbFestResistance: res[0][Data.llbFestResistance],
+              llbFestSpecial: res[0][Data.llbFestSpecial],
+              gpStats: {
+                UnitInfo.fGPStatsBurst: res[0][Data.gpStatsBurst],
+                UnitInfo.fGPStatsBurstCondition: res[0]
+                    [Data.gpStatsBurstCondition],
+                UnitInfo.fGPStatsLeaderSkill: res[0][Data.gpStatsLeaderSkill],
+              });
         }
       } else {
         return UnitInfo.empty();
