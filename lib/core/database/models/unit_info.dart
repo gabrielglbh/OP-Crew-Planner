@@ -235,9 +235,9 @@ class UnitInfo {
         Data.llbFestSpecial: llbFestSpecial ?? "",
         Data.superTandemCondition: superTandemCondition ?? "",
         Data.superTandemDescription: superTandemDescription ?? "",
-        Data.gpStatsBurst: sailor?[fGPStatsBurst] ?? "",
-        Data.gpStatsBurstCondition: sailor?[fGPStatsBurstCondition] ?? "",
-        Data.gpStatsLeaderSkill: sailor?[fGPStatsLeaderSkill] ?? "",
+        Data.gpStatsBurst: gpStats?[fGPStatsBurst] ?? "",
+        Data.gpStatsBurstCondition: gpStats?[fGPStatsBurstCondition] ?? "",
+        Data.gpStatsLeaderSkill: gpStats?[fGPStatsLeaderSkill] ?? "",
       };
     } else if (potential[0] != "" && potential[1] == "" && potential[2] == "") {
       return {
@@ -280,9 +280,9 @@ class UnitInfo {
         Data.llbFestSpecial: llbFestSpecial ?? "",
         Data.superTandemCondition: superTandemCondition ?? "",
         Data.superTandemDescription: superTandemDescription ?? "",
-        Data.gpStatsBurst: sailor?[fGPStatsBurst] ?? "",
-        Data.gpStatsBurstCondition: sailor?[fGPStatsBurstCondition] ?? "",
-        Data.gpStatsLeaderSkill: sailor?[fGPStatsLeaderSkill] ?? "",
+        Data.gpStatsBurst: gpStats?[fGPStatsBurst] ?? "",
+        Data.gpStatsBurstCondition: gpStats?[fGPStatsBurstCondition] ?? "",
+        Data.gpStatsLeaderSkill: gpStats?[fGPStatsLeaderSkill] ?? "",
       };
     } else if (potential[0] != "" && potential[1] != "" && potential[2] == "") {
       return {
@@ -325,9 +325,9 @@ class UnitInfo {
         Data.llbFestSpecial: llbFestSpecial ?? "",
         Data.superTandemCondition: superTandemCondition ?? "",
         Data.superTandemDescription: superTandemDescription ?? "",
-        Data.gpStatsBurst: sailor?[fGPStatsBurst] ?? "",
-        Data.gpStatsBurstCondition: sailor?[fGPStatsBurstCondition] ?? "",
-        Data.gpStatsLeaderSkill: sailor?[fGPStatsLeaderSkill] ?? "",
+        Data.gpStatsBurst: gpStats?[fGPStatsBurst] ?? "",
+        Data.gpStatsBurstCondition: gpStats?[fGPStatsBurstCondition] ?? "",
+        Data.gpStatsLeaderSkill: gpStats?[fGPStatsLeaderSkill] ?? "",
       };
     } else {
       return {
@@ -370,9 +370,9 @@ class UnitInfo {
         Data.llbFestSpecial: llbFestSpecial ?? "",
         Data.superTandemCondition: superTandemCondition ?? "",
         Data.superTandemDescription: superTandemDescription ?? "",
-        Data.gpStatsBurst: sailor?[fGPStatsBurst] ?? "",
-        Data.gpStatsBurstCondition: sailor?[fGPStatsBurstCondition] ?? "",
-        Data.gpStatsLeaderSkill: sailor?[fGPStatsLeaderSkill] ?? "",
+        Data.gpStatsBurst: gpStats?[fGPStatsBurst] ?? "",
+        Data.gpStatsBurstCondition: gpStats?[fGPStatsBurstCondition] ?? "",
+        Data.gpStatsLeaderSkill: gpStats?[fGPStatsLeaderSkill] ?? "",
       };
     }
   }

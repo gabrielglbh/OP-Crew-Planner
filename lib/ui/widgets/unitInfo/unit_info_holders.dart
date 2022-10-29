@@ -239,7 +239,55 @@ class Rumble extends StatelessWidget {
               info.llbFestResistance,
               isLLB: true,
             ),
-          )
+          ),
+          UnitInfoUtils.instance.divider()
+        ],
+      ),
+    );
+  }
+}
+
+class GPStats extends StatelessWidget {
+  final UnitInfo info;
+  const GPStats({Key? key, required this.info}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Visibility(
+      visible: info.gpStats != null &&
+          (info.gpStats?.length ?? 1) >= 1 &&
+          ((info.gpStats?.keys.contains(UnitInfo.fGPStatsBurst) == true &&
+                  info.gpStats?[UnitInfo.fGPStatsBurst] != "") &&
+              (info.gpStats?.keys.contains(UnitInfo.fGPStatsBurstCondition) ==
+                      true &&
+                  info.gpStats?[UnitInfo.fGPStatsBurstCondition] != "") &&
+              (info.gpStats?.keys.contains(UnitInfo.fGPStatsLeaderSkill) ==
+                      true &&
+                  info.gpStats?[UnitInfo.fGPStatsLeaderSkill] != "")),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          UnitInfoUtils.instance
+              .headerOfSection("res/maxed/rumble_ability.png", "GP Stats".tr()),
+          UnitInfoUtils.instance.richText3Ways(
+            context,
+            "fGPLeaderSkill".tr(),
+            info.gpStats?[UnitInfo.fGPStatsLeaderSkill],
+            isLLB: false,
+          ),
+          UnitInfoUtils.instance.richText3Ways(
+            context,
+            "fGPBurstCondition".tr(),
+            info.gpStats?[UnitInfo.fGPStatsBurstCondition],
+            isLLB: false,
+          ),
+          UnitInfoUtils.instance.richText3Ways(
+            context,
+            "fGPBurst".tr(),
+            info.gpStats?[UnitInfo.fGPStatsBurst],
+            isLLB: false,
+          ),
+          UnitInfoUtils.instance.divider()
         ],
       ),
     );
