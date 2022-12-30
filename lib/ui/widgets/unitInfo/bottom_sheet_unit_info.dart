@@ -192,6 +192,21 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
       info.vsSpecial =
           info.vsSpecial?.replaceAll(_escapedCharVS, _parsedCharVS);
     }
+    if (info.gpStats?[UnitInfo.fGPStatsBurstCondition] != null) {
+      info.gpStats?[UnitInfo.fGPStatsBurstCondition] = info
+          .gpStats?[UnitInfo.fGPStatsBurstCondition]
+          .replaceAll(_escapedCharVS, _parsedCharVS);
+    }
+    if (info.gpStats?[UnitInfo.fGPStatsBurst] != null) {
+      info.gpStats?[UnitInfo.fGPStatsBurst] = info
+          .gpStats?[UnitInfo.fGPStatsBurst]
+          .replaceAll(_escapedCharVS, _parsedCharVS);
+    }
+    if (info.gpStats?[UnitInfo.fGPStatsLeaderSkill] != null) {
+      info.gpStats?[UnitInfo.fGPStatsLeaderSkill] = info
+          .gpStats?[UnitInfo.fGPStatsLeaderSkill]
+          .replaceAll(_escapedCharVS, _parsedCharVS);
+    }
   }
 
   _formatSwapSuper(UnitInfo info) {

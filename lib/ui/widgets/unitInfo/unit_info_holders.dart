@@ -347,7 +347,13 @@ class PotentialAbility extends StatelessWidget {
                     ? const EdgeInsets.all(1)
                     : null,
                 child: Image.asset(
-                    (_potentialImages[ability.toLowerCase()] ?? "")),
+                  (_potentialImages[ability.toLowerCase()] ?? ""),
+                  errorBuilder: ((context, error, stackTrace) {
+                    return Transform.rotate(
+                        angle: 0.78,
+                        child: const Icon(Icons.animation_rounded));
+                  }),
+                ),
               ),
             ),
             RichText(
