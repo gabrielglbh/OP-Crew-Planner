@@ -19,7 +19,6 @@ final ThemeData light = ThemeData(
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 2.0),
         )),
-    toggleableActiveColor: Colors.green,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       unselectedItemColor: Colors.grey[500],
       backgroundColor: Colors.white,
@@ -45,6 +44,38 @@ final ThemeData light = ThemeData(
         disabledColor: Colors.grey,
         labelStyle: const TextStyle(color: Colors.white),
         secondarySelectedColor: Colors.black),
+    checkboxTheme: CheckboxThemeData(
+      fillColor: MaterialStateProperty.resolveWith<Color?>(
+          (Set<MaterialState> states) {
+        if (states.contains(MaterialState.disabled)) {
+          return null;
+        }
+        if (states.contains(MaterialState.selected)) {
+          return Colors.green;
+        }
+        return null;
+      }),
+    ),
+    switchTheme: SwitchThemeData(thumbColor:
+        MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.disabled)) {
+        return null;
+      }
+      if (states.contains(MaterialState.selected)) {
+        return Colors.green;
+      }
+      return null;
+    })),
+    radioTheme: RadioThemeData(fillColor:
+        MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.disabled)) {
+        return null;
+      }
+      if (states.contains(MaterialState.selected)) {
+        return Colors.green;
+      }
+      return null;
+    })),
     tabBarTheme: TabBarTheme(
         indicator: ShapeDecoration(
       shape: UnderlineInputBorder(
@@ -71,7 +102,6 @@ final ThemeData dark = ThemeData(
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.orange, width: 2.0),
         )),
-    toggleableActiveColor: Colors.green,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       unselectedItemColor: Colors.grey[500],
       backgroundColor: Colors.grey[800],
@@ -96,6 +126,38 @@ final ThemeData dark = ThemeData(
         disabledColor: Colors.grey,
         labelStyle: const TextStyle(color: Colors.white),
         secondarySelectedColor: Colors.black),
+    checkboxTheme: CheckboxThemeData(
+      fillColor: MaterialStateProperty.resolveWith<Color?>(
+          (Set<MaterialState> states) {
+        if (states.contains(MaterialState.disabled)) {
+          return null;
+        }
+        if (states.contains(MaterialState.selected)) {
+          return Colors.green;
+        }
+        return null;
+      }),
+    ),
+    switchTheme: SwitchThemeData(thumbColor:
+        MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.disabled)) {
+        return null;
+      }
+      if (states.contains(MaterialState.selected)) {
+        return Colors.green;
+      }
+      return null;
+    })),
+    radioTheme: RadioThemeData(fillColor:
+        MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.disabled)) {
+        return null;
+      }
+      if (states.contains(MaterialState.selected)) {
+        return Colors.green;
+      }
+      return null;
+    })),
     tabBarTheme: TabBarTheme(
         indicator: ShapeDecoration(
       shape: UnderlineInputBorder(

@@ -34,6 +34,7 @@ class UI {
       await launchUrl(Uri.parse(uri),
           mode: LaunchMode.externalNonBrowserApplication);
     } else {
+      // ignore: use_build_context_synchronously
       showSnackBar(context, "errOnLaunch".tr());
     }
   }

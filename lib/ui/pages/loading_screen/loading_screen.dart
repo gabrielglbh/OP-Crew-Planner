@@ -27,6 +27,7 @@ class _LoadingScreenPageState extends State<LoadingScreenPage> {
       }
       child = Text(versionNotes);
     }
+    if (!mounted) return;
     await showDialog(
       context: context,
       barrierDismissible: true,

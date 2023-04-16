@@ -399,6 +399,7 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
             final art = UI.getThumbnail(_information.art ?? "0", art: true);
             await UpdateQueries.instance
                 .registerAnalyticsEvent(AnalyticsEvents.showFullArt);
+            if (!mounted) return;
             showDialog(
                 context: context,
                 barrierDismissible: true,
