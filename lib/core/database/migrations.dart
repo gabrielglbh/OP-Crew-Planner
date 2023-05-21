@@ -5,6 +5,20 @@ import 'package:optcteams/core/database/queries/unit_queries.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Migrations {
+  // Rush STATS EXPANSION
+  static Future<void> version41to42(Database db) async {
+    try {
+      await db.rawQuery(
+          "ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.rushCondition} TEXT");
+      await db.rawQuery(
+          "ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.rushDescription} TEXT");
+      await db.rawQuery(
+          "ALTER TABLE ${Data.dataTable} ADD COLUMN ${Data.rushStats} TEXT");
+    } catch (err) {
+      print(err);
+    }
+  }
+
   // GP STATS EXPANSION
   static Future<void> version40to41(Database db) async {
     try {

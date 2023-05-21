@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,10 +14,11 @@ import 'package:optcteams/ui/theme/theme_manager.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await dotenv.load(fileName: "res/environment/app.env");
   MobileAds.instance.initialize();
   if (AdManager.test) {
-    await MobileAds.instance.updateRequestConfiguration(
-        RequestConfiguration(testDeviceIds: ['[GOOGLE-DEVICE-TESTS-AD]']));
+    await MobileAds.instance.updateRequestConfiguration(RequestConfiguration(
+        testDeviceIds: [dotenv.env['GOOGLE_DEVICE_TESTS_AD']!]));
   }
   await StorageUtils.getInstance();
   await EasyLocalization.ensureInitialized();

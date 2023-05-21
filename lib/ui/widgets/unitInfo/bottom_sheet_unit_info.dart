@@ -251,6 +251,7 @@ class _AdditionalUnitInfoState extends State<AdditionalUnitInfo> {
                           SwapAbility(info: _information),
                           PotentialAbility(info: _information),
                           LastTapAbility(info: _information),
+                          Rush(info: _information),
                           SuperTNDAbility(info: _information),
                           SupportAbility(info: _information),
                           Rumble(info: _information),

@@ -143,6 +143,9 @@ class Data {
   static const String gpStatsBurst = "gpBurst";
   static const String gpStatsBurstCondition = "gpBurstCondition";
   static const String gpStatsLeaderSkill = "gpLeaderSkill";
+  static const String rushCondition = "rushCondition";
+  static const String rushDescription = "rushDescription";
+  static const String rushStats = "rushStats";
 
   static const String allType = "ALL";
   static const String strType = "STR";

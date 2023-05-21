@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 /// BANNER
@@ -25,9 +26,9 @@ class AdManager {
 
   static String get _bannerAdUnitId {
     if (Platform.isAndroid) {
-      return "[GOOGLE-ANDROID-AD-BANNER-ID]";
+      return dotenv.env['GOOGLE_ANDROID_AD_BANNER_ID']!;
     } else if (Platform.isIOS) {
-      return "[GOOGLE-iOS-AD-BANNER-ID]";
+      return dotenv.env['GOOGLE_iOS_AD_BANNER_ID']!;
     } else {
       throw UnsupportedError("Unsupported platform");
     }
@@ -35,9 +36,9 @@ class AdManager {
 
   static String get _interstitialAdUnitId {
     if (Platform.isAndroid) {
-      return "[GOOGLE-ANDROID-AD-INTERSTITIAL-ID]";
+      return dotenv.env['GOOGLE_ANDROID_AD_INTERSTITIAL_ID']!;
     } else if (Platform.isIOS) {
-      return "[GOOGLE-iOS-AD-INTERSTITIAL-ID]";
+      return dotenv.env['GOOGLE_iOS_AD_INTERSTITIAL_ID']!;
     } else {
       throw UnsupportedError("Unsupported platform");
     }

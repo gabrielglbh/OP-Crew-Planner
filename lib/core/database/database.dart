@@ -27,7 +27,7 @@ class CustomDatabase {
       await Directory(databasesPath).create(recursive: true);
     } catch (_) {}
 
-    _database = await openDatabase(path, version: 41, singleInstance: true,
+    _database = await openDatabase(path, version: 42, singleInstance: true,
         onCreate: (Database db, int version) async {
       if (onUpdate != null) onUpdate("creatingDB".tr());
       await db.execute("CREATE TABLE ${Data.unitTable}("
@@ -161,7 +161,10 @@ class CustomDatabase {
           "${Data.lastTapDescription} TEXT, "
           "${Data.gpStatsBurst} TEXT, "
           "${Data.gpStatsBurstCondition} TEXT, "
-          "${Data.gpStatsLeaderSkill} TEXT)");
+          "${Data.gpStatsLeaderSkill} TEXT, "
+          "${Data.rushDescription} TEXT, "
+          "${Data.rushCondition} TEXT, "
+          "${Data.rushStats} TEXT)");
     }, onDowngrade: (Database db, int oldVersion, int newVersion) {
       // Change it to whatever to debug new versions of DB
     }, onUpgrade: (Database db, int oldVersion, int newVersion) async {
@@ -182,6 +185,7 @@ class CustomDatabase {
     if (oldVersion <= 38) await Migrations.version38to39(db);
     if (oldVersion <= 39) await Migrations.version39to40(db);
     if (oldVersion <= 40) await Migrations.version40to41(db);
+    if (oldVersion <= 41) await Migrations.version41to42(db);
   }
 
   /// Closes up the current database.

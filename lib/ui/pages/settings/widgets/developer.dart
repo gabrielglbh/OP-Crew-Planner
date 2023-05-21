@@ -12,9 +12,9 @@ class DeveloperTile extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.only(top: 8),
         children: [
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               Icon(Icons.handyman),
               Padding(
                 padding: EdgeInsets.only(left: 16, top: 16, bottom: 16),

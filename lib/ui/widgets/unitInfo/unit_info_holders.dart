@@ -294,6 +294,51 @@ class GPStats extends StatelessWidget {
   }
 }
 
+class Rush extends StatelessWidget {
+  final UnitInfo info;
+  const Rush({Key? key, required this.info}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Visibility(
+      visible: info.rush != null &&
+          (info.rush?.length ?? 1) >= 1 &&
+          ((info.rush?.keys.contains(UnitInfo.fRushCondition) == true &&
+                  info.rush?[UnitInfo.fRushCondition] != "") &&
+              (info.rush?.keys.contains(UnitInfo.fRushDescription) == true &&
+                  info.rush?[UnitInfo.fRushDescription] != "") &&
+              (info.rush?.keys.contains(UnitInfo.fRushStats) == true &&
+                  info.rush?[UnitInfo.fRushStats] != "")),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          UnitInfoUtils.instance
+              .headerOfSection("res/potential_abilities/rush.png", "Rush".tr()),
+          UnitInfoUtils.instance.richText3Ways(
+            context,
+            "special".tr(),
+            info.rush?[UnitInfo.fRushDescription],
+            isLLB: false,
+          ),
+          UnitInfoUtils.instance.richText3Ways(
+            context,
+            "stCriteria".tr(),
+            info.rush?[UnitInfo.fRushCondition],
+            isLLB: false,
+          ),
+          UnitInfoUtils.instance.richText3Ways(
+            context,
+            "Stats",
+            info.rush?[UnitInfo.fRushStats],
+            isLLB: false,
+          ),
+          UnitInfoUtils.instance.divider()
+        ],
+      ),
+    );
+  }
+}
+
 class PotentialAbility extends StatelessWidget {
   final UnitInfo info;
   const PotentialAbility({Key? key, required this.info}) : super(key: key);
@@ -326,6 +371,7 @@ class PotentialAbility extends StatelessWidget {
         "res/potential_abilities/reduceHunger.png",
     "last tap": "res/potential_abilities/lastTap.png",
     "super tandem": "res/potential_abilities/superTND.png",
+    "rush": "res/potential_abilities/rush.png"
   };
 
   @override

@@ -28,6 +28,8 @@ class UnitInfo {
   String? llbFestResistance;
   // GP Stats
   Map<String, dynamic>? gpStats;
+  // GP Stats
+  Map<String, dynamic>? rush;
   // Only for Device's Database
   String? unitId;
 
@@ -74,6 +76,10 @@ class UnitInfo {
   static const String fGPStatsBurst = "gpBurst";
   static const String fGPStatsBurstCondition = "gpBurstCondition";
   static const String fGPStatsLeaderSkill = "gpLeaderSkill";
+  static const String fRush = "rush";
+  static const String fRushDescription = "rushDescription";
+  static const String fRushCondition = "rushCondition";
+  static const String fRushStats = "rushStats";
 
   UnitInfo({
     this.sailor,
@@ -102,6 +108,7 @@ class UnitInfo {
     this.superTandemCondition,
     this.superTandemDescription,
     this.gpStats,
+    this.rush,
   });
 
   bool isEqualTo(UnitInfo b) {
@@ -130,7 +137,8 @@ class UnitInfo {
         llbFestResistance == b.llbFestResistance &&
         superTandemCondition == b.superTandemCondition &&
         superTandemDescription == b.superTandemDescription &&
-        gpStats?.length == b.gpStats?.length;
+        gpStats?.length == b.gpStats?.length &&
+        rush?.length == b.rush?.length;
   }
 
   factory UnitInfo.empty() => UnitInfo(
@@ -159,6 +167,7 @@ class UnitInfo {
         superTandemCondition: "",
         superTandemDescription: "",
         gpStats: {},
+        rush: {},
       );
 
   factory UnitInfo.fromJson(Map<String, dynamic> json) {
@@ -189,6 +198,7 @@ class UnitInfo {
       superTandemCondition: json[fSuperTandemCondition] ?? "",
       superTandemDescription: json[fSuperTandemDescription] ?? "",
       gpStats: json[fGPStats] ?? {},
+      rush: json[fRush] ?? {},
     );
   }
 
@@ -238,6 +248,9 @@ class UnitInfo {
         Data.gpStatsBurst: gpStats?[fGPStatsBurst] ?? "",
         Data.gpStatsBurstCondition: gpStats?[fGPStatsBurstCondition] ?? "",
         Data.gpStatsLeaderSkill: gpStats?[fGPStatsLeaderSkill] ?? "",
+        Data.rushCondition: gpStats?[fRushCondition] ?? "",
+        Data.rushDescription: gpStats?[fRushDescription] ?? "",
+        Data.rushStats: gpStats?[fRushStats] ?? "",
       };
     } else if (potential[0] != "" && potential[1] == "" && potential[2] == "") {
       return {
@@ -283,6 +296,9 @@ class UnitInfo {
         Data.gpStatsBurst: gpStats?[fGPStatsBurst] ?? "",
         Data.gpStatsBurstCondition: gpStats?[fGPStatsBurstCondition] ?? "",
         Data.gpStatsLeaderSkill: gpStats?[fGPStatsLeaderSkill] ?? "",
+        Data.rushCondition: gpStats?[fRushCondition] ?? "",
+        Data.rushDescription: gpStats?[fRushDescription] ?? "",
+        Data.rushStats: gpStats?[fRushStats] ?? "",
       };
     } else if (potential[0] != "" && potential[1] != "" && potential[2] == "") {
       return {
@@ -328,6 +344,9 @@ class UnitInfo {
         Data.gpStatsBurst: gpStats?[fGPStatsBurst] ?? "",
         Data.gpStatsBurstCondition: gpStats?[fGPStatsBurstCondition] ?? "",
         Data.gpStatsLeaderSkill: gpStats?[fGPStatsLeaderSkill] ?? "",
+        Data.rushCondition: gpStats?[fRushCondition] ?? "",
+        Data.rushDescription: gpStats?[fRushDescription] ?? "",
+        Data.rushStats: gpStats?[fRushStats] ?? "",
       };
     } else {
       return {
@@ -373,6 +392,9 @@ class UnitInfo {
         Data.gpStatsBurst: gpStats?[fGPStatsBurst] ?? "",
         Data.gpStatsBurstCondition: gpStats?[fGPStatsBurstCondition] ?? "",
         Data.gpStatsLeaderSkill: gpStats?[fGPStatsLeaderSkill] ?? "",
+        Data.rushCondition: gpStats?[fRushCondition] ?? "",
+        Data.rushDescription: gpStats?[fRushDescription] ?? "",
+        Data.rushStats: gpStats?[fRushStats] ?? "",
       };
     }
   }
