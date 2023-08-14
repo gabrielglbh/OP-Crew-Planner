@@ -39,7 +39,7 @@ class _NavigationPageState extends State<NavigationPage>
 
   final List<Unit> _recentUnits = [];
 
-  TypeList _type = TypeList.unit;
+  TypeList _type = TypeList.data;
   int _recentUnitsLength = 0;
 
   bool _showLastAddedUnits = true;
@@ -154,8 +154,8 @@ class _NavigationPageState extends State<NavigationPage>
                   controller: _pageController,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    UnitsTab(focus: _unitFocusNode),
                     DataTab(focus: _dataFocusNode),
+                    UnitsTab(focus: _unitFocusNode),
                     TeamsTab(focus: _teamFocusNode),
                     RumbleTab(focus: _rumbleTeamFocusNode)
                   ],
@@ -323,8 +323,8 @@ class _NavigationPageState extends State<NavigationPage>
         currentIndex: _type.index,
         selectedFontSize: 12,
         items: [
-          _navigationBarItem(TypeList.unit),
           _navigationBarItem(TypeList.data),
+          _navigationBarItem(TypeList.unit),
           _navigationBarItem(TypeList.team),
           _navigationBarItem(TypeList.rumble)
         ],

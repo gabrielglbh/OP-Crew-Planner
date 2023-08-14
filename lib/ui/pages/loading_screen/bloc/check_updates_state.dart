@@ -39,3 +39,5 @@ class CheckUpdatesNewVersionState extends CheckUpdatesState {
   @override
   List<Object> get props => [version];
 }
+
+class CheckUpdatesConsentState extends CheckUpdatesState {}

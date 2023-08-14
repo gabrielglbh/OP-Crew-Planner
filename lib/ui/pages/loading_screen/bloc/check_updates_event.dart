@@ -24,3 +24,12 @@ class CheckUpdatesResumeInstallEvent extends CheckUpdatesEvent {
   @override
   List<Object> get props => [context];
 }
+
+class CheckUpdatesResumeVersionEvent extends CheckUpdatesEvent {
+  final BuildContext context;
+
+  const CheckUpdatesResumeVersionEvent({required this.context});
+
+  @override
+  List<Object> get props => [context];
+}

@@ -13,6 +13,10 @@ part 'check_updates_state.dart';
 class CheckUpdatesBloc extends Bloc<CheckUpdatesEvent, CheckUpdatesState> {
   CheckUpdatesBloc() : super(const CheckUpdatesLoadingState()) {
     on<CheckUpdatesInstallEvent>((event, emit) async {
+      emit(CheckUpdatesConsentState());
+    });
+
+    on<CheckUpdatesResumeVersionEvent>((event, emit) async {
       /// Check if there is a new version
       String v = await UpdateQueries.instance.getVersion(event.context);
       PackageInfo pi = await PackageInfo.fromPlatform();

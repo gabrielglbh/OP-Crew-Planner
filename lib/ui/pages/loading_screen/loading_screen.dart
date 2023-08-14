@@ -8,6 +8,7 @@ import 'package:optcteams/ui/pages/loading_screen/bloc/check_updates_bloc.dart';
 import 'package:optcteams/ui/utils.dart';
 import 'package:optcteams/ui/widgets/custom_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:user_messaging_platform/user_messaging_platform.dart';
 
 class LoadingScreenPage extends StatefulWidget {
   const LoadingScreenPage({Key? key}) : super(key: key);
@@ -49,6 +50,22 @@ class _LoadingScreenPageState extends State<LoadingScreenPage> {
       ..add(CheckUpdatesResumeInstallEvent(context: context)));
   }
 
+  Future<void> _updateConsent(BuildContext context) async {
+    try {
+      var info =
+          await UserMessagingPlatform.instance.requestConsentInfoUpdate();
+      if (info.consentStatus == ConsentStatus.required) {
+        info = await UserMessagingPlatform.instance.showConsentForm();
+      }
+      if (!mounted) return;
+      context
+          .read<CheckUpdatesBloc>()
+          .add(CheckUpdatesResumeVersionEvent(context: context));
+    } catch (err) {
+      print(err);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -65,6 +82,8 @@ class _LoadingScreenPageState extends State<LoadingScreenPage> {
                   listener: (context, state) async {
                     if (state is CheckUpdatesNewVersionState) {
                       await _versionDialog(context, state.version);
+                    } else if (state is CheckUpdatesConsentState) {
+                      await _updateConsent(context);
                     } else if (state is CheckUpdatesDoneState) {
                       Navigator.of(context).pushReplacementNamed(
                           OPCrewPlannerPages.navigationPageName);
